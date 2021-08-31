@@ -1,0 +1,17 @@
+com/safely/BuildConfig.java
+ com.safely.BuildConfig
+com/safely/MainActivity.java
+ com.safely.MainActivity
+ com.safely.MainActivity$1
+com/safely/MainApplication.java
+ com.safely.MainApplication
+ com.safely.MainApplication$1
+com/safely/ReactNativeFlipper.java
+ com.safely.ReactNativeFlipper
+ com.safely.ReactNativeFlipper$1
+ com.safely.ReactNativeFlipper$2
+ com.safely.ReactNativeFlipper$2$1
+com/facebook/react/PackageList.java
+ com.facebook.react.PackageList
+com/safely/generated/BasePackageList.java
+ com.safely.generated.BasePackageList
