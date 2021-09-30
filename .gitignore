@@ -122,3 +122,6 @@ buck-out/
 # Expo
 .expo/
 web-build/
+
+#Mac
+.DS_Store/
