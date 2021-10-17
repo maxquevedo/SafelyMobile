@@ -9,7 +9,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 //import MantenedorAdmin from './Vistas/Auth/Admin/MantenedorAdmin';
 //import VerReportes from './Vistas/Auth/VerReportes';
 //import AsignarProfesional from './Vistas/Auth/Admin/AsignarProfesional';
-//import Perfil from './Vistas/Auth/Perfil';
+import Perfil from './Vistas/Auth/Perfil';
 //import Actividades from './Vistas/Auth/Actividades';
 //import Accidentes from './Vistas/Auth/Cliente/Accidentes';
 //import AsesoriaStack from './Vistas/Auth/AsesoriaStack';
@@ -106,8 +106,9 @@ function Profesional(){
       return <Ionicons name={iconName} size={size} color={color} />;
     },
   })}>
-{/* <Tab.Screen name="Perfil" component={Perfil}/>
-<Tab.Screen name="Actividades" component={Actividades}/>
+    <Tab.Screen name="Perfil" component={Perfil} options={{headerTitleAlign:'center', tabBarLabel:'Perfil', headerTitle:'NombreAqui'}}/>
+{
+/*<Tab.Screen name="Actividades" component={Actividades}/>
 <Tab.Screen name="Visita" component={VisitaStack}/>
 <Tab.Screen name="Asesoria" component={AsesoriaStack}/> */}
 </Tab.Navigator>);
@@ -116,7 +117,7 @@ function Profesional(){
 export default function App() {
 
   var tipoUsuario = 'Profesional';
-  var Autenticado = false;
+  var Autenticado = true;
   //const auth = useAuth();
 
   return (

@@ -9,36 +9,36 @@
 9        android:targetSdkVersion="30" />
 10
 11    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-11-->/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:5:3-75
-11-->/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:5:20-73
+11-->/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:5:3-75
+11-->/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:5:20-73
 12    <uses-permission android:name="android.permission.INTERNET" />
-12-->/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:3:3-64
-12-->/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:3:20-62
+12-->/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:3:3-64
+12-->/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:3:20-62
 13    <uses-permission android:name="android.permission.VIBRATE" /> <!-- These require runtime permissions on M -->
-13-->/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:6:3-63
-13-->/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:6:20-61
+13-->/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:6:3-63
+13-->/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:6:20-61
 14    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-14-->/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:8:3-77
-14-->/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:8:20-75
+14-->/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:8:3-77
+14-->/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:8:20-75
 15    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-15-->/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:9:3-78
-15-->/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:9:20-76
+15-->/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:9:3-78
+15-->/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:9:20-76
 16    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 16-->[com.facebook.flipper:flipper:0.54.0] /Users/maxquevedo/.gradle/caches/transforms-3/7ced98fae9ea2b5aa64e54aefef0d400/transformed/jetified-flipper-0.54.0/AndroidManifest.xml:16:5-76
 16-->[com.facebook.flipper:flipper:0.54.0] /Users/maxquevedo/.gradle/caches/transforms-3/7ced98fae9ea2b5aa64e54aefef0d400/transformed/jetified-flipper-0.54.0/AndroidManifest.xml:16:22-73
 17    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-17-->[:expo-updates] /Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/node_modules/expo-updates/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:11:5-79
-17-->[:expo-updates] /Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/node_modules/expo-updates/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:11:22-76
+17-->[:expo-updates] /Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/node_modules/expo-updates/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:11:5-79
+17-->[:expo-updates] /Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/node_modules/expo-updates/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:11:22-76
 18
 19    <queries>
-19-->[:expo-file-system] /Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:16:5-22:15
+19-->[:expo-file-system] /Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:16:5-22:15
 20
 21        <!-- Query open documents -->
 22        <intent>
-22-->[:expo-file-system] /Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:19:9-21:18
+22-->[:expo-file-system] /Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:19:9-21:18
 23            <action android:name="android.intent.action.OPEN_DOCUMENT_TREE" />
-23-->[:expo-file-system] /Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:20:13-79
-23-->[:expo-file-system] /Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:20:21-76
+23-->[:expo-file-system] /Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:20:13-79
+23-->[:expo-file-system] /Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:20:21-76
 24        </intent>
 25    </queries>
 26
@@ -47,89 +47,89 @@
 27-->[com.android.installreferrer:installreferrer:1.0] /Users/maxquevedo/.gradle/caches/transforms-3/03000e196f6751859c30663132ae1613/transformed/jetified-installreferrer-1.0/AndroidManifest.xml:9:22-107
 28
 29    <application
-29-->/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:11:3-36:17
+29-->/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:11:3-36:17
 30        android:name="com.safely.MainApplication"
-30-->/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:12:5-36
+30-->/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:12:5-36
 31        android:allowBackup="false"
-31-->/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:16:5-32
+31-->/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:16:5-32
 32        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
 32-->[androidx.core:core:1.3.0] /Users/maxquevedo/.gradle/caches/transforms-3/fe3cf0882eb40046447bd9893532f7c5/transformed/core-1.3.0/AndroidManifest.xml:24:18-86
 33        android:debuggable="true"
 34        android:icon="@mipmap/ic_launcher"
-34-->/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:14:5-39
+34-->/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:14:5-39
 35        android:label="@string/app_name"
-35-->/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:13:5-37
+35-->/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:13:5-37
 36        android:roundIcon="@mipmap/ic_launcher_round"
-36-->/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:15:5-50
+36-->/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:15:5-50
 37        android:theme="@style/AppTheme"
-37-->/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:17:5-36
+37-->/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:17:5-36
 38        android:usesCleartextTraffic="true" >
-38-->/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:18:5-40
+38-->/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:18:5-40
 39        <meta-data
-39-->/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:20:5-103
+39-->/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:20:5-103
 40            android:name="expo.modules.updates.EXPO_UPDATE_URL"
-40-->/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:20:16-67
+40-->/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:20:16-67
 41            android:value="YOUR-APP-URL-HERE" />
-41-->/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:20:68-101
+41-->/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:20:68-101
 42        <meta-data
-42-->/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:21:5-112
+42-->/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:21:5-112
 43            android:name="expo.modules.updates.EXPO_SDK_VERSION"
-43-->/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:21:16-68
+43-->/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:21:16-68
 44            android:value="YOUR-APP-SDK-VERSION-HERE" />
-44-->/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:21:69-110
+44-->/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:21:69-110
 45
 46        <activity
-46-->/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:22:5-34:16
+46-->/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:22:5-34:16
 47            android:name="com.safely.MainActivity"
-47-->/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:23:7-35
+47-->/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:23:7-35
 48            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
-48-->/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:25:7-84
+48-->/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:25:7-84
 49            android:label="@string/app_name"
-49-->/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:24:7-39
+49-->/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:24:7-39
 50            android:launchMode="singleTask"
-50-->/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:26:7-38
+50-->/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:26:7-38
 51            android:theme="@style/Theme.App.SplashScreen"
-51-->/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:28:7-52
+51-->/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:28:7-52
 52            android:windowSoftInputMode="adjustResize" >
-52-->/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:27:7-49
+52-->/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:27:7-49
 53            <intent-filter>
-53-->/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:30:7-33:23
+53-->/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:30:7-33:23
 54                <action android:name="android.intent.action.MAIN" />
-54-->/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:31:9-60
-54-->/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:31:17-58
+54-->/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:31:9-60
+54-->/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:31:17-58
 55
 56                <category android:name="android.intent.category.LAUNCHER" />
-56-->/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:32:9-68
-56-->/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:32:19-66
+56-->/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:32:9-68
+56-->/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:32:19-66
 57            </intent-filter>
 58        </activity>
 59        <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
-59-->/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:35:5-81
-59-->/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:35:15-79
+59-->/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:35:5-81
+59-->/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/AndroidManifest.xml:35:15-79
 60
 61        <meta-data
-61-->[:unimodules-react-native-adapter] /Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/node_modules/@unimodules/react-native-adapter/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:12:9-14:91
+61-->[:unimodules-react-native-adapter] /Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/node_modules/@unimodules/react-native-adapter/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:12:9-14:91
 62            android:name="org.unimodules.core.AppLoader#react-native-headless"
-62-->[:unimodules-react-native-adapter] /Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/node_modules/@unimodules/react-native-adapter/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:13:13-79
+62-->[:unimodules-react-native-adapter] /Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/node_modules/@unimodules/react-native-adapter/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:13:13-79
 63            android:value="org.unimodules.adapters.react.apploader.RNHeadlessAppLoader" />
-63-->[:unimodules-react-native-adapter] /Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/node_modules/@unimodules/react-native-adapter/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:14:13-88
+63-->[:unimodules-react-native-adapter] /Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/node_modules/@unimodules/react-native-adapter/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:14:13-88
 64
 65        <provider
-65-->[:expo-file-system] /Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:25:9-34:20
+65-->[:expo-file-system] /Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:25:9-34:20
 66            android:name="expo.modules.filesystem.FileSystemFileProvider"
-66-->[:expo-file-system] /Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:26:13-74
+66-->[:expo-file-system] /Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:26:13-74
 67            android:authorities="com.safely.FileSystemFileProvider"
-67-->[:expo-file-system] /Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:27:13-74
+67-->[:expo-file-system] /Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:27:13-74
 68            android:exported="false"
-68-->[:expo-file-system] /Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:28:13-37
+68-->[:expo-file-system] /Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:28:13-37
 69            android:grantUriPermissions="true" >
-69-->[:expo-file-system] /Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:29:13-47
+69-->[:expo-file-system] /Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:29:13-47
 70            <meta-data
-70-->[:expo-file-system] /Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:31:13-33:70
+70-->[:expo-file-system] /Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:31:13-33:70
 71                android:name="android.support.FILE_PROVIDER_PATHS"
-71-->[:expo-file-system] /Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:32:17-67
+71-->[:expo-file-system] /Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:32:17-67
 72                android:resource="@xml/file_system_provider_paths" />
-72-->[:expo-file-system] /Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:33:17-67
+72-->[:expo-file-system] /Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:33:17-67
 73        </provider>
 74
 75        <service

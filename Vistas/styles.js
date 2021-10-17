@@ -50,6 +50,20 @@ export default StyleSheet.create({
       //marginTop:20,
       color:'#000',
     },
+    textBlanco:{
+      fontSize:25,
+      color:"#fff",
+    },
+    textBold:{
+      fontSize:25,
+      fontWeight:'bold'
+    },
+    textBlancoCentrado:{
+      fontSize:25,
+      color:"#fff",
+      //fontWeight:'bold',
+      textAlign:'center'
+    },
     textUnderlined:{
       fontSize:25,
       color:'#000',
@@ -85,6 +99,39 @@ export default StyleSheet.create({
     titulo:{
       fontSize:45,
       alignSelf:'center'
+    },
+    //Caja flotante blanca
+    cajaFlotante:{
+      backgroundColor:'#fff',
+      padding:"5%",
+      borderRadius:15,
+      marginBottom:15,
+    },
+    cajaFlotanteRoja:{
+      backgroundColor:'#AA3939',
+      padding:"1%",
+      //borderRadius:15,
+      marginBottom:15,
+    },
+    cajaFlotanteVerde:{
+      backgroundColor:'#338A2E',
+      padding:"1%",
+      //borderRadius:15,
+      marginBottom:15
+    },
+    alingnCenter:{
+      alignSelf:'center'
+    },
+    tablaCajaFlotante:{
+      flexDirection:'row',
+      alignContent:'center',
+      justifyContent:'flex-start',
+      padding:"3.5%"
+    },
+    dosEnUno:{
+      flexDirection:'row',
+      justifyContent:'space-around',
+      
     }
       
 });

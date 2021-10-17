@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-pl/values-pl.xml",
+            "outputFile": "/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-pl/values-pl.xml",
             "map": [
                 {
                     "source": "/Users/maxquevedo/.gradle/caches/transforms-3/c810a29ee9cc32eddbe9f435a5d40943/transformed/appcompat-1.2.0/res/values-pl/values-pl.xml",

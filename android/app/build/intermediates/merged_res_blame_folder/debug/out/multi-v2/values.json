@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml",
+            "outputFile": "/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml",
             "map": [
                 {
                     "source": "/Users/maxquevedo/.gradle/caches/transforms-3/7db69bb020a3aa89f3a40f9115464e4e/transformed/cardview-1.0.0/res/values/values.xml",
@@ -42,20 +42,20 @@
                     }
                 },
                 {
-                    "source": "/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/build/generated/res/resValues/debug/values/gradleResValues.xml",
+                    "source": "/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/res/values/strings.xml",
                     "from": {
-                        "startLines": "6,8",
-                        "startColumns": "4,4",
-                        "startOffsets": "156,262",
-                        "endColumns": "63,68",
-                        "endOffsets": "215,326"
+                        "startLines": "1",
+                        "startColumns": "4",
+                        "startOffsets": "16",
+                        "endColumns": "43",
+                        "endOffsets": "55"
                     },
                     "to": {
-                        "startLines": "645,646",
-                        "startColumns": "4,4",
-                        "startOffsets": "41118,41182",
-                        "endColumns": "63,68",
-                        "endOffsets": "41177,41246"
+                        "startLines": "681",
+                        "startColumns": "4",
+                        "startOffsets": "43637",
+                        "endColumns": "43",
+                        "endOffsets": "43676"
                     }
                 },
                 {
@@ -113,6 +113,25 @@
                         "endLines": "4540,4547,4558,6805,6810",
                         "endColumns": "24,24,24,24,24",
                         "endOffsets": "304030,304415,305012,423505,423775"
+                    }
+                },
+                {
+                    "source": "/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/res/values/styles.xml",
+                    "from": {
+                        "startLines": "1,5,10",
+                        "startColumns": "2,2,2",
+                        "startOffsets": "14,224,467",
+                        "endLines": "4,9,14",
+                        "endColumns": "10,10,10",
+                        "endOffsets": "221,464,804"
+                    },
+                    "to": {
+                        "startLines": "810,2879,3254",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "59017,195580,219930",
+                        "endLines": "813,2883,3258",
+                        "endColumns": "10,10,10",
+                        "endOffsets": "59224,195820,220267"
                     }
                 },
                 {
@@ -243,7 +262,7 @@
                     }
                 },
                 {
-                    "source": "/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/res/values/colors.xml",
+                    "source": "/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/src/main/res/values/colors.xml",
                     "from": {
                         "startLines": "3",
                         "startColumns": "2",
@@ -296,23 +315,6 @@
                     }
                 },
                 {
-                    "source": "/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/res/values/strings.xml",
-                    "from": {
-                        "startLines": "1",
-                        "startColumns": "4",
-                        "startOffsets": "16",
-                        "endColumns": "43",
-                        "endOffsets": "55"
-                    },
-                    "to": {
-                        "startLines": "681",
-                        "startColumns": "4",
-                        "startOffsets": "43637",
-                        "endColumns": "43",
-                        "endOffsets": "43676"
-                    }
-                },
-                {
                     "source": "/Users/maxquevedo/.gradle/caches/transforms-3/5a5c9211f2d7ae9e2623ff42f7580a33/transformed/recyclerview-1.1.0/res/values/values.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10",
@@ -332,22 +334,20 @@
                     }
                 },
                 {
-                    "source": "/Users/maxquevedo/Desktop/reactNative/NoMasAccidentesMovil/android/app/src/main/res/values/styles.xml",
+                    "source": "/Users/maxquevedo/Desktop/Safely/movil/NoMasAccidentesMovil/android/app/build/generated/res/resValues/debug/values/gradleResValues.xml",
                     "from": {
-                        "startLines": "1,5,10",
-                        "startColumns": "2,2,2",
-                        "startOffsets": "14,224,467",
-                        "endLines": "4,9,14",
-                        "endColumns": "10,10,10",
-                        "endOffsets": "221,464,804"
+                        "startLines": "6,8",
+                        "startColumns": "4,4",
+                        "startOffsets": "156,262",
+                        "endColumns": "63,68",
+                        "endOffsets": "215,326"
                     },
                     "to": {
-                        "startLines": "810,2879,3254",
-                        "startColumns": "4,4,4",
-                        "startOffsets": "59017,195580,219930",
-                        "endLines": "813,2883,3258",
-                        "endColumns": "10,10,10",
-                        "endOffsets": "59224,195820,220267"
+                        "startLines": "645,646",
+                        "startColumns": "4,4",
+                        "startOffsets": "41118,41182",
+                        "endColumns": "63,68",
+                        "endOffsets": "41177,41246"
                     }
                 }
             ]
