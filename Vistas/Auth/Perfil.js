@@ -14,7 +14,7 @@ class Perfil extends Component {
             correo: 'fulaniasdsto@f.com',
             nombre:'Maximiliano Quevedo',
             tipoUsuario:'',
-            editar:true,
+            editar:false,
             loading: false,
             estadoContrato:true,
             rut:'11.111.111-1',
@@ -22,14 +22,16 @@ class Perfil extends Component {
             razonSocial:'Tenemos razon',
             contraseña:'',
         }
+        this.toggleEditar = this.toggleEditar.bind(this);
     }
 
-    toggleEditar = async (editar) => {
+    toggleEditar = async (editar,correo,direccion) => {
+        console.log("correo: ",corre,)
         let corre = await AsyncStorage.getItem('email');
         //let nombre = await AsyncStorage.getItem('');
         //let rut = await AsyncStorage.getItem('rut');
         //let dir = await AsyncStorage.getItem('dir');
-        this.setState({editar:!editar,correo:corre});
+        this.setState({editar:!editar,correo:correo,direccion:direccion});
     }
 
     componentDidMount = async() => {
@@ -63,21 +65,14 @@ class Perfil extends Component {
     render() {
         const { correo,nombre,editar,loading,rut,direccion,razonSocial,contratoActivo,estadoContrato } = this.state;
         const { navigation } = this.props;
-        
+        //console.log("editar prop parent b like: ",editar);
         return (
             <View>
             {
                 editar?
                     (<ScrollView>
-                        <EditarPerfilForm/>
-                        <View style={styles.dosEnUno}>
-                            <Button title="cancelar" onPress={()=>{
-                                this.setState({editar:!editar});
-                            }} color="#AA3939"/>
-                            <Button title="aceptar" onPress={()=>{
-                                this.setState({editar:!editar});
-                            }} color="#095813"/>
-                        </View>
+                       <EditarPerfilForm editar={editar} correo={correo} navigation={navigation} direccion={direccion} actualiza={this.toggleEditar}/>
+                       <Button title="cancelar" onPress={()=>{this.setState({editar:false})}}/>
                     </ScrollView>
                     )
                 :
@@ -149,5 +144,13 @@ class Perfil extends Component {
 
 
 //ditar={editar} correo={correo} navigation={navigation} 
-
+/*<View style={styles.dosEnUno}>
+    <Button title="cancelar" onPress={()=>{
+        this.setState({editar:!editar});
+    }} color="#AA3939"/>
+    <Button title="aceptar" onPress={()=>{
+        this.setState({editar:!editar});
+    }} color="#095813"/>
+</View>
+*/
 export default Perfil;
