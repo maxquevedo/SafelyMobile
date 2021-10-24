@@ -10,7 +10,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 //import VerReportes from './Vistas/Auth/VerReportes';
 //import AsignarProfesional from './Vistas/Auth/Admin/AsignarProfesional';
 import Perfil from './Vistas/Auth/Perfil';
-//import Actividades from './Vistas/Auth/Actividades';
+import Actividades from './Vistas/Auth/Actividades';
+import Administrar from '../NoMasAccidentesMovil/Vistas/Auth/Administrar';
+
 //import Accidentes from './Vistas/Auth/Cliente/Accidentes';
 //import AsesoriaStack from './Vistas/Auth/AsesoriaStack';
 import Login from './Vistas/NoAuth/Login';
@@ -40,18 +42,32 @@ function Admin(){
       tabBarIcon: ({ focused, color, size }) => {
         let iconName;
 
-        if (route.name === 'Mantenedor') {
+        if (route.name === 'Perfil') {
           iconName = 'ios-people';
         } else if (route.name === "Asignar profesional") {
           iconName = 'ios-calendar';
         } else if(route.name === "Ver reportes"){
           iconName = focused ? 'ios-folder-open' : 'ios-folder';
+        }else if (route.name === "Actividades") {
+          iconName = 'ios-calendar';
+        }else if( route.name === "Administrar"){
+          iconName = 'people-circle-outline';
         }
 
         return <Ionicons name={iconName} size={size} color={color} />;
       },
     })}>
-      {/* <Tab.Screen name="Mantenedor" component={MantenedorAdmin} 
+      <Tab.Screen name="Perfil" component={Perfil} options={{headerTitleAlign:'center', tabBarLabel:'Perfil', headerTitle:'NombreAqui Admin'}}/>
+      <Tab.Screen name="Actividades" component={Actividades} options={{headerShown:false}}/>
+      <Tab.Screen name="Administrar" component={Administrar} options={{headerShown:false}}/>
+      <Tab.Screen name="Asignar profesional" component={Perfil} options={{headerShown:false}} />
+      {/* 
+      ver actividades
+      notificar atrasos .-> altera el estado del cliente en bd
+                            pa que cuando logee de nuevo le muestre la wea
+      generar reporte cliente
+      generar reporte global                      
+      <Tab.Screen name="Mantenedor" component={MantenedorAdmin} 
         options={{size:3 }} />
       <Tab.Screen name="Asignar profesional" component={AsignarProfesional} />
       <Tab.Screen name="Ver reportes" component={VerReportes}/> */}
@@ -78,8 +94,14 @@ function Cliente(){
         return <Ionicons name={iconName} size={size} color={color} />;
       },
     })}>
-      {/* <Tab.Screen name="Perfil" component={Perfil}/>
+      <Tab.Screen name="Perfil" component={Perfil} options={{headerTitleAlign:'center', tabBarLabel:'Perfil', headerTitle:'NombreAqui Cliente'}}/>
       <Tab.Screen name="Actividades" component={Actividades}/>
+      {/* 
+      reportar accidente
+      solicitar asesoria especial
+      chat
+      <Tab.Screen name="Perfil" component={Perfil}/>
+      
       <Tab.Screen name="Accidentes" component={Accidentes}/>
       <Tab.Screen name="Asesoria" component={AsesoriaStack}/> */}
     </Tab.Navigator>
@@ -106,7 +128,8 @@ function Profesional(){
       return <Ionicons name={iconName} size={size} color={color} />;
     },
   })}>
-    <Tab.Screen name="Perfil" component={Perfil} options={{headerTitleAlign:'center', tabBarLabel:'Perfil', headerTitle:'NombreAqui'}}/>
+    <Tab.Screen name="Perfil" component={Perfil} options={{headerTitleAlign:'center', tabBarLabel:'Perfil', headerTitle:'NombreAqui Profesional'}}/>
+    <Tab.Screen name="Actividades" component={Actividades}/>
 {
 /*<Tab.Screen name="Actividades" component={Actividades}/>
 <Tab.Screen name="Visita" component={VisitaStack}/>
@@ -116,7 +139,7 @@ function Profesional(){
 
 export default function App() {
 
-  var tipoUsuario = 'Profesional';
+  var tipoUsuario = 'Admin';
   var Autenticado = true;
   //const auth = useAuth();
 

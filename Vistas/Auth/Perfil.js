@@ -27,7 +27,7 @@ class Perfil extends Component {
 
     toggleEditar = async (editar,correo,direccion) => {
         console.log("correo: ",corre,)
-        let corre = await AsyncStorage.getItem('email');
+        //let corre = await AsyncStorage.getItem('email');
         //let nombre = await AsyncStorage.getItem('');
         //let rut = await AsyncStorage.getItem('rut');
         //let dir = await AsyncStorage.getItem('dir');
@@ -139,18 +139,6 @@ class Perfil extends Component {
             }
             </View> 
         );
+    }
 }
-}
-
-
-//ditar={editar} correo={correo} navigation={navigation} 
-/*<View style={styles.dosEnUno}>
-    <Button title="cancelar" onPress={()=>{
-        this.setState({editar:!editar});
-    }} color="#AA3939"/>
-    <Button title="aceptar" onPress={()=>{
-        this.setState({editar:!editar});
-    }} color="#095813"/>
-</View>
-*/
 export default Perfil;
