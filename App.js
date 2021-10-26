@@ -1,7 +1,7 @@
 
 import * as React from 'react';
 import { useState } from 'react';
-import { Text, View } from 'react-native';
+import { Text, TouchableWithoutFeedback, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -12,7 +12,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Perfil from './Vistas/Auth/Perfil';
 import Actividades from './Vistas/Auth/Actividades';
 import Administrar from '../NoMasAccidentesMovil/Vistas/Auth/Administrar';
-
+import Accidentes from './Vistas/Auth/Accidentes';
+import AsesoriaStack from './Vistas/Auth/AsesoriaStack';
 //import Accidentes from './Vistas/Auth/Cliente/Accidentes';
 //import AsesoriaStack from './Vistas/Auth/AsesoriaStack';
 import Login from './Vistas/NoAuth/Login';
@@ -45,7 +46,7 @@ function Admin(){
         if (route.name === 'Perfil') {
           iconName = 'ios-people';
         } else if (route.name === "Asignar profesional") {
-          iconName = 'ios-calendar';
+          iconName = 'person-add';
         } else if(route.name === "Ver reportes"){
           iconName = focused ? 'ios-folder-open' : 'ios-folder';
         }else if (route.name === "Actividades") {
@@ -61,16 +62,6 @@ function Admin(){
       <Tab.Screen name="Actividades" component={Actividades} options={{headerShown:false}}/>
       <Tab.Screen name="Administrar" component={Administrar} options={{headerShown:false}}/>
       <Tab.Screen name="Asignar profesional" component={Perfil} options={{headerShown:false}} />
-      {/* 
-      ver actividades
-      notificar atrasos .-> altera el estado del cliente en bd
-                            pa que cuando logee de nuevo le muestre la wea
-      generar reporte cliente
-      generar reporte global                      
-      <Tab.Screen name="Mantenedor" component={MantenedorAdmin} 
-        options={{size:3 }} />
-      <Tab.Screen name="Asignar profesional" component={AsignarProfesional} />
-      <Tab.Screen name="Ver reportes" component={VerReportes}/> */}
 </Tab.Navigator>
   );
 }
@@ -90,20 +81,13 @@ function Cliente(){
         } else if(route.name === "Asesoria"){
           iconName = 'ios-clipboard';
         }
-
-        return <Ionicons name={iconName} size={size} color={color} />;
+        return <Ionicons name={iconName} size={size} color={color}/>;
       },
     })}>
       <Tab.Screen name="Perfil" component={Perfil} options={{headerTitleAlign:'center', tabBarLabel:'Perfil', headerTitle:'NombreAqui Cliente'}}/>
-      <Tab.Screen name="Actividades" component={Actividades}/>
-      {/* 
-      reportar accidente
-      solicitar asesoria especial
-      chat
-      <Tab.Screen name="Perfil" component={Perfil}/>
-      
-      <Tab.Screen name="Accidentes" component={Accidentes}/>
-      <Tab.Screen name="Asesoria" component={AsesoriaStack}/> */}
+      <Tab.Screen name="Actividades" component={Actividades} options={{headerShown:false}}/>
+      <Tab.Screen name="Accidentes" component={Accidentes} options={{headerShown:false}}/>
+      <Tab.Screen name="Asesoria" component={AsesoriaStack} options={{headerShown:false}}/> 
     </Tab.Navigator>
   );
 }
@@ -114,22 +98,26 @@ function Profesional(){
       let iconName;
 
       if (route.name === 'Perfil') {
-        iconName = 'ios-person';
+        iconName = 'ios-person-outline';
       } else if (route.name === "Actividades") {
-        iconName = 'ios-calendar';
-      } else if(route.name === "Accidentes"){
-        iconName = 'ios-flame';
-      } else if(route.name === "Asesoria"){
-        iconName = 'ios-clipboard';
-      } else if(route.name==="Visita"){
-        iconName = 'ios-headset';
+        iconName = 'ios-calendar-outline';
+      } else if(route.name === "RevisarCliente"){
+        iconName = 'search-outline';
+      } else if(route.name === "Asesorias"){
+        iconName = 'ios-clipboard-outline';
+      } else if(route.name==="Visitas"){
+        iconName = 'create-outline';
       }
 
       return <Ionicons name={iconName} size={size} color={color} />;
     },
   })}>
     <Tab.Screen name="Perfil" component={Perfil} options={{headerTitleAlign:'center', tabBarLabel:'Perfil', headerTitle:'NombreAqui Profesional'}}/>
-    <Tab.Screen name="Actividades" component={Actividades}/>
+    <Tab.Screen name="RevisarCliente" component={Perfil} options={{headerShown:false}}/>
+    <Tab.Screen name="Actividades" component={Actividades} options={{headerShown:false}}/>
+    <Tab.Screen name="Visitas" component={Perfil} options={{headerShown:false}}/>
+    <Tab.Screen name="Asesorias" component={Perfil} options={{headerShown:false}}/>
+   
 {
 /*<Tab.Screen name="Actividades" component={Actividades}/>
 <Tab.Screen name="Visita" component={VisitaStack}/>
@@ -139,7 +127,7 @@ function Profesional(){
 
 export default function App() {
 
-  var tipoUsuario = 'Admin';
+  var tipoUsuario = 'Pro';
   var Autenticado = true;
   //const auth = useAuth();
 
@@ -159,27 +147,4 @@ export default function App() {
       </NavigationContainer>
     </Provider>
   );
-  // import { StatusBar } from 'expo-status-bar';
-// import React from 'react';
-// import { StyleSheet, Text, View } from 'react-native';
-
-
-// export default function App() {
-//   return (
-//     <View style={styles.container}>
-//       <Selector/>      
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-// });
-
-//  <StatusBar style="auto" /> 
 }

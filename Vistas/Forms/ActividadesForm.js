@@ -9,7 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Picker} from '@react-native-community/picker';
 // create a component
 const ActividadesForm = (props) => {
-    const isAdmin = true;
+    const isAdmin = false;
     const adminView1 = '';
     const [selectAdminView,setAdminView] = useState('');
     const asesorias = props.asesorias;
@@ -178,7 +178,7 @@ const ActividadesForm = (props) => {
                     <Text>Elegiste: {adminView1}</Text>
                 </View>
                 :
-                <Text>No</Text>
+                <Text></Text>
         }
         <View style={{}}>
           <CalendarPicker
