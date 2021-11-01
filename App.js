@@ -8,7 +8,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 //import MantenedorAdmin from './Vistas/Auth/Admin/MantenedorAdmin';
 //import VerReportes from './Vistas/Auth/VerReportes';
-//import AsignarProfesional from './Vistas/Auth/Admin/AsignarProfesional';
+import AsignarProfesional from './Vistas/Auth/AsignarProfesional';
 import Perfil from './Vistas/Auth/Perfil';
 import Actividades from './Vistas/Auth/Actividades';
 import Administrar from '../NoMasAccidentesMovil/Vistas/Auth/Administrar';
@@ -20,7 +20,7 @@ import Login from './Vistas/NoAuth/Login';
 ///import Visita from './Vistas/Auth/Profesional/Visita';
 import { Provider } from 'react-redux'
 import Store from './Store/Store';
-// import VisitaStack from './Vistas/Auth/Profesional/VisitaStack';
+import VisitaStack from './Vistas/Auth/VisitaStack';
 
 
 const Tab = createBottomTabNavigator();
@@ -61,7 +61,7 @@ function Admin(){
       <Tab.Screen name="Perfil" component={Perfil} options={{headerTitleAlign:'center', tabBarLabel:'Perfil', headerTitle:'NombreAqui Admin'}}/>
       <Tab.Screen name="Actividades" component={Actividades} options={{headerShown:false}}/>
       <Tab.Screen name="Administrar" component={Administrar} options={{headerShown:false}}/>
-      <Tab.Screen name="Asignar profesional" component={Perfil} options={{headerShown:false}} />
+      <Tab.Screen name="Asignar profesional" component={AsignarProfesional} options={{headerShown:false}} />
 </Tab.Navigator>
   );
 }
@@ -115,7 +115,7 @@ function Profesional(){
     <Tab.Screen name="Perfil" component={Perfil} options={{headerTitleAlign:'center', tabBarLabel:'Perfil', headerTitle:'NombreAqui Profesional'}}/>
     <Tab.Screen name="RevisarCliente" component={Perfil} options={{headerShown:false}}/>
     <Tab.Screen name="Actividades" component={Actividades} options={{headerShown:false}}/>
-    <Tab.Screen name="Visitas" component={Perfil} options={{headerShown:false}}/>
+    <Tab.Screen name="Visitas" component={VisitaStack} options={{headerShown:false}}/>
     <Tab.Screen name="Asesorias" component={Perfil} options={{headerShown:false}}/>
    
 {
@@ -127,7 +127,7 @@ function Profesional(){
 
 export default function App() {
 
-  var tipoUsuario = 'Pro';
+  var tipoUsuario = 'pro';
   var Autenticado = true;
   //const auth = useAuth();
 
