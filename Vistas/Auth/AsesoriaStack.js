@@ -5,15 +5,28 @@ import { createStackNavigator } from '@react-navigation/stack';
 import CanalComu from './CanalComu';
 import PropuestasMejora from './PropuestasMejora';
 import Asesorias from './Asesorias';
+import AsesoriaHome from './AsesoriaHome';
+import Capacitacion from './Capacitacion';
+import SolicitarAsesoria from './SolicitarAsesoria';
 
 // create a component
 class AsesoriaStack extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            user: 'cli',
+        }
+    }
     
     render() {
         return (
             <Stack.Navigator>
-                <Stack.Screen name="Home" component={Asesorias} options={{headerShown:false}} />
-                <Stack.Screen name="Propuestas" component={PropuestasMejora} options={{headerShown:false}}/>
+                <Stack.Screen name="Home" component={AsesoriaHome} options={{headerShown:false}}/>
+                <Stack.Screen name="Asesorias" component={Asesorias}/>
+                <Stack.Screen name="Propuestas" component={PropuestasMejora}/>
+                <Stack.Screen name="Chat" component={CanalComu} options={{}}/>
+                <Stack.Screen name="Capacitacion" component={Capacitacion} options={{}}/>
+                <Stack.Screen name="SolicitarAsesoria" component={SolicitarAsesoria} option={{}}/>
             </Stack.Navigator>
         );
     }

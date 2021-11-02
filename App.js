@@ -17,6 +17,7 @@ import AsesoriaStack from './Vistas/Auth/AsesoriaStack';
 //import Accidentes from './Vistas/Auth/Cliente/Accidentes';
 //import AsesoriaStack from './Vistas/Auth/AsesoriaStack';
 import Login from './Vistas/NoAuth/Login';
+import RevisarCliente from './Vistas/Auth/RevisarCliente';
 ///import Visita from './Vistas/Auth/Profesional/Visita';
 import { Provider } from 'react-redux'
 import Store from './Store/Store';
@@ -113,15 +114,10 @@ function Profesional(){
     },
   })}>
     <Tab.Screen name="Perfil" component={Perfil} options={{headerTitleAlign:'center', tabBarLabel:'Perfil', headerTitle:'NombreAqui Profesional'}}/>
-    <Tab.Screen name="RevisarCliente" component={Perfil} options={{headerShown:false}}/>
+    <Tab.Screen name="RevisarCliente" component={RevisarCliente} options={{headerShown:false}}/>
     <Tab.Screen name="Actividades" component={Actividades} options={{headerShown:false}}/>
     <Tab.Screen name="Visitas" component={VisitaStack} options={{headerShown:false}}/>
-    <Tab.Screen name="Asesorias" component={Perfil} options={{headerShown:false}}/>
-   
-{
-/*<Tab.Screen name="Actividades" component={Actividades}/>
-<Tab.Screen name="Visita" component={VisitaStack}/>
-<Tab.Screen name="Asesoria" component={AsesoriaStack}/> */}
+    <Tab.Screen name="Asesorias" component={AsesoriaStack} options={{headerShown:false}}/>   
 </Tab.Navigator>);
 }
 
