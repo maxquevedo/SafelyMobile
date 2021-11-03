@@ -11,7 +11,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsignarProfesional from './Vistas/Auth/AsignarProfesional';
 import Perfil from './Vistas/Auth/Perfil';
 import Actividades from './Vistas/Auth/Actividades';
-import Administrar from '../NoMasAccidentesMovil/Vistas/Auth/Administrar';
+import Administrar from './Vistas/Auth/Administrar';
 import Accidentes from './Vistas/Auth/Accidentes';
 import AsesoriaStack from './Vistas/Auth/AsesoriaStack';
 //import Accidentes from './Vistas/Auth/Cliente/Accidentes';
