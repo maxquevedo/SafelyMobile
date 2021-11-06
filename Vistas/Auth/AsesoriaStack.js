@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import CanalComu from './CanalComu';
 import PropuestasMejora from './PropuestasMejora';
-import Asesorias from './Asesorias';
+import Asesoria from './Asesoria';
 import AsesoriaHome from './AsesoriaHome';
 import Capacitacion from './Capacitacion';
 import SolicitarAsesoria from './SolicitarAsesoria';
@@ -22,7 +22,7 @@ class AsesoriaStack extends Component {
         return (
             <Stack.Navigator>
                 <Stack.Screen name="Home" component={AsesoriaHome} options={{headerShown:false}}/>
-                <Stack.Screen name="Asesorias" component={Asesorias}/>
+                <Stack.Screen name="Asesoria" component={Asesoria}/>
                 <Stack.Screen name="Propuestas" component={PropuestasMejora}/>
                 <Stack.Screen name="Chat" component={CanalComu} options={{}}/>
                 <Stack.Screen name="Capacitacion" component={Capacitacion} options={{}}/>

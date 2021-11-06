@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, Button, ActivityIndicator,FlatList,TouchableOpacity,Alert } from 'react-native';
+import { View, Text, Button, ActivityIndicator,FlatList,TouchableOpacity,Alert,TextInput,KeyboardAvoidingView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import VisitaCheckForm from '../Forms/VisitaCheckForm';
 import { Ionicons } from '@expo/vector-icons';
@@ -10,18 +10,17 @@ class Visita extends Component {
     constructor(props){
         super(props);
         this.state = {
-            n: 3,
-            aprobado: false,
             loading: false,
-            checks: [['Not ok','ok','quiza ok'],
-        ['ok','ok','oko']],
-            nombresChecks: ['hola'],
-            estadoChecks: ['ok'],
+            checks: [['Not ok','check1','quiza ok'],
+        ['ok','check2','oko']],
+            //nombresChecks: ['hola'],
+            comentarios: '',
+            estadoChecks: ['0',0],
             failedChecks: ['not ok'],
             checksFallidos: ['not ok1'],
             checksNoFallidos:['ok1'],
-            redIndexes:['0'],
-            greenIndexes:['1'],
+            redIndexes:['0','1'],
+            greenIndexes:[],
             color1: 'black',
             color2: 'black'
         }
@@ -220,6 +219,16 @@ class Visita extends Component {
                         }
                         
                         <View>
+                            <KeyboardAvoidingView style={{alignSelf:'stretch',backgroundColor:'#BABABA'}}>
+                                <TextInput
+                                    style={{textAlign:'center'}}
+                                    multiline={true}    
+                                    numberOfLines={10}
+                                    placeholder={"Detalles..."}
+                                    onChangeText={(comentarios) => this.setState({comentarios:comentarios})}
+                                    value={this.state.text}
+                                />
+                            </KeyboardAvoidingView>
                             <View>
                                 <View><Text></Text><Text></Text></View>
                                 <Button color="#095813" onPress={ ()=> this._generarInforme() } title="generar informe"/>

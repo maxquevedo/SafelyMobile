@@ -72,17 +72,17 @@ class Perfil extends Component {
                 editar?
                     (<ScrollView>
                        <EditarPerfilForm editar={editar} correo={correo} navigation={navigation} direccion={direccion} actualiza={this.toggleEditar}/>
-                       <Button title="cancelar" onPress={()=>{this.setState({editar:false})}}/>
+                       <Button title="cancelar"  color={"#edad24"} onPress={()=>{this.setState({editar:false})}}/>
                     </ScrollView>
                     )
                 :
                 (
                 <View style={{alignContent:'center'}}>
                     <View><Text></Text></View>
-                    { loading? <ActivityIndicator animating={true} color="#095813" size="large"/>:
+                    { loading? <ActivityIndicator animating={true} color={'#18ac30'} size="large"/>:
                     <View>
                         <View style={{ justifyContent:'center', alignItems:'center',marginBottom:15}}>
-                            <Button color={'#095813'}  title="Cerrar Sesion" onPress={async() => {
+                            <Button color={'#18ac30'}  title="Cerrar Sesion" onPress={async() => {
                                 await AsyncStorage.clear();
                                 this.props.navigation.reset({
                                     index:0,
@@ -120,6 +120,7 @@ class Perfil extends Component {
                         <View style={styles.FieldSeparator}></View>
                     </View>
                     {
+                        /*
                         estadoContrato ?  
                         <View style={styles.cajaFlotanteVerde}>
                             <Text style={styles.textBlancoCentrado}>Activo</Text>
@@ -127,11 +128,11 @@ class Perfil extends Component {
                         : 
                         <View style={styles.cajaFlotanteRoja}>
                             <Text style={styles.textBlancoCentrado}>No Activo</Text>
-                        </View>
+                        </View>*/
                     }
                     <Button title="Editar" onPress={()=>{
                         this.setState({editar:!editar});
-                    }} color="#095813"/>
+                    }} color="#18ac30"/>
                     </View>
                     </View>
                 }

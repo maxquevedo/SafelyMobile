@@ -58,6 +58,11 @@ export default StyleSheet.create({
       fontSize:25,
       fontWeight:'bold'
     },
+    textBoldCentrado:{
+      fontSize:25,
+      fontWeight:'bold',
+      textAlign:'center'
+    },
     textBlancoCentrado:{
       fontSize:25,
       color:"#fff",

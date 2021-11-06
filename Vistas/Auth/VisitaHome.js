@@ -14,8 +14,8 @@ class VisitaHome extends Component {
         const { navigation } = this.props;
         return (
             <View style={styles.container}>
-                <View><Button title="Tomar visita" onPress={()=>{navigation.navigate('TomarVisita')}}/></View>
-                <View><Button title="Atender visita" onPress={()=>{navigation.navigate('Visita')}}/></View>
+                <View><Button color="#18ac30" title="Tomar visita" onPress={()=>{navigation.navigate('TomarVisita')}}/></View>
+                <View><Button color="#18ac30" title="Atender visita" onPress={()=>{navigation.navigate('Visita')}}/></View>
             </View>
         );
     }º

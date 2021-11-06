@@ -101,7 +101,7 @@ const SignUpForm = (props) => {
             <KeyboardAvoidingView style={{alignSelf:'stretch'}} enabled>
                 {
                     editable? <View>
-                        <Button title="guardar" color="#095813" onPress={props.handleSubmit((values)=>{
+                        <Button title="guardar" color='#18ac30' onPress={props.handleSubmit((values)=>{
                             updateForm(editable,values,props);
                             editable = false;
                             })}

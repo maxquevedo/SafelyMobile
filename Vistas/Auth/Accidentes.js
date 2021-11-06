@@ -2,6 +2,8 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet,Button, ActivityIndicator,FlatList,TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import DialogInput from 'react-native-dialog-input';
+import styles from '../styles';
 
 // create a component
 class Accidentes extends Component {
@@ -10,8 +12,9 @@ class Accidentes extends Component {
         super(props);
         this.state = {
             loading: false,
-            accidentes: [['Not Ok','Aaaa']],
-
+            accidentes: [['Not Ok','Aaaa'],['ok','eeee','no']],
+            accidenteReportado:'',
+            showDialog:false
         }
     }
 
@@ -49,7 +52,7 @@ class Accidentes extends Component {
 
 
     render() {
-        const { loading, accidentes } = this.state;
+        const { loading, accidentes,showDialog } = this.state;
 
         return (
             <View style={{marginTop:35, flex:1}}>
@@ -60,11 +63,22 @@ class Accidentes extends Component {
                         <ActivityIndicator size="large" color="#095813"/>
                     </View>
                     :
+                    showDialog?
+
+                    <DialogInput isDialogVisible={this.state.showDialog}
+                        title={"Descripción del accidente"}
+                        message={'Wena wena'}
+                        hintInput ={"Escribe aquí..."}
+                        submitInput={ (inputText) => {this.sendInput(inputText)} }
+                        closeDialog={ () => {this.setState({showDialog:false})}}>
+                    </DialogInput>
+                    :
                     <View style={{flex:1}}>
                         <View style={{flex:0.25, flexDirection:'column',justifyContent:'space-evenly',alignSelf:'stretch',backgroundColor:'#00fff'}}>
-                            <Button title="reportar accidente" onPress={()=>{}}/>
+                            <Button color="#18ac30" title="reportar accidente" onPress={()=>{this.setState({showDialog:!showDialog})}}/>
                         </View>
                         <View stlye={{flex:0.72}}>
+                            <Text style={styles.textBoldCentrado}>Accidentes anteriores</Text>
                             <FlatList data={accidentes} renderItem={this.renderItem.bind(this)} keyExtractor={ item => item.id } />
                         </View>
                     </View>
@@ -76,13 +90,13 @@ class Accidentes extends Component {
 }
 
 // define your styles
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-});
+// const styles = StyleSheet.create({
+//     container: {
+//         flex: 1,
+//         justifyContent: 'center',
+//         alignItems: 'center'
+//     },
+// });
 
 //make this component available to the app
 export default Accidentes;

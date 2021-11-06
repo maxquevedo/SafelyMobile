@@ -1,8 +1,9 @@
 //import liraries
 import React, { Component } from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import { View, Text, StyleSheet,TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet,TouchableOpacity, Button } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import styles from '../styles';
 
 // create a component
 class SolicitarAsesoria extends Component {
@@ -34,39 +35,46 @@ class SolicitarAsesoria extends Component {
         const { fecha,show,fechaStr } = this.state;
         return (
             <View style={styles.container}>
-                <View style={{flex:1}}>
+                
                     {
                         show?
-                        <DateTimePicker 
-                            value={ fecha }
-                            mode='default'
-                            display='calendar'
-                            minimumDate={new Date()}
-                            onChange={(event,date)=>{  this.updateDate(event,date) } } 
-                        />
+                            <DateTimePicker 
+                                value={ fecha }
+                                mode='default'
+                                display='calendar'
+                                minimumDate={new Date()}
+                                onChange={
+                                    (event,date)=>{  
+                                        if(event.type === "dismissed"){
+                                            this.setState({show:false});
+                                        }else{
+                                            this.updateDate(event,date)    
+                                        }
+                                    } 
+                                } 
+                            />
                         :
-                        <View style={{flex:1}}>
-                            <Text>{fechaStr}</Text>
-                            <TouchableOpacity onPress={()=>{
-                                this.setState({show:true});
-                            }}>
-                                <Ionicons name="calendar-outline"/>
-                            </TouchableOpacity>
-                        </View>
+                            <View>
+                                <View style={{flexDirection:'row'}}>
+                                    <Text style={styles.text}>{fechaStr}</Text>
+                                    <Text>   </Text>
+                                    <TouchableOpacity onPress={()=>{
+                                        this.setState({show:true});
+                                    }}>
+                                        <Ionicons name="calendar-outline" size={31}/>
+                                    </TouchableOpacity>
+                                </View>
+                                <View>
+                                    <Text></Text>
+                                    <Button title="Solicitar asesoría" color="#18ac30" onPress={()=>{}}/>
+                                </View>
+                            </View>
                     }
-                </View>
+
             </View>
         );
     }
 }
-
-// define your styles
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-    },
-});
 
 //make this component available to the app
 export default SolicitarAsesoria;

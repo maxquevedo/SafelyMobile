@@ -12,17 +12,18 @@ class Capacitacion extends Component {
         super(props);
         this.state = {
             loading:false,
-            solicitudes:['Wena'],
-            fechaSeleccionada: new Date(),
+            solicitudes:['pendiente','ok','rechazada'],
+            fechaSeleccionada: new Date().setDate(new Date().getDate() + 15),
+            fechaFormat: new Date().getDate()+'/'+(new Date().getMonth()+1)+'/'+new Date().getFullYear(),
             tipoUsu:'Cliente',
             refreshList: false,
             showDatePicker: false,
-            asistentes:'',
+            asistentes:['Maximiliano Quevedo, Javier Ibarra'],
             materiales:'',
             capaElegida:[],
             backColor:'fff',
             selectedIndex:-1,
-            listaAsistentes:[]
+            listaAsistentes:['Maxi','Javi']
         }    
     }
 
@@ -66,7 +67,8 @@ class Capacitacion extends Component {
 
     renderItem(data){
         //console.log("Hnito que wea: ",data);
-        let fecha =new Date(data.item[6]).toLocaleDateString();
+        //let fecha =new Date(data.item[6]).toLocaleDateString();
+        let fecha = new Date().toLocaleDateString();
         let fechaFormat = fecha[3]+fecha[4]+'/'+fecha[0]+fecha[1]+'/'+fecha[6]+fecha[7];
         let backColor = "fff";
         if(data.index%2 == 0){
@@ -75,16 +77,16 @@ class Capacitacion extends Component {
         return(
             <View style= {{ backgroundColor:backColor, flexDirection:'row' }}>
                 <Text style={{fontSize: 25, paddingLeft: '5%', paddingRight:'5%'}}>{ fechaFormat }</Text>
-                <Text style={{fontSize: 25, paddingLeft:'30%'}}>{ data.item[4] }</Text>
+                <Text style={{fontSize: 25, paddingLeft:'30%'}}>{ data.item }</Text>
             </View>
         );
     }
    
     renderItemPro(data){
-        var { backColor, selectedIndex } = this.state;
+        var { backColor, selectedIndex, fechaFormat } = this.state;
         //console.log("Hnito que wea: ",data);
-        let fecha =new Date(data.item[6]).toLocaleDateString();
-        let fechaFormat = fecha[3]+fecha[4]+'/'+fecha[0]+fecha[1]+'/'+fecha[6]+fecha[7];
+        //let fecha =new Date(data.item[6]).toLocaleDateString();
+        //let fechaFormat = fecha[3]+fecha[4]+'/'+fecha[0]+fecha[1]+'/'+fecha[6]+fecha[7];
         if(data.index == selectedIndex){
             backColor= "#A3AFA2"
         }else{
@@ -92,16 +94,17 @@ class Capacitacion extends Component {
         }
         return(
             <TouchableOpacity style={{ backgroundColor:backColor, flexDirection:'row' }} onPress={()=> {
-                console.log(data.item[3]);
+                //console.log(data.item[3]);
                 this.setState({capaElegida:data.item, selectedIndex:data.index,listaAsistentes:data.item[3]})
                 }}>
                 <Text style={{fontSize: 25, paddingLeft: '5%', paddingRight:'5%'}}>{ fechaFormat }</Text>
-                <Text style={{fontSize: 25, paddingLeft:'30%'}}>{ data.item[4] }</Text>
+                <Text style={{fontSize: 25, paddingLeft:'30%'}}>{ data.item }</Text>
             </TouchableOpacity>
         );
     }
 
    async crearCapacitacion(){
+       /*
         //console.log("Entró a crearCapa");
         var { capaElegida,asistentes, materiales,listaAsistentes} = this.state;
         let idCli = await AsyncStorage.getItem("id2");
@@ -127,9 +130,11 @@ class Capacitacion extends Component {
         let respJson = await resp.json();
         this.setState({capaElegida:[],listaAsistentes:[],selectedIndex:-1,materiales:'',asistentes:''})
         this.refreshSolicitudes();
+        */
    }
 
    async rechazarCapacitacion(){
+       /*
     var { capaElegida } = this.state;
         let idSol = capaElegida[0];
         let resp = await fetch(`http://10.0.2.2:8080/rechazarCapacitacion/${idSol}`,{
@@ -140,9 +145,11 @@ class Capacitacion extends Component {
         });
         this.setState({capaElegida:[],listaAsistentes:[],selectedIndex:-1,materiales:'',asistentes:''})
         this.refreshSolicitudes();
+        */
    }
 
     async solicitarCapacitacion(){
+        /*
         let fecha = this.state.fechaSeleccionada;
         let id = await AsyncStorage.getItem("id2");
         let participantes = this.state.asistentes;
@@ -160,6 +167,7 @@ class Capacitacion extends Component {
         });
         let respJson = await resp.json();
         this.refreshSolicitudes();
+        */
     }
 
     clienteView(){
@@ -181,9 +189,16 @@ class Capacitacion extends Component {
                                                 is24Hour={true}
                                                 display="calendar"
                                                 minimumDate = { minDate }
-                                                onChange={(event,selectedDate)=>{this.setState({fechaSeleccionada:selectedDate})}}
-                                            />:
-                                            <Text></Text>
+                                                onChange={
+                                                    (event,selectedDate)=>{
+                                                        if(event.type === "dismissed"){
+                                                            this.setState({showDatePicker:!showDatePicker})
+                                                        }else{
+                                                            this.setState({fechaSeleccionada:selectedDate,showDatePicker:!showDatePicker})
+                                                        }
+                                                    }
+                                                }
+                                            />:<Text></Text>
                         }
                         <TouchableOpacity onPress={()=> {this.setState({showDatePicker:true})}}>
                             <Ionicons name="md-calendar" size={32} color={ "black"} />
@@ -201,7 +216,7 @@ class Capacitacion extends Component {
                 </KeyboardAvoidingView>
 
                 <View style={{flex:0.1}}>
-                   <Button title="Solicitar capacitacion" color="#095813" onPress={()=>{this.solicitarCapacitacion()}}/>
+                   <Button title="Solicitar capacitacion" color="#18ac30" onPress={()=>{this.solicitarCapacitacion()}}/>
                 </View>
                 <View style={{flex:0.6, marginTop:'10%'}}>
                     <View style={styles.FieldSeparator}></View>
@@ -218,7 +233,7 @@ class Capacitacion extends Component {
 
     proView(){
         const { solicitudes,refreshList,listaAsistentes,capaElegida } = this.state;
-        console.log(capaElegida);
+        //console.log(capaElegida);
         return(
             <KeyboardAvoidingView style={{flex:1}} behavior="height">
                 <KeyboardAvoidingView style={{flex:0.2, alignItems:'center'}} behavior="padding">
@@ -262,8 +277,8 @@ class Capacitacion extends Component {
     }
 
     render() {
-        const { loading, tipoUsu,showDatePicker } = this.state;
-        console.log(showDatePicker);
+        const { loading, tipoUsu } = this.state;
+        //console.log(showDatePicker);
         return (
             <View style={{flex:2}}>
                 {

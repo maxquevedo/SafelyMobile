@@ -9,9 +9,9 @@ class Actividades extends Component {
         super(props);
         this.state={
             loading:false,
-            visitas:'',
-            asesorias:'',
-            capacitaciones:''
+            visitas:[['01/11/21','26/11/21']],
+            asesorias:[['19/11/21','23/10/21']],
+            capacitaciones:[['30/11/21']]
             
         };
     }
@@ -23,11 +23,11 @@ class Actividades extends Component {
             <View style={styles.container}>
                 {
                     loading? 
-                    <ActivityIndicator size="large" color="#095813" style={{alignSelf:"center",justifyContent:'center'}}/>
+                    <ActivityIndicator size="large" color="#18ac30" style={{alignSelf:"center",justifyContent:'center'}}/>
                     :
                     <View>
                         <ActividadesForm visitas={visitas[0]} asesorias={asesorias[0]} capacitaciones={capacitaciones[0]}/>
-                        <Button title="Refrescar calendario" onPress={this.getData} color="#095813"/>
+                        <Button title="Refrescar calendario" onPress={this.getData} color="#18ac30"/>
                     </View>
             }
             </View>

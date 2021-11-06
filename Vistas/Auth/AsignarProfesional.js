@@ -50,6 +50,7 @@ class AsignarProfesional extends Component {
         this.setState({fecha:date,showDatePicker:!showDatePicker});
         //console.log("Cambiando fecha")
         */
+       this.setState({fecha:date,showDatePicker:false})
     }
 
     updatePro = async() => {
@@ -150,7 +151,7 @@ class AsignarProfesional extends Component {
                          <Picker.Item label="Asesoría" value="asesoria" />
                          <Picker.Item label="Visita" value="visita" />
                     </Picker>
-                    <Button title="Consultar" color="#095813" onPress={this.updatePro}/>
+                    <Button title="Consultar" color="#18ac30" onPress={this.updatePro}/>
                     <Text style={styles.titleForm}>Profesional</Text>
                     {
                         showPro? <View>
@@ -168,7 +169,7 @@ class AsignarProfesional extends Component {
                                  })
                             }
                         </Picker>
-                        <Button title="Asignar" color="#095813" onPress={async ()=>{
+                        <Button title="Asignar" color="#18ac30" onPress={async ()=>{
                             this.updateEvento(idCliente,idPro,fecha,evento);
                             }
                     }/>

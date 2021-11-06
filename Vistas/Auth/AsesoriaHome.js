@@ -19,7 +19,7 @@ class AsesoriaHome extends Component {
 
     async componentDidMount(){
         //this.getUsuarios();
-        AsyncStorage.getItem("tipoUsuario").then(dato => this.setState({tipoUsuario:dato}));
+        //AsyncStorage.getItem("tipoUsuario").then(dato => this.setState({tipoUsuario:dato}));
         //console.log(this.state.tipoUsuario);
     }
 
@@ -42,22 +42,28 @@ class AsesoriaHome extends Component {
         const { fecha,showDatePicker,tipoUsuario } = this.state;
         const { navigation } = this.props;
         //console.log((usuarios[0]+"{''}"));
+        console.log(tipoUsuario)
         return (
             <View style={{flex:1}}>
                 <View style={{flex:0.2}}></View>
                 <View style={{flex:0.5, justifyContent:'space-around'}}>
-                    <Button color="#095813" title="canal de comunicacion" onPress={()=>{
+                    <Button color="#18ac30" title="canal de comunicacion" onPress={()=>{
                         navigation.navigate('Chat');
                     }}/>
-                    <Button color="#095813" title="capacitacion" onPress={()=>{
+                    <Button color="#18ac30" title="capacitacion" onPress={()=>{
                         navigation.navigate('Capacitacion');
                     }}/>
-                    <Button color="#095813" title="propuestas de mejora" onPress={()=>{
+                    <Button color="#18ac30" title="propuestas de mejora" onPress={()=>{
                         navigation.navigate('Propuestas');
                     }}/>
-                    <Button color="#095813" title="solicitar asesoria" onPress={()=>{
-                        navigation.navigate('SolicitarAsesoria');
-                    }}/>
+                    {
+                        tipoUsuario == "Cliente"?
+                        <View>
+                        <Button color="#18ac30" title="solicitar asesoria" onPress={()=>{
+                            navigation.navigate('SolicitarAsesoria');
+                        }}/></View>:<Text></Text>
+                    }
+                    
                 </View>
                 <View style={{flex:0.2}}></View>
             </View>

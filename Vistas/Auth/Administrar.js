@@ -19,13 +19,13 @@ class Administrar extends Component {
                 { !loading? 
                 <View style={styles.container}>
                     <View>
-                        <Button title='Notificar atrasos' onPress={()=>{this.setState({loading:true,action:'notificarAtrasos'})}}/>
+                        <Button color="#18ac30" title='Notificar atrasos' onPress={()=>{this.setState({loading:true,action:'notificarAtrasos'})}}/>
                     </View>
                     <View>
-                        <Button title='generar reporte cliente' onPress={()=>{this.setState({loading:true,action:'reporteCli'})}}/>
+                        <Button color="#18ac30" title='generar reporte cliente' onPress={()=>{this.setState({loading:true,action:'reporteCli'})}}/>
                     </View>
                     <View>
-                        <Button title='generar reporte global' onPress={()=>{this.setState({loading:true,action:'reporteGlo'})}}/>
+                        <Button color="#18ac30" title='generar reporte global' onPress={()=>{this.setState({loading:true,action:'reporteGlo'})}}/>
                     </View>
                 </View>
                     :

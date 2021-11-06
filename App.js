@@ -84,6 +84,7 @@ function Cliente(){
         }
         return <Ionicons name={iconName} size={size} color={color}/>;
       },
+      
     })}>
       <Tab.Screen name="Perfil" component={Perfil} options={{headerTitleAlign:'center', tabBarLabel:'Perfil', headerTitle:'NombreAqui Cliente'}}/>
       <Tab.Screen name="Actividades" component={Actividades} options={{headerShown:false}}/>
@@ -123,7 +124,7 @@ function Profesional(){
 
 export default function App() {
 
-  var tipoUsuario = 'pro';
+  var tipoUsuario = 'Admin';
   var Autenticado = true;
   //const auth = useAuth();
 
