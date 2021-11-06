@@ -45,7 +45,7 @@ const ActividadesForm = (props) => {
           if(dateCompairable == asesorias[dias] || dateCompairableFull == asesorias[dias]){
             return {
               style:{
-                backgroundColor: '#988C0C',
+                backgroundColor: '#edad24',
               },
               textStyle: {
                 color: '#fff',
@@ -60,7 +60,7 @@ const ActividadesForm = (props) => {
           if(dateCompairable == capacitaciones[dias] || dateCompairableFull == capacitaciones[dias]){
             return {
               style:{
-                backgroundColor: '#17176B',
+                backgroundColor: '#24a0ed',
               },
               textStyle: {
                 color: '#fff',
@@ -74,7 +74,7 @@ const ActividadesForm = (props) => {
           if(dateCompairable == visitas[dias] || dateCompairableFull == visitas[dias]){
             return {
               style:{
-                backgroundColor: '#157D0A',
+                backgroundColor: '#18ac30',
               },
               textStyle: {
                 color: '#fff',
@@ -227,14 +227,14 @@ const ActividadesForm = (props) => {
         </View>
         <Text></Text>
         <View style={{flexDirection:'row'}}>
-            <View style={{backgroundColor:'#17176B',width:20,borderRadius:9}}></View>
+            <View style={{backgroundColor:'#24a0ed',width:20,borderRadius:9}}></View>
             <Text> Capacitacion      </Text>
 
-          <View style={{backgroundColor:'#988C0C',width:20,borderRadius:9}}></View>
+          <View style={{backgroundColor:'#edad24',width:20,borderRadius:9}}></View>
             <Text> Asesoría      </Text>
  
    
-          <View style={{backgroundColor:'#157D0A',width:20,borderRadius:9}}></View>
+          <View style={{backgroundColor:'#18ac30',width:20,borderRadius:9}}></View>
             <Text> Visita</Text>
  
         </View>
