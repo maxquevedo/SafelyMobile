@@ -14,7 +14,7 @@ class TomarVisita extends Component {
             fechaFormated: new Date().getDate()+'/'+(new Date().getMonth()+1)+'/'+new Date().getFullYear(),
             visitas: ['11/11/21','12/12/21','5/11/2021'],
             clientes: ['falabella','falabella','ripley'],
-            visitasClientes: [['5/11/2021','falabella'],['12/11/21','falabella'],['11/11/21','ripley'],['5/11/2021','paris']]
+            visitasClientes: [['6/11/2021','falabella'],['12/11/21','falabella'],['11/11/21','ripley'],['5/11/2021','paris']]
         }
     }
 

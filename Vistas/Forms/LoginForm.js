@@ -7,7 +7,7 @@ import styles from '../styles';
 import { NavigationActions } from 'react-navigation';
 
 const loggin = async (values) => {
-
+    /*
     let url = `http://10.0.2.2:8080/login/${values.username}/${values.password}` ;
     var resp = await fetch(url);
     const respJson = await resp.json();
@@ -34,7 +34,7 @@ const loggin = async (values) => {
         await AsyncStorage.setItem('tipoUsuario',respJson[0][5]);
         await AsyncStorage.setItem('id2',(respJson[0][6]).toString());
         return true;
-    }
+    }*/
 }
 
 const fieldLogin = (props) => {

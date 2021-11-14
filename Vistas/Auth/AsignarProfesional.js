@@ -20,7 +20,7 @@ class AsignarProfesional extends Component {
             profesionalElecto:'',
             loading: false,
             showDatePicker: false,
-            showPro: false,
+            showPro: true,
             idCliente: '',
             idPro:'',
         }

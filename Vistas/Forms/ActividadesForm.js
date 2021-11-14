@@ -3,7 +3,6 @@ import React, { Component,useState,useEffect } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, Button, ActivityIndicator } from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
 import { Ionicons } from '@expo/vector-icons';
-//import moment from 'moment';
 import styles from '../styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Picker} from '@react-native-community/picker';
