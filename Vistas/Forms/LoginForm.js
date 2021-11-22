@@ -69,6 +69,34 @@ const loggin = async (values) => {
                 await AsyncStorage.setItem('telefono',tel.toString());
                 await AsyncStorage.setItem('direccion',dir);
                 await AsyncStorage.setItem('idPerfil',idPerfil.toString());
+                let idName = "";
+                switch (user.groups[0]) {
+                    case 1:
+                        url = `http://${URLS['local-tarrito']}:8000/api/profesional/`;
+                        idName = "id_prof";
+                        break;
+                    case 2:
+                        url = `http://${URLS['local-tarrito']}:8000/api/cliente/`;
+                        idName = "id_cli";
+                        break;
+                    case 3:
+                        url = `http://${URLS['local-tarrito']}:8000/api/administrador/`;                        
+                        idName = "id_admin";
+                        break;
+                    default:
+                        break;
+                }
+                resp = await fetch(url);
+                respJson = await resp.json();
+                let idEspecifico = -1;
+                respJson.forEach(elem => {
+                    console.log(`elem.id_perfil =${elem.id_perfil}`,"idPerfil: ",idPerfil);
+                    if(elem.id_perfil == idPerfil ){
+                        idEspecifico = elem[idName];
+                        console.log("id = ",idEspecifico);
+                    }
+                });
+                console.log('id tipo:',tipo,'url: ',url,respJson);
             }
         }else{
             Alert.alert("Error",'Error conectando con el servidor.',[{text:'Ok'}]);

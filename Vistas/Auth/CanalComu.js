@@ -30,7 +30,7 @@ class CanalComu extends Component {
         return (
             <View style={{flex:1}}>
                 <View style={{flex:0.5}}>
-                    <FlatList data={mensajes} renderItem={this.renderItem} keyExtractor={(item,index)=> index }/>
+                    <FlatList data={mensajes} renderItem={this.renderItem} keyExtractor={(item,index)=> index.toString() }/>
                 </View>
                 <View style={{flex:0.5,justifyContent:'space-around'}}>
                     <TextInput placeholder="Mensaje..." style={{alignSelf:'stretch',backgroundColor:'#fff',justifyContent:'center'}}/>

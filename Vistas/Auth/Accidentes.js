@@ -79,7 +79,7 @@ class Accidentes extends Component {
                         </View>
                         <View stlye={{flex:0.72}}>
                             <Text style={styles.textBoldCentrado}>Accidentes anteriores</Text>
-                            <FlatList data={accidentes} renderItem={this.renderItem.bind(this)} keyExtractor={ item => item.id } />
+                            <FlatList data={accidentes} renderItem={this.renderItem.bind(this)} keyExtractor={ (item,index) => index.toString() } />
                         </View>
                     </View>
                 }

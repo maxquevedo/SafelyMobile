@@ -212,7 +212,7 @@ class Capacitacion extends Component {
                         placeholder="Asistentes aquí"
                         numberOfLines={4}
                         onChangeText={(asistentes) => this.setState({asistentes,showDatePicker:false})}
-                        value={this.state.asistentes}/>
+                        value={this.state.asistentes.toString()}/>
                 </KeyboardAvoidingView>
 
                 <View style={{flex:0.1}}>
@@ -243,7 +243,7 @@ class Capacitacion extends Component {
                         placeholder="materiales aquí"
                         numberOfLines={4}
                         onChangeText={(materiales) => this.setState({materiales})}
-                        value={this.state.materiales}/>
+                        value={this.state.materiales.toString()}/>
                 </KeyboardAvoidingView>
 
                 <KeyboardAvoidingView style={{flex:0.2, alignItems:'center'}} behavior="padding">
