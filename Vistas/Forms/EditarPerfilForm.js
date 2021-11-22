@@ -1,11 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { Component } from 'react';
+import React from 'react';
 import { View, Text, TextInput, Button, ScrollView,Alert,KeyboardAvoidingView } from 'react-native';
 import { Field, reduxForm } from 'redux-form';
 import styles from '../styles';
+import URLS from '../URLS';
 
 const fieldModiTexto = (props) => {
-   // console.log("props fieldModiTexto"+props.nm+"}: ",props);
     return(
         <View style={styles.inputForm}>
             <Text style={styles.titleForm}>{props.nm}</Text>
@@ -26,16 +26,7 @@ const fieldModiTexto = (props) => {
 };
 
 const validate = (values) =>{
-    console.log("validate values: ",values);
     const errors = {};
-    // //usuario
-    //if(!values.usuario){
-    //    errors.usuario = 'requerido';
-    // }else if(values.usuario.length < 5){
-    //     errors.usuario = 'usuario debe tener al menos 5 caracteres';
-    // }else if(values.usuario.length > 20){
-    //     errors.usuario= 'usuario debe tener menos de 20 caracteres';
-    //}
 
     //largo correo
     if(!values.correo){
@@ -45,16 +36,68 @@ const validate = (values) =>{
         errors.correo = 'correo inválido'
     }
 
-     if(!values.direccion){
+    if(!values.direccion){
         errors.direccion = 'requerido';
-     }
+    }
+
+    if(!values.telefono){
+        errors.telefono = 'requerido';
+    }else if(values.telefono.length < 8 ||
+        values.telefono.length > 8){
+        errors.telefono = 'largo incorrecto';
+    }
+    
     return errors;
 }
 
 const updateForm = async (editable,values,props) => {
-    //console.log("editable: ",editable,"values: ",values,"props: ",props);
-    //console.log("errores: ",props);
-    props.actualiza(editable,values.correo,values.direccion);
+    let json = {
+        email: values.correo,
+    };
+    let userId = await AsyncStorage.getItem('idUsuario');
+    let resp = await fetch(`http://${URLS['local-tarrito']}:8000/api/user/${userId}/`,{
+        method:'PATCH',
+        headers:{
+            'Content-Type':'application/json; charset="UTF-8"'
+        },
+        body: JSON.stringify(json)
+    });
+    let respJson = await resp.json();
+    if(respJson){
+        await AsyncStorage.removeItem('email');
+        await AsyncStorage.setItem('email',respJson.email);
+    }
+    //correo y direccion
+    json = {
+        direccion: values.direccion,
+        telefono: values.telefono
+    }
+    let idPerfil = await AsyncStorage.getItem('idPerfil');
+    resp = await fetch(`http://${URLS['local-tarrito']}:8000/api/perfil/${idPerfil}/`,{
+        method:'PATCH',
+        headers:{
+            'Content-Type':'application/json; charset="UTF-8"'
+        },
+        body: JSON.stringify(json)
+    });
+    respJson = await resp.json();
+
+    console.log(respJson);
+
+    if(respJson){
+        await AsyncStorage.removeItem('telefono');
+        await AsyncStorage.setItem('telefono',values.telefono);
+        await AsyncStorage.removeItem('direccion');
+        await AsyncStorage.setItem('direccion',values.direccion);
+    }
+
+    Alert.alert('Datos actualizados','Los datos se han actualizado correctamente',[{text:'Ok',onPress: ()=>{
+        console.log('A');
+        props.actualiza(editable);
+    }}]);
+
+    
+    //props.actualiza(editable,values.correo,values.direccion);
     // let json = {
     //     id: await AsyncStorage.getItem('id'),
     //     email: values.correo
@@ -84,15 +127,13 @@ const updateForm = async (editable,values,props) => {
 
 const SignUpForm = (props) => {
     var editable = props.editar;
-   // console.log(props);
-    //<View style={{alignItems:'stretch',justifyContent:'flex-end'}}>
-    // <Field name="usuario" component={fieldCrearCuenta} ph={props.usuario} nm="Usuario" editar={props.editar}/>
+    console.disableYellowBox = true;
     return(
         <ScrollView>
-            <ScrollView > 
-               
+            <ScrollView> 
                 <Field name="correo" component={fieldModiTexto} ph={props.correo} nm="Correo" editar={props.editar}/>
-                <Field name="direccion" component={fieldModiTexto} ph={props.direccion} nm="Direccion" editar={props.editar}/>
+                <Field name="direccion" component={fieldModiTexto} ph={props.direccion} nm="Dirección" editar={props.editar}/>
+                <Field name="telefono" component={fieldModiTexto} ph={'Nuevo teléfono sin +569'} nm="Teléfono" editar={props.editar}/>
             </ScrollView>
             <View><Text></Text></View>
             <View><Text></Text></View>

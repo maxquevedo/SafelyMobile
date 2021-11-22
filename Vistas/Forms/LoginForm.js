@@ -5,12 +5,80 @@ import { Field, reduxForm } from 'redux-form';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from '../styles';
 import { NavigationActions } from 'react-navigation';
+import URLS from '../URLS';
+
+const userGrops = {
+    1:'Profesional',
+    2:'Cliente',
+    3:'Admin'
+}
 
 const loggin = async (values) => {
+    //let url = `http://${URLS['local-android']}:8000/inicio/` ;
+    let url = `http://${URLS['local-tarrito']}:8000/inicio/`;
+    var usrnm = values.username;
+    var pwd = values.password;
+    var bdy = { 'username': usrnm,'password':pwd };
+    var user = {};
+    bdy = JSON.stringify(bdy);
+
+    var resp = await fetch(url,{
+        method:'POST',
+        //mode:'same-origin',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body: bdy
+    });
+    var respJson = await resp.json();
+    if(respJson.token){
+        await AsyncStorage.setItem('token',respJson.token);
+        //url = `http://${URLS['local-android']}:8000/api/user`;
+        url = `http://${URLS['local-tarrito']}:8000/api/user`;
+        resp = await fetch(url);
+        respJson = await resp.json();
+        if(respJson){
+            respJson.forEach(element => {
+                if(element.username === usrnm){
+                    user = element;
+                }
+            });
+            
+            let tipo = userGrops[user.groups];
+            //console.log(tipo,user.id,user.username,user.first_name,user.last_name,user.email);
+            await AsyncStorage.setItem('tipoUsuario',tipo);
+            await AsyncStorage.setItem('idUsuario',(user.id).toString());
+            await AsyncStorage.setItem('username',user.username);
+            await AsyncStorage.setItem('firstName',user.first_name);
+            await AsyncStorage.setItem('lastName',user.last_name);
+            await AsyncStorage.setItem('email',user.email);
+            url = `http://${URLS['local-tarrito']}:8000/api/perfil`;
+            resp = await fetch(url);
+            respJson = await resp.json();
+            var dir = '';
+            var tel = '';
+            var idPerfil = '';
+            if(respJson){
+                respJson.forEach(element => {
+                    if(element.id_auth_user === user.id){
+                        dir = element.direccion;
+                        tel = element.telefono;
+                        idPerfil = element.id_perfil;
+                    }
+                });
+                await AsyncStorage.setItem('telefono',tel.toString());
+                await AsyncStorage.setItem('direccion',dir);
+                await AsyncStorage.setItem('idPerfil',idPerfil.toString());
+            }
+        }else{
+            Alert.alert("Error",'Error conectando con el servidor.',[{text:'Ok'}]);
+        }
+        
+        return true;
+    }else{
+        Alert.alert('Error', 'Usuario/Contraseña incorrectos',[{text:'Ok'}]);
+    }
     /*
-    let url = `http://10.0.2.2:8080/login/${values.username}/${values.password}` ;
-    var resp = await fetch(url);
-    const respJson = await resp.json();
     const status = parseInt(respJson.code);
     if(respJson.length == 0){
         Alert.alert('Error','Usuario y/o contraseña incorrecto(s)',[{text:'Ok'}]);
@@ -127,7 +195,6 @@ const LoginForm = (props) => {
             <Button style={styles.button} title="Iniciar sesion" color="#095813" onPress={props.handleSubmit(async (values)=>{
                //-> funciona iwal props.login(values);
                let reddir = await loggin(values)
-                //console.log(values);
             })} />
         </View>
     )

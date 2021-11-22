@@ -15,63 +15,48 @@ class Perfil extends Component {
             nombre:'Maximiliano Quevedo',
             tipoUsuario:'',
             editar:false,
-            loading: false,
+            loading: true,
             estadoContrato:true,
             rut:'11.111.111-1',
             direccion:'calle uno #0001',
             razonSocial:'Tenemos razon',
             contraseña:'',
+            telefono:'000000000',
+            username:''
         }
         this.toggleEditar = this.toggleEditar.bind(this);
     }
 
-    toggleEditar = async (editar,correo,direccion) => {
-        console.log("correo: ",corre,)
-        //let corre = await AsyncStorage.getItem('email');
-        //let nombre = await AsyncStorage.getItem('');
-        //let rut = await AsyncStorage.getItem('rut');
-        //let dir = await AsyncStorage.getItem('dir');
-        this.setState({editar:!editar,correo:correo,direccion:direccion});
+    toggleEditar = async (editar) => {
+        let email = await AsyncStorage.getItem('email');
+        let direccion = await AsyncStorage.getItem('direccion');
+        let telefono = await AsyncStorage.getItem('telefono');
+        this.setState({editar:!editar,correo:email,direccion,telefono});
     }
 
     componentDidMount = async() => {
-       /* let usuario = await AsyncStorage.getItem('username');
+        let username = await AsyncStorage.getItem('username');
         let correo = await AsyncStorage.getItem('email');
         let tipoUsuario = await AsyncStorage.getItem('tipoUsuario');
-        let id2 = await AsyncStorage.getItem('id2');
-        let asociado;
-        let tipoAsociado;
-        if(tipoUsuario =="Cliente"){
-            tipoAsociado = "Profesional a cargo";
-            let resp = await fetch(`http://10.0.2.2:8080/clientes/${id2}`);
-            let respJson = await resp.json();
-            let id_pro = respJson[5];
-            resp = await fetch(`http://10.0.2.2:8080/profesionales/${id_pro}`);
-            respJson = await resp.json();
-            asociado = respJson[2]+' '+respJson[3];
-        }else{
-            tipoAsociado = "Cliente ";
-            let resp = await fetch(`http://10.0.2.2:8080/profesionales/${id2}`);
-            let respJson = await resp.json();
-            let id_cli = respJson[5];
-            resp = await fetch(`http://10.0.2.2:8080/usuarios_clientes/${id_cli}`);
-            respJson = await resp.json();
-            asociado = respJson[3];
-        }
-
-        this.setState({correo:correo,nombre:usuario,loading:false,tipoUsuario,asociado,tipoAsociado})*/
+        let apellido =  await AsyncStorage.getItem('lastName');
+        let nombre = await AsyncStorage.getItem('firstName');
+        let nombreCompleto = nombre+' '+apellido;
+        let id2 = await AsyncStorage.getItem('idUsuario');
+        let telefono = await AsyncStorage.getItem('telefono');
+        let direccion = await AsyncStorage.getItem('direccion');
+        //console.log(usuario,correo,tipoUsario,id2);
+        this.setState({correo:correo,nombre:nombreCompleto,loading:false,tipoUsuario,direccion,telefono,username})
     }
 
     render() {
-        const { correo,nombre,editar,loading,rut,direccion,razonSocial,contratoActivo,estadoContrato } = this.state;
+        const { correo,nombre,editar,loading,rut,direccion,razonSocial,contratoActivo,estadoContrato,telefono,username } = this.state;
         const { navigation } = this.props;
-        //console.log("editar prop parent b like: ",editar);
         return (
             <View>
             {
                 editar?
                     (<ScrollView>
-                       <EditarPerfilForm editar={editar} correo={correo} navigation={navigation} direccion={direccion} actualiza={this.toggleEditar}/>
+                       <EditarPerfilForm editar={editar} correo={correo} navigation={navigation} direccion={direccion} actualiza={this.toggleEditar} telefono={telefono}/>
                        <Button title="cancelar"  color={"#edad24"} onPress={()=>{this.setState({editar:false})}}/>
                     </ScrollView>
                     )
@@ -89,7 +74,7 @@ class Perfil extends Component {
                                     routes: [{
                                         name: 'Login'
                                     }]
-                                })
+                                });
                             }}/>
                         </View>
                     <View>
@@ -101,15 +86,15 @@ class Perfil extends Component {
                         </View>
                         <View style={styles.FieldSeparator}></View>
                         <View style={styles.tablaCajaFlotante}>
-                            <FontAwesome5 name={"envelope"} size={29} />                              
-                            <Text>    </Text>
-                            <Text style={styles.text}>{correo}</Text>
-                        </View>
-                        <View style={styles.FieldSeparator}></View>
-                        <View style={styles.tablaCajaFlotante}>
                             <FontAwesome5 name={"id-card"} size={29} />                              
                             <Text>&nbsp;&nbsp;</Text>
                             <Text style={styles.text}>{rut}</Text>
+                        </View>
+                        <View style={styles.FieldSeparator}></View>
+                        <View style={styles.tablaCajaFlotante}>
+                            <FontAwesome5 name={"envelope"} size={29} />                              
+                            <Text>    </Text>
+                            <Text style={styles.text}>{correo}</Text>
                         </View>
                         <View style={styles.FieldSeparator}></View>
                         <View style={styles.tablaCajaFlotante}>
@@ -117,6 +102,12 @@ class Perfil extends Component {
                             <Text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</Text>
                             <Text style={styles.text}>{direccion}</Text>
                         </View>        
+                        <View style={styles.FieldSeparator}></View>
+                        <View style={styles.tablaCajaFlotante}>
+                            <FontAwesome5 name={"phone-alt"} size={29}/>
+                            <Text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</Text>
+                            <Text style={styles.text}>{telefono}</Text>
+                        </View>
                         <View style={styles.FieldSeparator}></View>
                     </View>
                     {
