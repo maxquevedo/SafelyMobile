@@ -22,7 +22,6 @@ class Perfil extends Component {
             razonSocial:'Tenemos razon',
             contraseña:'',
             telefono:'000000000',
-            username:''
         }
         this.toggleEditar = this.toggleEditar.bind(this);
     }
