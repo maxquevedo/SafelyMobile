@@ -1,8 +1,10 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, FlatList,TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, FlatList,TouchableOpacity, ActivityIndicator } from 'react-native';
 import {Picker} from '@react-native-community/picker';
 import { Ionicons } from '@expo/vector-icons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import URLS from '../URLS';
 
 // create a component
 class RevisarCliente extends Component {
@@ -10,71 +12,146 @@ class RevisarCliente extends Component {
     constructor(props){
         super(props);
         this.state =  {
-            loading: false,
-            clienteElecto:'Falabella',
-            clientes: ['Falabella','Paris','Ripley'],
-            detallesClienteElecto:['Rut1','Direccion1','email1']
+            loading: true,
+            clienteElecto:'A',
+            detallesClienteElecto: [],
+            data: {},
         }
     }
 
-    renderItem(data){
-        var color = "white";
-        var accidente_id = data.item[0];
-        var iconName = "";
-        //var nombre = data.item[1].charAt(0).toUpperCase() +  data.item[1].slice(1);
-        var nombre = data.item + ' '+this.state.clienteElecto;
-        if(data.index%2==0){
-            color= "#A2AFA2"
-        }
-        switch (data.index) {
-            case 0:
-                iconName = "card-outline";
-                break;
-            case 1:
-                iconName = "location-outline";
-                break;
-            case 2:
-                iconName = "mail-outline";
-            default:
-                break;
-        }
-        return <View style={{flexDirection:'row'}} key={data.key}>
-            <View style={{flexDirection:'column', width:"100%", padding:35, backgroundColor:color,}}>
-                <View style={{flexDirection:'row'}}>
-                    <Ionicons name={iconName} size={35} color={'#000'} />
-                    <Text>     </Text>
-                    <Text style={{fontSize:25}}>{ nombre }</Text>  
-                </View>
-            </View>
-        </View>
+    async componentDidMount(){
+        var elegido;
+        var datosElegidos;
+        let clientes;
+        let url = `http://${URLS['api-tarrito']}/cliente`;
+        let resp = await fetch(url);
+        let respJson = await resp.json();
+        clientes = respJson;
+        //respJson = {id_cli, id_perfil, razon_social}
+        let perfiles;
+        url = `http://${URLS['api-tarrito']}/perfil/`;
+        resp = await fetch(url);
+        respJson = await resp.json();        
+        perfiles = respJson.filter((p)=>{
+                return p.tipo_perf === "3";
+        });
+        let usuarios;
+        url = `http://${URLS['api-tarrito']}/user/`;
+        resp = await fetch(url);
+        respJson = await resp.json();   
+        usuarios = respJson.filter((u)=>{
+            return u.groups[0] === 3;
+        });
+
+        var  data = {};
+        usuarios.forEach((item,index)=> {
+            var usrId = item.id;
+            var prfId;
+            var razonSocial;
+            var rut;
+            var telefono;
+            var direccion;
+            var correo = item.email;
+            for(var i =0;i<perfiles.length;i++){
+                if(usrId == perfiles[i].id_auth_user){
+                    direccion = perfiles[i].direccion;
+                    telefono = perfiles[i].telefono;
+                    rut = perfiles[i].rut;
+                    prfId = perfiles[i].id_perfil;
+                    for(var j=0;j<clientes.length;j++){
+                        if(prfId == clientes[j].id_perfil){
+                            razonSocial = clientes[j].razon_social;
+                        }
+                    }
+                }
+            }
+            data[item.username] = {
+                razonSocial,
+                rut,
+                telefono,
+                direccion,
+                correo
+            };
+
+            if(index == 0){
+                elegido = item.username;
+                datosElegidos = data[item.username];
+            }
+        })
+        this.setState({loading:false,data,clienteElegido:elegido,detallesClienteElecto:datosElegidos});
     }
+
+    componentWillUnmount(){
+        this.setState({loading:true,data:{}});
+    }
+
 
     render() {
-        const { clientes,clienteElecto, detallesClienteElecto } = this.state;
+        const { data, detallesClienteElecto,loading } = this.state;
         return (
             <View style={styles.container}>
-                <View style={{flex:0.2,marginTop:'15%'}}>
-                    <Text>Selecciona al cliente</Text>
-                    <Picker
-                        selectedValue={this.state.clienteElecto}
-                        style={{height: 50, width: 200}}
-                        onValueChange={(itemValue, itemIndex) =>
-                            this.setState({clienteElecto: itemValue})
-                        }>
-                        {
-                            this.state.clientes.map((item,key)=>{
-                                return( <Picker.Item label={item} value={item} key={key} />);
-                            })
-                        }
-                        </Picker>
-                    </View>
-                    <View style={{flex:0.8}}>
-                        <FlatList
-                            renderItem = {this.renderItem.bind(this)}
-                            data={detallesClienteElecto}
-                            keyExtractor={ (index,item) => index.toString() }
-                        />
-                    </View>
+                {
+                    loading? 
+                            <ActivityIndicator size={'large'} color={'blue'}/>
+                        :
+                        <View>
+                            <View style={{marginTop:'15%',backgroundColor:'white',alignSelf:'center'}}>
+                                <Text style={styles.text}>Selecciona al cliente</Text>
+                                <Picker
+                                    selectedValue={this.state.clienteElecto}
+                                    style={{height: 50, width: 200,padding:"10%"}}
+                                    onValueChange={(itemValue, itemIndex) =>{
+                                        this.setState({clienteElecto: itemValue,detallesClienteElecto:data[itemValue]})
+                                    }}>
+                                    {
+                                        Object.keys(data).map((item,key) => {
+                                            return(<Picker.Item label={item} value={item} key={key}/>);
+                                        })
+                                    }
+
+                                </Picker>
+                            </View>
+                            <View>
+                                <View>
+                                    <View style={{backgroundColor:'black',height:1}}></View>
+                                    <Text style={styles.centerText}>Rut</Text>
+                                    <View style={{backgroundColor:'black',height:1}}></View>
+                                    <View style={{flexDirection:'row',justifyContent:'space-between',paddingLeft:50,paddingRight:"5%",paddingBottom:"5%",paddingTop:"5%",backgroundColor:'#A2AFA2'}}>
+                                        <FontAwesome5 name={"id-card"} size={29} />                              
+                                        <Text style={styles.text}>{detallesClienteElecto.rut}</Text>
+                                    </View>
+                                    <View style={{backgroundColor:'black',height:1}}></View>
+                                    <Text style={styles.centerText}>Razón Social</Text>
+                                    <View style={{backgroundColor:'black',height:1}}></View>
+                                    <View style={{flexDirection:'row',justifyContent:'space-between',paddingLeft:50,paddingRight:"5%",paddingBottom:"5%",paddingTop:"5%"}}>
+                                        <FontAwesome5 name={"user"} size={29} />                                                                      
+                                        <Text style={styles.text}>{detallesClienteElecto.razonSocial}</Text>
+                                    </View>
+                                    <View style={{backgroundColor:'black',height:1}}></View>
+                                    <Text style={styles.centerText}>Teléfono</Text>
+                                    <View style={{backgroundColor:'black',height:1}}></View>
+                                    <View style={{flexDirection:'row',justifyContent:'space-between',paddingLeft:50,paddingRight:"5%",backgroundColor:'#A2AFA2',paddingBottom:"5%",paddingTop:"5%"}}>
+                                        <FontAwesome5 name={"phone-alt"} size={29} />                              
+                                        <Text style={styles.text}>{detallesClienteElecto.telefono}</Text>
+                                    </View>
+                                    <View style={{backgroundColor:'black',height:1}}></View>
+                                    <Text style={styles.centerText}>Correo</Text>
+                                    <View style={{backgroundColor:'black',height:1}}></View>
+                                    <View style={{flexDirection:'row',justifyContent:'space-between',paddingLeft:50,paddingRight:"5%",paddingBottom:"5%",paddingTop:"5%"}}>
+                                        <FontAwesome5 name={"envelope"} size={29} />                                                                      
+                                        <Text style={styles.text}>{detallesClienteElecto.correo}</Text>
+                                    </View>
+                                    <View style={{backgroundColor:'black',height:1}}></View>
+                                    <Text style={styles.centerText}>Dirección</Text>
+                                    <View style={{backgroundColor:'black',height:1}}></View>
+                                    <View style={{flexDirection:'row',justifyContent:'space-between',paddingLeft:50,paddingRight:"5%",backgroundColor:'#A2AFA2',paddingBottom:"5%",paddingTop:"5%"}}>
+                                        <FontAwesome5 name={"map-marker-alt"} size={29} />                              
+                                        <Text style={styles.text}>{detallesClienteElecto.direccion}</Text>
+                                    </View>
+                                </View>
+                            </View>
+                        </View>
+                    }
             </View>
         );
     }
@@ -83,11 +160,20 @@ class RevisarCliente extends Component {
 // define your styles
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        
+        justifyContent: 'space-evenly',
+        alignItems: 'stretch',
         backgroundColor: '#fff',
     },
+    text:{
+        color:'black',
+        fontSize:25,   
+    },
+    centerText:{
+        textAlign:'center',
+        textAlignVertical:'center',
+        fontWeight:'800'
+    }
 });
 
 //make this component available to the app

@@ -7,10 +7,27 @@ import styles from '../styles';
 import { NavigationActions } from 'react-navigation';
 import URLS from '../URLS';
 
+
+/*
+AsyncStorage items que se guardan: 
+    tipoUsuario,
+    idUsuario (en bd se llama id_auth_user),
+    username,
+    firstName,
+    lastName,
+    email,
+    telefono,
+    direccion,
+    idPerfil,
+    id2 (id_especifico: id_cli, id_prof, id_admin)
+*/
+
+
+
 const userGrops = {
-    1:'Profesional',
-    2:'Cliente',
-    3:'Admin'
+    1:'Admin',
+    2:'Profesional',
+    3:'Cliente',
 }
 
 const loggin = async (values) => {
@@ -45,7 +62,6 @@ const loggin = async (values) => {
             });
             
             let tipo = userGrops[user.groups];
-            //console.log(tipo,user.id,user.username,user.first_name,user.last_name,user.email);
             await AsyncStorage.setItem('tipoUsuario',tipo);
             await AsyncStorage.setItem('idUsuario',(user.id).toString());
             await AsyncStorage.setItem('username',user.username);
@@ -72,15 +88,15 @@ const loggin = async (values) => {
                 let idName = "";
                 switch (user.groups[0]) {
                     case 1:
-                        url = `http://${URLS['local-tarrito']}:8000/api/profesional/`;
+                        url = `http://${URLS['local-tarrito']}:8000/api/administrador/`;
                         idName = "id_prof";
                         break;
                     case 2:
-                        url = `http://${URLS['local-tarrito']}:8000/api/cliente/`;
+                        url = `http://${URLS['local-tarrito']}:8000/api/profesional/`;
                         idName = "id_cli";
                         break;
                     case 3:
-                        url = `http://${URLS['local-tarrito']}:8000/api/administrador/`;                        
+                        url = `http://${URLS['local-tarrito']}:8000/api/cliente/`;                        
                         idName = "id_admin";
                         break;
                     default:
@@ -90,13 +106,17 @@ const loggin = async (values) => {
                 respJson = await resp.json();
                 let idEspecifico = -1;
                 respJson.forEach(elem => {
-                    console.log(`elem.id_perfil =${elem.id_perfil}`,"idPerfil: ",idPerfil);
-                    if(elem.id_perfil == idPerfil ){
-                        idEspecifico = elem[idName];
-                        console.log("id = ",idEspecifico);
+                    if(elem.id_perfil == idPerfil){
+                        if(elem.id_admin){
+                            idEspecifico = elem.id_admin;
+                        }else if(elem.id_cli){
+                            idEspecifico = elem.id_cli;
+                        }else if(elem.id_prof){
+                            idEspecifico = elem.id_prof;
+                        }
                     }
                 });
-                console.log('id tipo:',tipo,'url: ',url,respJson);
+                await AsyncStorage.setItem('id2',idEspecifico);
             }
         }else{
             Alert.alert("Error",'Error conectando con el servidor.',[{text:'Ok'}]);
