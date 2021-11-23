@@ -1,8 +1,6 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, FlatList,TouchableOpacity, ActivityIndicator } from 'react-native';
-import {Picker} from '@react-native-community/picker';
-import { Ionicons } from '@expo/vector-icons';
+import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import URLS from '../URLS';
 

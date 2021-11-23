@@ -116,7 +116,7 @@ const loggin = async (values) => {
                         }
                     }
                 });
-                await AsyncStorage.setItem('id2',idEspecifico);
+                await AsyncStorage.setItem('id2',idEspecifico.toString());
             }
         }else{
             Alert.alert("Error",'Error conectando con el servidor.',[{text:'Ok'}]);

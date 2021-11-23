@@ -227,7 +227,7 @@ const ActividadesForm = (props) => {
         <Text></Text>
         <View style={{flexDirection:'row'}}>
             <View style={{backgroundColor:'#24a0ed',width:20,borderRadius:9}}></View>
-            <Text> Capacitacion      </Text>
+            <Text> Capacitación      </Text>
 
           <View style={{backgroundColor:'#edad24',width:20,borderRadius:9}}></View>
             <Text> Asesoría      </Text>

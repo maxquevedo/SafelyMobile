@@ -18,9 +18,7 @@ class AsesoriaHome extends Component {
     }
 
     async componentDidMount(){
-        //this.getUsuarios();
-        //AsyncStorage.getItem("tipoUsuario").then(dato => this.setState({tipoUsuario:dato}));
-        //console.log(this.state.tipoUsuario);
+        AsyncStorage.getItem('tipoUsuario').then(tipoUsuario => this.setState({tipoUsuario}));
     }
 
     updateDate = (event,date) =>{
