@@ -4,21 +4,31 @@ import { View, Text, StyleSheet,Button, ActivityIndicator,FlatList,TouchableOpac
 import { Ionicons } from '@expo/vector-icons';
 import DialogInput from 'react-native-dialog-input';
 import styles from '../styles';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import URLS from '../URLS';
+
+const auxUrl = URLS['api-tarrito'];
 
 // create a component
 class Accidentes extends Component {
-
     constructor(props){
         super(props);
         this.state = {
             loading: false,
             accidentes: [['Not Ok','Aaaa'],['ok','eeee','no']],
             accidenteReportado:'',
-            showDialog:false
+            showDialog:false,
+            idCli: -1,
+            idPro: -1,
+            descripcion:'',
         }
     }
 
     async componentDidMount(){
+        let idCli = await AsyncStorage.getItem('id2');
+        //acá se toma el cliente de la ultima actividad.
+        
+        let idPro;
         /*
         const { loading } = this.state;
         let resp = await fetch(`http://10.0.2.2:8080/accidentes/1`);

@@ -1,6 +1,5 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import CanalComu from './CanalComu';
 import PropuestasMejora from './PropuestasMejora';
@@ -8,6 +7,7 @@ import AsesoriaPulenta from './AsesoriaPulenta';
 import AsesoriaHome from './AsesoriaHome';
 import Capacitacion from './Capacitacion';
 import SolicitarAsesoria from './SolicitarAsesoria';
+import Chat from './Chat';
 
 // create a component
 class AsesoriaStack extends Component {
@@ -22,25 +22,16 @@ class AsesoriaStack extends Component {
         return (
             <Stack.Navigator>
                 <Stack.Screen name="Home" component={AsesoriaHome} options={{headerShown:false}}/>
-                <Stack.Screen name="AsesoriaPulenta" component={AsesoriaPulenta}/>
-                <Stack.Screen name="Propuestas" component={PropuestasMejora}/>
-                <Stack.Screen name="Chat" component={CanalComu} options={{}}/>
-                <Stack.Screen name="Capacitacion" component={Capacitacion} options={{}}/>
-                <Stack.Screen name="SolicitarAsesoria" component={SolicitarAsesoria} option={{}}/>
+                <Stack.Screen name="AsesoriaPulenta" component={AsesoriaPulenta}options={{headerTitle:'Asesoria pulenta'}}/>
+                <Stack.Screen name="Propuestas" component={PropuestasMejora} options={{headerTitle:'Propuestas de mejora'}}/>
+                <Stack.Screen name="VerMensajes" component={CanalComu} options={{headerTitle:'Mensajes'}}/>
+                <Stack.Screen name="Capacitacion" component={Capacitacion} options={{headerTitle:'Capacitación'}}/>
+                <Stack.Screen name="SolicitarAsesoria" component={SolicitarAsesoria} options={{headerTitle:'Solicitar Asesoría'}}/>
+                <Stack.Screen name="Chat" component={Chat} options={{}}/>
             </Stack.Navigator>
         );
     }
 }
 const Stack = createStackNavigator();
 
-// define your styles
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-});
-
-//make this component available to the app
 export default AsesoriaStack;

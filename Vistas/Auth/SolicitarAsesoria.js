@@ -1,4 +1,3 @@
-//import liraries
 import React, { Component } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { View, Text,TouchableOpacity, Button, ActivityIndicator, TextInput, Alert } from 'react-native';
@@ -8,7 +7,6 @@ import styles from '../styles';
 import URLS from '../URLS';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// create a component
 class SolicitarAsesoria extends Component {
     constructor(props){
         super(props);
@@ -19,7 +17,7 @@ class SolicitarAsesoria extends Component {
             show: false,
             descripcion:'',
             estado:'',
-            nombre:'Holi',
+            nombre:'',
             asesoriaElegida: -1,
             tipo_ase:[],
         }
@@ -56,10 +54,17 @@ class SolicitarAsesoria extends Component {
         this.setState({fechaStr:dateFormat, show:false});
     }
 
+    fechaBd(fecha){
+        let año = fecha[6]+fecha[7]+fecha[8]+fecha[9];
+        let mes = fecha[3]+fecha[4];
+        let dia = fecha[0]+fecha[1];
+        var fechaBd = año+'-'+mes+'-'+dia;
+        return fechaBd;
+    }
+
 
     solicitar = async(props) => {
-
-        const { tipo_ase,nombre,asesoriaElegida,descripcion } = this.state;
+        const { tipo_ase,nombre,asesoriaElegida,descripcion,fecha,fechaStr } = this.state;
         const { navigation } = this.props;
         let url = `http://${URLS['api-tarrito']}/asesoria/`;
         let datos = {};
@@ -68,6 +73,7 @@ class SolicitarAsesoria extends Component {
         datos.descripcion = descripcion;
         datos.estado = true;
         datos.id_tipo_ase = asesoriaElegida;
+        var desc = descripcion
         
         let resp = await fetch(url,{
            method:'POST',
@@ -77,11 +83,35 @@ class SolicitarAsesoria extends Component {
            body: JSON.stringify(datos)
         });
         let respJson = await resp.json();
-        console.log(respJson);
         if(respJson){
-            Alert.alert("Éxito","Se ha enviado la solicitud con éxito.",[{text:'Ok',onPress:()=>{
-                navigation.goBack();
-            }}]);
+            url = `http://${URLS['api-tarrito']}/activiad/`;
+            let nombre = await AsyncStorage.getItem('username');
+            nombre = 'Asesoria'+nombre;
+            let tipo_act = 2;
+            let act_extra = false;
+            let fec_estimada = this.fechaBd(fechaStr);
+            let estado = 1;
+            let id_cli = await AsyncStorage.getItem('id2');
+            let id_asesoria = respJson.id_asesoria;
+            let actividad = {
+                nombre,descripcion:desc,tipo_act,act_extra,fec_estimada,fec_ida:null,
+                estado,id_cli,id_prof:null,id_asesoria
+            };
+            //console.log("actividad: ",actividad)
+            resp = await fetch(url,{
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json; charset="UTF-8";'
+                },
+                body: JSON.stringify(actividad)
+            })
+            //console.log("actvidad stringified: ",JSON.stringify(actividad));
+            respJson = await resp.json();
+            console.log(respJson)
+            if(respJson)
+                Alert.alert("Éxito","Se ha enviado la solicitud con éxito.",[{text:'Ok',onPress:()=>{
+                    navigation.goBack();
+                }}]);
         }
     }
 
@@ -89,7 +119,6 @@ class SolicitarAsesoria extends Component {
     render() {
         const { fecha,show,fechaStr,tipo_ase,nombre,loading} = this.state;
         const { navigation } = this.props;
-        //console.log(navigation)//
         return (
             <View style={styles.container}>
                     {
@@ -167,17 +196,13 @@ class SolicitarAsesoria extends Component {
                                         }}/>
                                     </View>
                             </View>:
-                            <ActivityIndicator size="large" color="green"/>
+                            <ActivityIndicator size="large" color="#green"/>
                             }
-
-                            </View>)
-
+                        </View>)
                     }
-
             </View>
         );
     }
 }
 
-//make this component available to the app
 export default SolicitarAsesoria;
