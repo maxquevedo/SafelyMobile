@@ -1,10 +1,9 @@
-//import liraries
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import URLS from '../URLS';
+import {Picker} from '@react-native-community/picker';
 
-// create a component
 class RevisarCliente extends Component {
     
     constructor(props){
@@ -155,7 +154,6 @@ class RevisarCliente extends Component {
     }
 }
 
-// define your styles
 const styles = StyleSheet.create({
     container: {
         
@@ -170,9 +168,8 @@ const styles = StyleSheet.create({
     centerText:{
         textAlign:'center',
         textAlignVertical:'center',
-        fontWeight:'800'
+        fontWeight:'800',
     }
 });
 
-//make this component available to the app
 export default RevisarCliente;

@@ -25,6 +25,7 @@ class Capacitacion extends Component {
             backColor:'fff',
             selectedIndex:-1,
             listaAsistentes:[],
+            listaMateriales:[],
         }    
     }
 
@@ -40,52 +41,46 @@ class Capacitacion extends Component {
             var capas = respJson.filter((item)=>{
                 return item.id_cli == idCli;
             });
-            console.log(capas);
             this.setState({solicitudes:capas})
         }else{
-
-        }
-        /*
-        const {navigation} = this.props;
-        let date = this.state.fechaSeleccionada;
-        date.setDate(date.getDate()+15);
-        let tipoUsu = await AsyncStorage.getItem('tipoUsuario');
-        if(tipoUsu == 'Cliente'){
-            navigation.setOptions({ title:'Solicitar capacitación' });
-            var idCli = await AsyncStorage.getItem('id2');
-            var resp = await fetch(`http://10.0.2.2:8080/solicitudes/capacitacionCli/${idCli}`);
-            var respJson = await resp.json();
-        }else{
-            navigation.setOptions({ title:'Crear capacitación' });
             var idPro = await AsyncStorage.getItem('id2');
-            var resp = await fetch(`http://10.0.2.2:8080/solicitudes/capacitacionPro/${idPro}`);
+            var resp = await fetch(`http:${URLS['api-tarrito']}/activiad/`)
             var respJson = await resp.json();
+            var capas = respJson.filter((item)=>{
+                return ((item.idprof == null || item.idprof == idPro) && item.id_capacitacion != null);
+            });
+            resp = await fetch(`http://${URLS['api-tarrito']}/capacitacion/`)
+            respJson = await resp.json();
+            var materiales = respJson;
+            this.setState({solicitudes:capas,listaMateriales:materiales})
         }
-        //console.log(respJson);
-        this.setState({solicitudes: respJson,loading:false,tipoUsu,fechaSeleccionada:date});
-        */
     }
 
     async refreshSolicitudes(){
-        /*
         let tipoUsu = await AsyncStorage.getItem('tipoUsuario');
         if(tipoUsu == 'Cliente'){
             let idCli = await AsyncStorage.getItem('id2');
-            let resp = await fetch(`http://10.0.2.2:8080/solicitudes/capacitacionCli/${idCli}`);
+            let resp = await fetch(`http://${URLS['api-tarrito']}/activiad/`);
             var respJson = await resp.json();
+            var capas = respJson.filter((item)=>{
+                return item.id_cli == idCli;
+            });
+            this.setState({solicitudes:capas});
         }else{
             let idPro = await AsyncStorage.getItem('id2');
-            let resp = await fetch(`http://10.0.2.2:8080/solicitudes/capacitacionPro/${idPro}`);
+            let resp = await fetch(`http://${URLS['api-tarrito']}/activiad/`);
             var respJson = await resp.json();
+            let capas = respJson.filter((item)=>{
+                return ((item.idprof == null || item.idprof == idPro) && item.id_capacitacion != null);
+            });
+            resp = await fetch(`http://${URLS['api-tarrito']}/capacitacion/`);
+            respJson = await resp.json();
+            let materiales = respJson;
+            this.setState({solicitudes:capas,listaMateriales:materiales})
         }
-        this.setState({solicitudes: respJson,loading:false,showDatePicker:false,asistentes:''});
-        */
     }
 
     renderItem(data){
-        //console.log("Hnito que wea: ",data);
-        //let fecha =new Date(data.item[6]).toLocaleDateString();
-        console.log(data)
         let fecha = data.item.fec_estimada;
         let fechaF = fecha[8]+fecha[9]+'/'+fecha[5]+fecha[6]+'/'+fecha[0]+fecha[1]+fecha[2]+fecha[3]
         var estados = ['','Solicitado','Pendiente','Realizado','Cancelado'];
@@ -99,85 +94,77 @@ class Capacitacion extends Component {
             <Text style={styles.text}>{fechaF}</Text>
             <Text style={styles.text}>{estados[data.item.estado]}</Text>
         </View>)
-        /*
-        let fecha = new Date().toLocaleDateString();
-        let fechaFormat = fecha[3]+fecha[4]+'/'+fecha[0]+fecha[1]+'/'+fecha[6]+fecha[7];
-        let backColor = "fff";
-        if(data.index%2 == 0){
-            backColor= "#A2AFA2"
-        }
-        return(
-            <View style= {{ backgroundColor:backColor, flexDirection:'row' }}>
-                <Text style={{fontSize: 25, paddingLeft: '5%', paddingRight:'5%'}}>{ fechaFormat }</Text>
-                <Text style={{fontSize: 25, paddingLeft:'30%'}}>{ data.item }</Text>
-            </View>
-        );*/
     }
    
     renderItemPro(data){
-        var { backColor, selectedIndex, fechaFormat } = this.state;
-        //console.log("Hnito que wea: ",data);
-        //let fecha =new Date(data.item[6]).toLocaleDateString();
-        //let fechaFormat = fecha[3]+fecha[4]+'/'+fecha[0]+fecha[1]+'/'+fecha[6]+fecha[7];
+        var { backColor, selectedIndex, listaMateriales } = this.state;
+        let fecha = new Date(data.item.fec_estimada);
+        let dia = fecha.getDate()+1;
+        if(dia.toString().length < 2){
+            dia = '0'+dia    
+        }
+        let fechaFormateada = dia+'/'+(fecha.getMonth()+1)+'/'+fecha.getFullYear();
+        var estados = ['','Solicitado','Pendiente','Realizado','Cancelado'];
         if(data.index == selectedIndex){
             backColor= "#A3AFA2"
         }else{
             backColor= "#fff"
         }
         return(
-            <TouchableOpacity style={{ backgroundColor:backColor, flexDirection:'row' }} onPress={()=> {
-                //console.log(data.item[3]);
-                this.setState({capaElegida:data.item, selectedIndex:data.index,listaAsistentes:data.item[3]})
+            <TouchableOpacity style={{ backgroundColor:backColor, flexDirection:'row'}} onPress={()=> {
+                let id_capa = data.item.id_capacitacion;
+                let materialesSelected = listaMateriales.filter((item)=>{
+                    return item.id_capacitacion == id_capa;
+                });
+                let materiales = materialesSelected[0].materiales;
+                this.setState({capaElegida:data.item, selectedIndex:data.index,listaAsistentes:data.item.descripcion,materiales})
                 }}>
-                <Text style={{fontSize: 25, paddingLeft: '5%', paddingRight:'5%'}}>{ fechaFormat }</Text>
-                <Text style={{fontSize: 25, paddingLeft:'30%'}}>{ data.item }</Text>
+                <Text style={{fontSize: 25, paddingLeft: '5%', paddingRight:'5%'}}>{ fechaFormateada }</Text>
+                <Text style={{fontSize: 25, paddingLeft:'30%'}}>{ estados[data.item.estado] }</Text>
             </TouchableOpacity>
         );
     }
 
-   async crearCapacitacion(){
-       /*
-        //console.log("Entró a crearCapa");
+   async crearCapacitacion(data){
         var { capaElegida,asistentes, materiales,listaAsistentes} = this.state;
-        let idCli = await AsyncStorage.getItem("id2");
-        let idPro =capaElegida[2];
-        let participantes = listaAsistentes;
-        let fecha = capaElegida[6];
-        let idSol = capaElegida[0];
-        let jeison = {
-            idCli,
-            idPro,
-            fecha: (new Date(fecha)).toLocaleDateString(),
-            participantes,
-            materiales,
-            idSol
+        let idPro = await AsyncStorage.getItem('id2');
+        let fec_ida = capaElegida.fec_estimada;
+        var actividad = {
+            id_prof:idPro,fec_ida,estado:2
         }
-        let resp = await fetch(`http://10.0.2.2:8080/crearCapacitacion`,{
-            method:'POST',
-            headers: {
-                'Content-Type':'application/json; charset="UTF-8"'
+        var url = `http://${URLS['api-tarrito']}/activiad/`;
+        var resp = await fetch(url,{
+            method:'PATCH',
+            headers:{
+                'Content-Type':'application/json'
             },
-            body:JSON.stringify({jeison})
-        });
-        let respJson = await resp.json();
+            body: JSON.stringify(actividad)
+        })
+        var respJson = await resp.json();
+        console.log(respJson);
         this.setState({capaElegida:[],listaAsistentes:[],selectedIndex:-1,materiales:'',asistentes:''})
         this.refreshSolicitudes();
-        */
    }
 
    async rechazarCapacitacion(){
-       /*
-    var { capaElegida } = this.state;
-        let idSol = capaElegida[0];
-        let resp = await fetch(`http://10.0.2.2:8080/rechazarCapacitacion/${idSol}`,{
-            method:'PUT',
-            headers: {
-                'Content-Type':'application/json; charset="UTF-8"'
-            }
-        });
+        var { capaElegida,asistentes, materiales,listaAsistentes} = this.state;
+        let idPro = await AsyncStorage.getItem('id2');
+        let fec_ida = capaElegida.fec_estimada;
+        var actividad = {
+            id_prof:idPro,estado:4
+        }
+        var url = `http://${URLS['api-tarrito']}/activiad/`;
+        var resp = await fetch(url,{
+            method:'PATCH',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify(actividad)
+        })
+        var respJson = await resp.json();
+        console.log(respJson);
         this.setState({capaElegida:[],listaAsistentes:[],selectedIndex:-1,materiales:'',asistentes:''})
         this.refreshSolicitudes();
-        */
    }
 
    fechaBd(fecha){
@@ -320,35 +307,30 @@ class Capacitacion extends Component {
     }
 
     proView(){
-        const { solicitudes,refreshList,listaAsistentes,capaElegida } = this.state;
+        const { solicitudes,refreshList,listaAsistentes,capaElegida,materiales } = this.state;
         //console.log(capaElegida);
         return(
             <KeyboardAvoidingView style={{flex:1}} behavior="height">
                 <KeyboardAvoidingView style={{flex:0.2, alignItems:'center'}} behavior="padding">
                     <Text style={{fontSize:25}}>Materiales</Text>
-                    <TextInput
-                        multiline={true}
-                        placeholder="materiales aquí"
-                        numberOfLines={4}
-                        onChangeText={(materiales) => this.setState({materiales})}
-                        value={this.state.materiales.toString()}/>
+                    <View style={styles.FieldSeparator}></View>
+                    <Text style={styles.centerText}>{materiales}</Text>
                 </KeyboardAvoidingView>
 
                 <KeyboardAvoidingView style={{flex:0.2, alignItems:'center'}} behavior="padding">
-                <ScrollView >
                     <Text style={{fontSize:25}}>Asistentes</Text>
-                    <Text>{listaAsistentes}</Text>
-                </ScrollView>
+                    <View style={styles.FieldSeparator}></View>
+                    <Text style={styles.centerText}>{listaAsistentes}</Text>
                 </KeyboardAvoidingView>
 
                 <KeyboardAvoidingView style={{flex:0.1}}>
                     {
-                        capaElegida[4] == 'enviada'? <Button title="Confirmar capacitacion" color="#095813" onPress={ ()=> {this.crearCapacitacion()}}/>:<Text></Text>
+                        capaElegida.estado == 1? <Button title="Confirmar capacitacion" color="green" onPress={ ()=> {this.crearCapacitacion()}}/>:<Text></Text>
                     }
                 </KeyboardAvoidingView>
                 <View style={{flex:0.1}}>
                     {
-                        capaElegida[4] == 'enviada'?<Button title="Rechazar capacitacion" color="#095813" onPress={ ()=> {this.rechazarCapacitacion()}}/>:<Text></Text>
+                        capaElegida.estado == 1?<Button title="Rechazar capacitacion" color="red" onPress={ ()=> {this.rechazarCapacitacion()}}/>:<Text></Text>
                     }                    
                 </View>
                 <KeyboardAvoidingView style={{flex:0.4}}>
@@ -358,7 +340,7 @@ class Capacitacion extends Component {
                         <Text style={{fontSize: 25, paddingLeft:'15%'}}>Estado</Text>
                     </View>
                     <View style={styles.FieldSeparator}></View>
-                    <FlatList data={['Hola']} refreshing={refreshList} onRefresh={this.refreshSolicitudes.bind(this)} renderItem={this.renderItemPro.bind(this)} keyExtractor={(item,index)=> index.toString() }/>
+                    <FlatList data={solicitudes} refreshing={refreshList} onRefresh={this.refreshSolicitudes.bind(this)} renderItem={this.renderItemPro.bind(this)} keyExtractor={(item,index)=> index.toString() }/>
                 </KeyboardAvoidingView>
             </KeyboardAvoidingView>
         );
