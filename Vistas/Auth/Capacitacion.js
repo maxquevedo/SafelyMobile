@@ -32,7 +32,7 @@ class Capacitacion extends Component {
     async componentDidMount(){
         const { navigation } = this.props;
         let tipoUsu = await AsyncStorage.getItem('tipoUsuario')
-        this.setState({tipoUsu});
+        //this.setState({tipoUsu});
         if(tipoUsu == 'Cliente'){
             navigation.setOptions({ title:'Solicitar capacitación' });
             var idCli = await AsyncStorage.getItem('id2');
@@ -41,7 +41,7 @@ class Capacitacion extends Component {
             var capas = respJson.filter((item)=>{
                 return item.id_cli == idCli;
             });
-            this.setState({solicitudes:capas})
+            this.setState({solicitudes:capas,tipoUsu})
         }else{
             var idPro = await AsyncStorage.getItem('id2');
             var resp = await fetch(`http:${URLS['api-tarrito']}/activiad/`)
@@ -52,7 +52,7 @@ class Capacitacion extends Component {
             resp = await fetch(`http://${URLS['api-tarrito']}/capacitacion/`)
             respJson = await resp.json();
             var materiales = respJson;
-            this.setState({solicitudes:capas,listaMateriales:materiales})
+            this.setState({solicitudes:capas,listaMateriales:materiales,tipoUsu})
         }
     }
 
@@ -85,6 +85,7 @@ class Capacitacion extends Component {
         let fechaF = fecha[8]+fecha[9]+'/'+fecha[5]+fecha[6]+'/'+fecha[0]+fecha[1]+fecha[2]+fecha[3]
         var estados = ['','Solicitado','Pendiente','Realizado','Cancelado'];
         var color = 'fff';
+        console.log(data);
         if(data.index%2 === 0){
             color = '#A2AFA2';
         }
@@ -111,7 +112,7 @@ class Capacitacion extends Component {
             backColor= "#fff"
         }
         return(
-            <TouchableOpacity style={{ backgroundColor:backColor, flexDirection:'row'}} onPress={()=> {
+            <TouchableOpacity style={{ backgroundColor:backColor, flexDirection:'row',justifyContent:'space-around'}} onPress={()=> {
                 let id_capa = data.item.id_capacitacion;
                 let materialesSelected = listaMateriales.filter((item)=>{
                     return item.id_capacitacion == id_capa;
@@ -119,8 +120,8 @@ class Capacitacion extends Component {
                 let materiales = materialesSelected[0].materiales;
                 this.setState({capaElegida:data.item, selectedIndex:data.index,listaAsistentes:data.item.descripcion,materiales})
                 }}>
-                <Text style={{fontSize: 25, paddingLeft: '5%', paddingRight:'5%'}}>{ fechaFormateada }</Text>
-                <Text style={{fontSize: 25, paddingLeft:'30%'}}>{ estados[data.item.estado] }</Text>
+                <Text style={styles.text}>{ fechaFormateada }</Text>
+                <Text style={styles.text}>{ estados[data.item.estado] }</Text>
             </TouchableOpacity>
         );
     }
@@ -132,7 +133,7 @@ class Capacitacion extends Component {
         var actividad = {
             id_prof:idPro,fec_ida,estado:2
         }
-        var url = `http://${URLS['api-tarrito']}/activiad/`;
+        var url = `http://${URLS['api-tarrito']}/activiad/${capaElegida.id_actividad}/`;
         var resp = await fetch(url,{
             method:'PATCH',
             headers:{
@@ -149,11 +150,11 @@ class Capacitacion extends Component {
    async rechazarCapacitacion(){
         var { capaElegida,asistentes, materiales,listaAsistentes} = this.state;
         let idPro = await AsyncStorage.getItem('id2');
-        let fec_ida = capaElegida.fec_estimada;
+        console.log(capaElegida);
         var actividad = {
             id_prof:idPro,estado:4
         }
-        var url = `http://${URLS['api-tarrito']}/activiad/`;
+        var url = `http://${URLS['api-tarrito']}/activiad/${capaElegida.id_actividad}/`;
         var resp = await fetch(url,{
             method:'PATCH',
             headers:{
@@ -299,7 +300,7 @@ class Capacitacion extends Component {
                                 <Text style={{fontSize: 25, paddingLeft:'15%'}}>Estado</Text>
                             </View>
                             <View style={styles.FieldSeparator}></View>
-                            <FlatList data={solicitudes} renderItem={this.renderItem.bind(this)} keyExtractor={(item,index)=>{index.toString()}}/>
+                            <FlatList data={solicitudes} renderItem={this.renderItem.bind(this)} keyExtractor={(item,index) => '0aB'+index.toString()}/>
                     </View>
                 </View>
             </View>
