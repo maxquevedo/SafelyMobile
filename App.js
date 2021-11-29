@@ -23,7 +23,6 @@ import { Provider } from 'react-redux'
 import Store from './Store/Store';
 import VisitaStack from './Vistas/Auth/VisitaStack';
 
-
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -59,7 +58,7 @@ function Admin(){
         return <Ionicons name={iconName} size={size} color={color} />;
       },
     })}>
-      <Tab.Screen name="Perfil" component={Perfil} options={{headerTitleAlign:'center', tabBarLabel:'Perfil', headerTitle:'NombreAqui Admin'}}/>
+      <Tab.Screen name="Perfil" component={Perfil} options={{headerTitleAlign:'center', tabBarLabel:'Perfil', headerTitle:`Admin`}}/>
       <Tab.Screen name="Actividades" component={Actividades} options={{headerShown:false}}/>
       <Tab.Screen name="Administrar" component={Administrar} options={{headerShown:false}}/>
       <Tab.Screen name="Asignar profesional" component={AsignarProfesional} options={{headerShown:false}} />
@@ -86,7 +85,7 @@ function Cliente(){
       },
       
     })}>
-      <Tab.Screen name="Perfil" component={Perfil} options={{headerTitleAlign:'center', tabBarLabel:'Perfil', headerTitle:'NombreAqui Cliente'}}/>
+      <Tab.Screen name="Perfil" component={Perfil} options={{headerTitleAlign:'center', tabBarLabel:'Perfil', headerTitle:'Cliente'}}/>
       <Tab.Screen name="Actividades" component={Actividades} options={{headerShown:false}}/>
       <Tab.Screen name="Accidentes" component={Accidentes} options={{headerShown:false}}/>
       <Tab.Screen name="Asesoria" component={AsesoriaStack} options={{headerShown:false}}/> 
@@ -114,7 +113,7 @@ function Profesional(){
       return <Ionicons name={iconName} size={size} color={color} />;
     },
   })}>
-    <Tab.Screen name="Perfil" component={Perfil} options={{headerTitleAlign:'center', tabBarLabel:'Perfil', headerTitle:'NombreAqui Profesional'}}/>
+    <Tab.Screen name="Perfil" component={Perfil} options={{headerTitleAlign:'center', tabBarLabel:'Perfil', headerTitle:'Profesional'}}/>
     <Tab.Screen name="RevisarCliente" component={RevisarCliente} options={{headerShown:false}}/>
     <Tab.Screen name="Actividades" component={Actividades} options={{headerShown:false}}/>
     <Tab.Screen name="Visitas" component={VisitaStack} options={{headerShown:false}}/>
@@ -124,9 +123,8 @@ function Profesional(){
 
 export default function App() {
 
-  var tipoUsuario = 'Admin';
-  var Autenticado = true;
-  //const auth = useAuth();
+  var tipoUsuario = 'Cliente';
+  var Autenticado = false;
 
   return (
     <Provider store={Store}>

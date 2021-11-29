@@ -1,19 +1,47 @@
-//import liraries
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { Component } from 'react';
 import { View, ActivityIndicator, StyleSheet, Button } from 'react-native';
 import ActividadesForm from '../Forms/ActividadesForm';
+import URLS from '../URLS';
 
-// create a component
 class Actividades extends Component {
     constructor(props){
         super(props);
         this.state={
-            loading:false,
-            visitas:[['01/11/21','26/11/21']],
-            asesorias:[['19/11/21','23/10/21']],
-            capacitaciones:[['30/11/21']]
-            
+            loading:true,
+            visitas:null,
+            asesorias:null,
+            capacitaciones:null
         };
+    }
+
+    async componentDidMount(){
+        let tipoUsuario = await AsyncStorage.getItem('tipoUsuario');
+        let id2 = await AsyncStorage.getItem('id2');
+        let url = `http://${URLS['api-tarrito']}/activiad/`;
+        let resp = await fetch(url);
+        let respJson = await resp.json();
+        var filtrado;
+        if(tipoUsuario === "Cliente"){
+            filtrado = respJson.filter((item)=>{
+                return item.id_cli == id2;
+            });
+        }else if(tipoUsuario === "Profesional"){
+            filtrado = respJson.filter((item)=>{
+                return item.id_prof == id2;
+            });
+        }
+        var visitas = filtrado.filter((item)=>{
+            return item.tipo_act == 3
+        });
+        var asesorias = filtrado.filter((item)=>{
+            return item.tipo_act == 2
+        });
+        var capacitaciones = filtrado.filter((item)=>{
+            return item.tipo_act == 1
+        });
+        this.setState({visitas,asesorias,capacitaciones,loading:false})
+        console.log("visitas en la clase: ",visitas);
     }
 
 
@@ -26,7 +54,7 @@ class Actividades extends Component {
                     <ActivityIndicator size="large" color="#18ac30" style={{alignSelf:"center",justifyContent:'center'}}/>
                     :
                     <View>
-                        <ActividadesForm visitas={visitas[0]} asesorias={asesorias[0]} capacitaciones={capacitaciones[0]}/>
+                        <ActividadesForm visitas={visitas} asesorias={asesorias} capacitaciones={capacitaciones}/>
                         <Button title="Refrescar calendario" onPress={this.getData} color="#18ac30"/>
                     </View>
             }
@@ -35,7 +63,6 @@ class Actividades extends Component {
     }
 }
 
-// define your styles
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -45,5 +72,4 @@ const styles = StyleSheet.create({
     },
 });
 
-//make this component available to the app
 export default Actividades;

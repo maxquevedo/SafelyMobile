@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet,TextInput,Button,FlatList } from 'react-native';
+import { View, Text, StyleSheet,TextInput,Button,FlatList, TouchableOpacity } from 'react-native';
 import styles from '../styles';
 
 // create a component
@@ -8,34 +8,42 @@ class CanalComu extends Component {
     constructor(props){
         super(props);
         this.state = {
-            mensajes: ['Buenos días, hoy toca asesoria','Buenos días, voy en camino'],
-
+            //username, idCliente, idPerfil, idUsuario
+            usuariosDelChat:[['Juanito','1','1','1'],['Mauricio','1','1','1']]
         }
-    }
-
-    renderItem = (data) => {
-        let  color ="white";
-        if(data.index%2==0){
-            color="#A2AFA2"
-        }
-        return(
-            <View style={{flex:1,alignContent:'center',justifyContent:'center',backgroundColor:color}}>
-                <Text style={styles.text}>{data.item}</Text>
-            </View>
-        );
     }
 
     render() {
-        const { mensajes } = this.state;
+        const { usuariosDelChat } = this.state;
+        const { navigation } = this.props;
         return (
-            <View style={{flex:1}}>
-                <View style={{flex:0.5}}>
-                    <FlatList data={mensajes} renderItem={this.renderItem} keyExtractor={(item,index)=> index }/>
-                </View>
-                <View style={{flex:0.5,justifyContent:'space-around'}}>
-                    <TextInput placeholder="Mensaje..." style={{alignSelf:'stretch',backgroundColor:'#fff',justifyContent:'center'}}/>
-                    <Button color="#095813" title="Enviar" onPress={()=>{}}/>
-                </View>
+            <View style={{ justifyContent: 'space-evenly', alignItems: 'stretch', backgroundColor: '#fff',}}>
+                {
+                    usuariosDelChat.length > 0 ?
+                    <View>
+                        {
+                        usuariosDelChat.map((item,index)=>{
+                            //console.log(item)
+                            return(
+                            <View key={index}>
+                                <TouchableOpacity style={{padding:20,flexDirection:'row',justifyContent:'space-between',alignSelf:'stretch'}} onPress={(data)=>{
+                                    //console.log("ITEM: ",item,"DATA: ",data);
+                                    navigation.navigate("Chat");
+                                    
+                                }}>
+                                    <Text>{item[0]}</Text>
+                                    <Text>icono aqui  </Text>
+                                </TouchableOpacity>
+                            </View>
+                            );
+                        })
+                        }
+                    </View>
+                    :
+                    <View style={styles.centerText}>
+                        <Text style={styles.text}>No hay chats disponibles...</Text>
+                    </View>
+                }
             </View>
         );
     }

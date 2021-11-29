@@ -1,4 +1,3 @@
-//import liraries
 import React, { Component,useState,useEffect } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, Button, ActivityIndicator } from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
@@ -6,8 +5,10 @@ import { Ionicons } from '@expo/vector-icons';
 import styles from '../styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Picker} from '@react-native-community/picker';
-// create a component
+import Helper from "../../Store/Helper";
+
 const ActividadesForm = (props) => {
+  console.log("visitas en el form: ",props.visitas);
     const isAdmin = false;
     const adminView1 = '';
     const [selectAdminView,setAdminView] = useState('');
@@ -37,11 +38,10 @@ const ActividadesForm = (props) => {
           month = '0' + month;
         } 
         let dateCompairable = day+'/'+(month)+'/'+year;
-
         let dateCompairableFull = day+'/'+(month)+'/'+deit.getFullYear();
 
         for( dias in asesorias){
-          if(dateCompairable == asesorias[dias] || dateCompairableFull == asesorias[dias]){
+          if(dateCompairable == Helper.bdDateToChileDate(asesorias[dias].fec_estimada) || dateCompairableFull == Helper.bdDateToChileDate(asesorias[dias].fec_estimada)){
             return {
               style:{
                 backgroundColor: '#edad24',
@@ -56,7 +56,7 @@ const ActividadesForm = (props) => {
   
         for(dias in capacitaciones){
           //console.log("dateCompairable: "+dateCompairable,"capacitaciones[dias]: "+capacitaciones[dias]);
-          if(dateCompairable == capacitaciones[dias] || dateCompairableFull == capacitaciones[dias]){
+          if(dateCompairable == Helper.bdDateToChileDate(capacitaciones[dias].fec_estimada) || Helper.bdDateToChileDate(dateCompairableFull == capacitaciones[dias].fec_estimada)){
             return {
               style:{
                 backgroundColor: '#24a0ed',
@@ -70,7 +70,7 @@ const ActividadesForm = (props) => {
         }
   
         for(dias in visitas){
-          if(dateCompairable == visitas[dias] || dateCompairableFull == visitas[dias]){
+          if(dateCompairable == Helper.bdDateToChileDate(visitas[dias].fec_estimada) || dateCompairableFull == Helper.bdDateToChileDate(visitas[dias].fec_estimada)){
             return {
               style:{
                 backgroundColor: '#18ac30',
@@ -227,7 +227,7 @@ const ActividadesForm = (props) => {
         <Text></Text>
         <View style={{flexDirection:'row'}}>
             <View style={{backgroundColor:'#24a0ed',width:20,borderRadius:9}}></View>
-            <Text> Capacitacion      </Text>
+            <Text> Capacitación      </Text>
 
           <View style={{backgroundColor:'#edad24',width:20,borderRadius:9}}></View>
             <Text> Asesoría      </Text>

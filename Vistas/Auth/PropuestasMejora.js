@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet,TouchableOpacity } from 'react-native';
 import styles from '../styles';
 import { Ionicons } from '@expo/vector-icons'; 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // create a component
 class PropuestasMejora extends Component {
@@ -15,6 +16,12 @@ class PropuestasMejora extends Component {
             tipoUsuario:'Cliente'
         }
     }
+
+    async componentDidMount(){
+        let tipoUsuario = await AsyncStorage.getItem("tipoUsuario");
+        this.setState({tipoUsuario});
+    }
+
 
     changeCheckState = (item,action) => {
         const { estadoPropuestas, propuestas } = this.state;
