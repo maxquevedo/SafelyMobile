@@ -2,6 +2,7 @@
   "expo": {
     "name": "Safely",
     "slug": "Safely",
+    "icon":"favicon/favicon-32x32.png",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"

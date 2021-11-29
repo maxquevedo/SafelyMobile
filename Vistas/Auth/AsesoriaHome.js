@@ -24,11 +24,7 @@ class AsesoriaHome extends Component {
         const { navigation } = this.props;
         return (
             <View style={{flex:1}}>
-                <View style={{flex:0.2}}></View>
-                <View style={{flex:0.5, justifyContent:'space-around'}}>
-                    <Button color="#18ac30" title="canal de comunicacion" onPress={()=>{
-                        navigation.navigate('VerMensajes');
-                    }}/>
+                <View style={{flex:1,justifyContent:'space-evenly'}}>
                     <Button color="#18ac30" title="capacitacion" onPress={()=>{
                         navigation.navigate('Capacitacion');
                     }}/>
@@ -42,9 +38,7 @@ class AsesoriaHome extends Component {
                             navigation.navigate('SolicitarAsesoria');
                         }}/></View>:<Text></Text>
                     }
-                    
                 </View>
-                <View style={{flex:0.2}}></View>
             </View>
         );
     }

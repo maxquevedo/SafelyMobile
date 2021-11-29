@@ -1,10 +1,9 @@
 
-import React, { Component } from 'react';
+import React from 'react';
 import { View, Text, TextInput, Button,KeyboardAvoidingView,Alert } from 'react-native';
 import { Field, reduxForm } from 'redux-form';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from '../styles';
-import { NavigationActions } from 'react-navigation';
 import URLS from '../URLS';
 
 

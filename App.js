@@ -125,7 +125,6 @@ export default function App() {
 
   var tipoUsuario = 'Cliente';
   var Autenticado = false;
-  //const auth = useAuth();
 
   return (
     <Provider store={Store}>
