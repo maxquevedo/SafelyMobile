@@ -76,7 +76,7 @@ function Cliente(){
         } else if(route.name === "Accidentes"){
           iconName = 'ios-flame';
         } else if(route.name === "Asesoria"){
-          iconName = 'ios-clipboard';
+          iconName = 'menu';
         }
         return <Ionicons name={iconName} size={size} color={color}/>;
       },
@@ -85,7 +85,7 @@ function Cliente(){
       <Tab.Screen name="Perfil" component={Perfil} options={{headerTitleAlign:'center', tabBarLabel:'Perfil', headerTitle:'Cliente'}}/>
       <Tab.Screen name="Actividades" component={Actividades} options={{headerShown:false}}/>
       <Tab.Screen name="Accidentes" component={Accidentes} options={{headerShown:false}}/>
-      <Tab.Screen name="Asesoria" component={AsesoriaStack} options={{headerShown:false}}/> 
+      <Tab.Screen name="Asesoria" component={AsesoriaStack} options={{headerShown:false , tabBarLabel:'Menú'}}/> 
     </Tab.Navigator>
   );
 }
@@ -102,7 +102,7 @@ function Profesional(){
       } else if(route.name === "RevisarCliente"){
         iconName = 'search-outline';
       } else if(route.name === "Asesorias"){
-        iconName = 'ios-clipboard-outline';
+        iconName = 'menu';
       } else if(route.name==="Visitas"){
         iconName = 'create-outline';
       }
@@ -114,7 +114,7 @@ function Profesional(){
     <Tab.Screen name="RevisarCliente" component={RevisarCliente} options={{headerShown:false}}/>
     <Tab.Screen name="Actividades" component={Actividades} options={{headerShown:false}}/>
     <Tab.Screen name="Visitas" component={VisitaStack} options={{headerShown:false}}/>
-    <Tab.Screen name="Asesorias" component={AsesoriaStack} options={{headerShown:false}}/>   
+    <Tab.Screen name="Asesorias" component={AsesoriaStack} options={{headerShown:false, tabBarLabel:'Menú'}}/>   
 </Tab.Navigator>);
 }
 
