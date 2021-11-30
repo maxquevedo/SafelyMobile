@@ -51,8 +51,6 @@ function Admin(){
           iconName = focused ? 'ios-folder-open' : 'ios-folder';
         }else if (route.name === "Actividades") {
           iconName = 'ios-calendar';
-        }else if( route.name === "Administrar"){
-          iconName = 'people-circle-outline';
         }
 
         return <Ionicons name={iconName} size={size} color={color} />;
@@ -60,7 +58,6 @@ function Admin(){
     })}>
       <Tab.Screen name="Perfil" component={Perfil} options={{headerTitleAlign:'center', tabBarLabel:'Perfil', headerTitle:`Admin`}}/>
       <Tab.Screen name="Actividades" component={Actividades} options={{headerShown:false}}/>
-      <Tab.Screen name="Administrar" component={Administrar} options={{headerShown:false}}/>
       <Tab.Screen name="Asignar profesional" component={AsignarProfesional} options={{headerShown:false}} />
 </Tab.Navigator>
   );
