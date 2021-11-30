@@ -26,27 +26,99 @@ class Actividades extends Component {
             filtrado = respJson.filter((item)=>{
                 return item.id_cli == id2;
             });
+            var visitas = filtrado.filter((item)=>{
+                return item.tipo_act == 3
+            });
+            var asesorias = filtrado.filter((item)=>{
+                return item.tipo_act == 2
+            });
+            var capacitaciones = filtrado.filter((item)=>{
+                return item.tipo_act == 1
+            });
+            this.setState({visitas,asesorias,capacitaciones,loading:false})
         }else if(tipoUsuario === "Profesional"){
             filtrado = respJson.filter((item)=>{
                 return item.id_prof == id2;
             });
+            var visitas = filtrado.filter((item)=>{
+                return item.tipo_act == 3
+            });
+            var asesorias = filtrado.filter((item)=>{
+                return item.tipo_act == 2
+            });
+            var capacitaciones = filtrado.filter((item)=>{
+                return item.tipo_act == 1
+            });
+            this.setState({visitas,asesorias,capacitaciones,loading:false})
+        }else if(tipoUsuario === "Admin"){
+
+            var visitas = respJson.filter((item)=>{
+                return item.tipo_act == 3
+            });
+            var asesorias = respJson.filter((item)=>{
+                return item.tipo_act == 2
+            });
+            var capacitaciones = respJson.filter((item)=>{
+                return item.tipo_act == 1
+            });
+            this.setState({visitas,asesorias,capacitaciones,loading:false})
         }
-        var visitas = filtrado.filter((item)=>{
-            return item.tipo_act == 3
-        });
-        var asesorias = filtrado.filter((item)=>{
-            return item.tipo_act == 2
-        });
-        var capacitaciones = filtrado.filter((item)=>{
-            return item.tipo_act == 1
-        });
-        this.setState({visitas,asesorias,capacitaciones,loading:false})
-        console.log("visitas en la clase: ",visitas);
+        //console.log("visitas en la clase: ",visitas);
     }
 
+    getData = async ()=> {
+        let tipoUsuario = await AsyncStorage.getItem('tipoUsuario');
+        let id2 = await AsyncStorage.getItem('id2');
+        let url = `http://${URLS['api-tarrito']}/activiad/`;
+        let resp = await fetch(url);
+        let respJson = await resp.json();
+        var filtrado;
+        if(tipoUsuario === "Cliente"){
+            filtrado = respJson.filter((item)=>{
+                return item.id_cli == id2;
+            });
+            var visitas = filtrado.filter((item)=>{
+                return item.tipo_act == 3
+            });
+            var asesorias = filtrado.filter((item)=>{
+                return item.tipo_act == 2
+            });
+            var capacitaciones = filtrado.filter((item)=>{
+                return item.tipo_act == 1
+            });
+            this.setState({visitas,asesorias,capacitaciones,loading:false})
+        }else if(tipoUsuario === "Profesional"){
+            filtrado = respJson.filter((item)=>{
+                return item.id_prof == id2;
+            });
+            var visitas = filtrado.filter((item)=>{
+                return item.tipo_act == 3
+            });
+            var asesorias = filtrado.filter((item)=>{
+                return item.tipo_act == 2
+            });
+            var capacitaciones = filtrado.filter((item)=>{
+                return item.tipo_act == 1
+            });
+            this.setState({visitas,asesorias,capacitaciones,loading:false})
+        }else if(tipoUsuario === "Admin"){
+
+            var visitas = respJson.filter((item)=>{
+                return item.tipo_act == 3
+            });
+            var asesorias = respJson.filter((item)=>{
+                return item.tipo_act == 2
+            });
+            var capacitaciones = respJson.filter((item)=>{
+                return item.tipo_act == 1
+            });
+            this.setState({visitas,asesorias,capacitaciones,loading:false})
+        }
+    }
 
     render() {
         const {loading, visitas, asesorias,capacitaciones} = this.state;
+        
         return (
             <View style={styles.container}>
                 {

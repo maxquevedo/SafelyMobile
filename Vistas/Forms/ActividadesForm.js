@@ -1,5 +1,5 @@
 import React, { Component,useState,useEffect } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Button, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, Button, ActivityIndicator, ScrollView, FlatList } from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
 import { Ionicons } from '@expo/vector-icons';
 import styles from '../styles';
@@ -8,14 +8,9 @@ import {Picker} from '@react-native-community/picker';
 import Helper from "../../Store/Helper";
 
 const ActividadesForm = (props) => {
-  console.log("visitas en el form: ",props.visitas);
-    const isAdmin = false;
-    const adminView1 = '';
-    const [selectAdminView,setAdminView] = useState('');
     const asesorias = props.asesorias;
     const visitas = props.visitas;
     const capacitaciones = props.capacitaciones;
-    //console.log("Ase: "+asesorias,"Visi: "+visitas,"Capa: "+capacitaciones);
     const [selectedStartDate, setSelectedStartDate] = useState('');
     const [selectedEndDate, setSelectedEndDate] = useState('');
 
@@ -39,9 +34,10 @@ const ActividadesForm = (props) => {
         } 
         let dateCompairable = day+'/'+(month)+'/'+year;
         let dateCompairableFull = day+'/'+(month)+'/'+deit.getFullYear();
-
         for( dias in asesorias){
-          if(dateCompairable == Helper.bdDateToChileDate(asesorias[dias].fec_estimada) || dateCompairableFull == Helper.bdDateToChileDate(asesorias[dias].fec_estimada)){
+          let fec_estimada = asesorias[dias].fec_estimada;
+          let fecha = fec_estimada[8]+fec_estimada[9]+'/'+fec_estimada[5]+fec_estimada[6]+'/'+fec_estimada[2]+fec_estimada[3];
+          if(dateCompairable == fecha || dateCompairableFull == fecha){
             return {
               style:{
                 backgroundColor: '#edad24',
@@ -53,10 +49,10 @@ const ActividadesForm = (props) => {
             };
           }
         }
-  
         for(dias in capacitaciones){
-          //console.log("dateCompairable: "+dateCompairable,"capacitaciones[dias]: "+capacitaciones[dias]);
-          if(dateCompairable == Helper.bdDateToChileDate(capacitaciones[dias].fec_estimada) || Helper.bdDateToChileDate(dateCompairableFull == capacitaciones[dias].fec_estimada)){
+          let fec_estimada = capacitaciones[dias].fec_estimada;
+          let fecha = fec_estimada[8]+fec_estimada[9]+'/'+fec_estimada[5]+fec_estimada[6]+'/'+fec_estimada[2]+fec_estimada[3];
+          if(dateCompairable == fecha || dateCompairableFull == fecha){
             return {
               style:{
                 backgroundColor: '#24a0ed',
@@ -68,9 +64,10 @@ const ActividadesForm = (props) => {
             };
           }
         }
-  
         for(dias in visitas){
-          if(dateCompairable == Helper.bdDateToChileDate(visitas[dias].fec_estimada) || dateCompairableFull == Helper.bdDateToChileDate(visitas[dias].fec_estimada)){
+          let fec_estimada = visitas[dias].fec_estimada;
+          let fecha = fec_estimada[8]+fec_estimada[9]+'/'+fec_estimada[5]+fec_estimada[6]+'/'+fec_estimada[2]+fec_estimada[3];
+          if(dateCompairable == fecha || dateCompairableFull == fecha){
             return {
               style:{
                 backgroundColor: '#18ac30',
@@ -125,6 +122,10 @@ const ActividadesForm = (props) => {
       )
     }
 
+    const renderEvento = (data) => {
+      return <Text key={data.index.toString()+'eventoOox'} style={{fontSize:25}}>{data.item}</Text>
+    }
+
     const evento = () => {
       let deit = (new Date(selectedStartDate)).toLocaleDateString();
       let mes = deit[0]+deit[1];
@@ -133,32 +134,38 @@ const ActividadesForm = (props) => {
       let añoCompleto = new Date(selectedStartDate).getFullYear();
       let fecha = dia+'/'+mes+'/'+año;
       let fechaFull = dia+'/'+mes+'/'+añoCompleto;
-      let evento = "";
-
+      let eventos = [];
       for( dias in asesorias){
-        if(fecha == asesorias[dias] || fechaFull == asesorias[dias]){
-          evento = "Asesoría"
-          break;
+        let fec_estimada = asesorias[dias].fec_estimada;
+        let fechaFormat = fec_estimada[8]+fec_estimada[9]+'/'+fec_estimada[5]+fec_estimada[6]+'/'+fec_estimada[2]+fec_estimada[3];
+        if(fecha == fechaFormat || fechaFull == fechaFormat){
+          eventos.push(asesorias[dias].nombre);
         }
       }
 
       for(dias in capacitaciones){
-        if(fecha == capacitaciones[dias] || fechaFull == capacitaciones[dias]){
-          evento = "Capacitación"
-          break;
+        let fec_estimada = capacitaciones[dias].fec_estimada;
+        let fechaFormat = fec_estimada[8]+fec_estimada[9]+'/'+fec_estimada[5]+fec_estimada[6]+'/'+fec_estimada[2]+fec_estimada[3];
+        if(fecha ==fechaFormat || fechaFull == fechaFormat){
+          eventos.push(capacitaciones[dias].nombre);
         }
       }
 
       for(dias in visitas){
-        if(fecha == visitas[dias]  || fechaFull == visitas[dias]){
-          evento = "Visita"
-          break;
+        let fec_estimada = visitas[dias].fec_estimada;
+        let fechaFormat = fec_estimada[8]+fec_estimada[9]+'/'+fec_estimada[5]+fec_estimada[6]+'/'+fec_estimada[2]+fec_estimada[3];
+        if(fecha == fechaFormat || fechaFull == fechaFormat){
+          eventos.push(visitas[dias].nombre);
         }
       }
 
-      return (
-        <Text>Evento: { evento }</Text>
-      )
+      if(eventos.length == 1) {
+        return (<Text>Evento: { eventos }</Text>);
+      }else if(eventos.length == 2){
+        return (<Text>Evento 1: { eventos[0]+'\n' }Evento 2: {eventos[1]}</Text>);
+      }else{
+        return <FlatList data={eventos} renderItem={renderEvento} keyExtractor={(item,index)=>{index.toString()+'flatList22312312312'}}/>
+      }
     }
 
     const changeMonth = (date ) => {
@@ -167,18 +174,6 @@ const ActividadesForm = (props) => {
 
     return (
       <SafeAreaView style={{}}>
-        {
-            isAdmin? 
-                <View>
-                    <Picker selectedValue={selectAdminView} 
-                    onValueChange={(itemValue, itemIndex) => setAdminView(itemValue)}>
-                        <Picker.item label='a1' value='a2'/>
-                    </Picker>
-                    <Text>Elegiste: {adminView1}</Text>
-                </View>
-                :
-                <Text></Text>
-        }
         <View style={{}}>
           <CalendarPicker
             startFromMonday={true}
@@ -222,10 +217,11 @@ const ActividadesForm = (props) => {
             }}
             onDateChange={onDateChange}
             customDatesStyles={customDatesStylesCallback}
+            
           />
         </View>
-        <Text></Text>
-        <View style={{flexDirection:'row'}}>
+        <Text></Text> 
+        <View style={{flexDirection:'row',paddingLeft:'5%'}}>
             <View style={{backgroundColor:'#24a0ed',width:20,borderRadius:9}}></View>
             <Text> Capacitación      </Text>
 
@@ -238,17 +234,16 @@ const ActividadesForm = (props) => {
  
         </View>
         <Text></Text>
-        <Text></Text>
         <View style={{}}>
           {
             selectedStartDate != null? 
-            <View style={{alignItems:'baseline'}}>
+            <View style={{alignItems:'stretch',paddingLeft:'5%'}}>
               <Text style={styles.text}>{ selectedStartDate ? fechaElegida() : ''}</Text>
               <Text></Text>
-              {//<Text style={styles.text}>{ selectedStartDate ? eventoEnFechaElegida() : ''}</Text>
+              {
+               // <Text style={styles.text}>{ selectedStartDate ? eventoEnFechaElegida() : ''}</Text>
               }
-              <Text style={styles.text}>{ selectedStartDate ? evento() : ''}</Text>
-              <Text></Text>
+              <Text style={styles.text}>{ selectedStartDate ? evento(): ''}</Text>
               <Text></Text>
             </View>  
               :<Text></Text>
