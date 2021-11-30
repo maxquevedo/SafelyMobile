@@ -137,6 +137,18 @@ export default StyleSheet.create({
       flexDirection:'row',
       justifyContent:'space-around',
       
+    },
+    circuloVerde:{
+      width: 44,
+      height: 44,
+      borderRadius: 44/2,
+      backgroundColor:'green'
+    },
+    circuloRojo:{
+      width: 44, 
+      height: 44, 
+      borderRadius: 44/2,
+      backgroundColor:'red'
     }
       
 });

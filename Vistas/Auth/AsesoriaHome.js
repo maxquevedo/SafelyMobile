@@ -1,9 +1,6 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, Alert ,Button, TextInput, TouchableOpacity } from 'react-native';
-import styles from '../styles'; 
-import { Ionicons } from '@expo/vector-icons';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import { View, Text ,Button } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // create a component

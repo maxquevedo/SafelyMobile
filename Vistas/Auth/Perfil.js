@@ -1,27 +1,25 @@
-//import liraries
 import React, { Component } from 'react';
 import { View, Text, Button, ActivityIndicator,ScrollView } from 'react-native';
 import styles from '../styles';
 import EditarPerfilForm from '../Forms/EditarPerfilForm';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import URLS from '../URLS';
 
-// create a component
 class Perfil extends Component {
     constructor(props){
         super(props);
         this.state = {
-            correo: 'fulaniasdsto@f.com',
-            nombre:'Maximiliano Quevedo',
+            correo: '',
+            nombre:'',
             tipoUsuario:'',
             editar:false,
             loading: true,
             estadoContrato:true,
-            rut:'11.111.111-1',
-            direccion:'calle uno #0001',
-            razonSocial:'Tenemos razon',
-            contraseña:'',
-            telefono:'000000000',
+            rut:'',
+            direccion:'',
+            razonSocial:'',
+            telefono:'',
         }
         this.toggleEditar = this.toggleEditar.bind(this);
     }
@@ -43,8 +41,14 @@ class Perfil extends Component {
         let id2 = await AsyncStorage.getItem('idUsuario');
         let telefono = await AsyncStorage.getItem('telefono');
         let direccion = await AsyncStorage.getItem('direccion');
-        //console.log(usuario,correo,tipoUsario,id2);
-        this.setState({correo:correo,nombre:nombreCompleto,loading:false,tipoUsuario,direccion,telefono,username})
+        let idPerfil = await AsyncStorage.getItem('idPerfil');
+        let resp = await fetch(`http://${URLS['api-tarrito']}/perfil/`);
+        let respJson = await resp.json();
+        let rut = respJson.filter((item,index)=>{
+            return item.id_perfil == idPerfil;
+        });
+        rut = rut[0].rut;
+        this.setState({correo:correo,nombre:nombreCompleto,loading:false,tipoUsuario,direccion,telefono,username,rut})
     }
 
     render() {
