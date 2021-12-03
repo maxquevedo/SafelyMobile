@@ -97,7 +97,6 @@ class SolicitarAsesoria extends Component {
                 nombre,descripcion:desc,tipo_act,act_extra,fec_estimada,fec_ida:null,
                 estado,id_cli,id_prof:null,id_asesoria
             };
-            //console.log("actividad: ",actividad)
             resp = await fetch(url,{
                 method:'POST',
                 headers:{
@@ -105,9 +104,7 @@ class SolicitarAsesoria extends Component {
                 },
                 body: JSON.stringify(actividad)
             })
-            //console.log("actvidad stringified: ",JSON.stringify(actividad));
             respJson = await resp.json();
-            console.log(respJson)
             if(respJson)
                 Alert.alert("Éxito","Se ha enviado la solicitud con éxito.",[{text:'Ok',onPress:()=>{
                     navigation.goBack();
@@ -169,7 +166,6 @@ class SolicitarAsesoria extends Component {
                                                     return a.nombre == itemValue;
                                                 })
                                                 id_tipo_ase = id_tipo_ase[0].id_tipo_ase;
-                                                console.log("itemValue = ",itemValue,"id_tipo_ase: ",id_tipo_ase);
                                                 this.setState({nombre:itemValue,asesoriaElegida:id_tipo_ase})
                                             }}>
                                             {                                        

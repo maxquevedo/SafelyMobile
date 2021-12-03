@@ -60,7 +60,7 @@ class PropuestasMejora extends Component {
                             colorCheckApro = "green";
                         }
 
-                        return <View style={{flex:1,backgroundColor:color,flexDirection:'row',paddingTop:75,paddingLeft:10}}
+                        return <View style={{flex:1,backgroundColor:color,flexDirection:'row',paddingTop:75}}
                         key={index}>
                             <Text>     </Text>
                             <Text style={styles.text}>{item}</Text>

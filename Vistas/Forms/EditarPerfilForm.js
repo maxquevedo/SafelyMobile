@@ -81,9 +81,6 @@ const updateForm = async (editable,values,props) => {
         body: JSON.stringify(json)
     });
     respJson = await resp.json();
-
-    console.log(respJson);
-
     if(respJson){
         await AsyncStorage.removeItem('telefono');
         await AsyncStorage.setItem('telefono',values.telefono);
@@ -92,37 +89,8 @@ const updateForm = async (editable,values,props) => {
     }
 
     Alert.alert('Datos actualizados','Los datos se han actualizado correctamente',[{text:'Ok',onPress: ()=>{
-        console.log('A');
         props.actualiza(editable);
     }}]);
-
-    
-    //props.actualiza(editable,values.correo,values.direccion);
-    // let json = {
-    //     id: await AsyncStorage.getItem('id'),
-    //     email: values.correo
-    // }
-    // let correo = values.correo;
-    // let resp = await fetch('http://10.0.2.2:8080/update/email',{
-    //     method:'PATCH',
-    //     headers: {
-    //         'Content-Type':'application/json; charset="UTF-8"'
-    //     },
-    //     body:JSON.stringify({json})
-    // });
-
-    // let respJson = await resp.json();
-    // console.log(respJson);
-    // if(respJson){
-    //     await AsyncStorage.removeItem('email');
-    //     await AsyncStorage.setItem('email',correo);
-    //     //console.log(props);
-    //     Alert.alert("Exito","Datos actualizados correctamente",[{text:'Ok',onPress: ()=>{
-    //         props.reset();
-    //         editable = false;
-    //         //props.toggleEditar(props.editar);
-    //     }}],{cancelable:false})
-    // }
 }
 
 const SignUpForm = (props) => {

@@ -50,7 +50,6 @@ class Accidentes extends Component {
         accidentes = accidentes.sort((first,second)=>{
             return(first.fec_aviso > second.fec_aviso);
         })
-        console.log(accidentes);
         this.setState({accidentes, loading:false,idPro,idCli});
     }
 

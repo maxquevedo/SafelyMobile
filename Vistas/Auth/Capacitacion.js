@@ -85,7 +85,6 @@ class Capacitacion extends Component {
         let fechaF = fecha[8]+fecha[9]+'/'+fecha[5]+fecha[6]+'/'+fecha[0]+fecha[1]+fecha[2]+fecha[3]
         var estados = ['','Solicitado','Pendiente','Realizado','Cancelado'];
         var color = 'fff';
-        console.log(data);
         if(data.index%2 === 0){
             color = '#A2AFA2';
         }
@@ -142,7 +141,6 @@ class Capacitacion extends Component {
             body: JSON.stringify(actividad)
         })
         var respJson = await resp.json();
-        console.log(respJson);
         this.setState({capaElegida:[],listaAsistentes:[],selectedIndex:-1,materiales:'',asistentes:''})
         this.refreshSolicitudes();
    }
@@ -150,7 +148,6 @@ class Capacitacion extends Component {
    async rechazarCapacitacion(){
         var { capaElegida,asistentes, materiales,listaAsistentes} = this.state;
         let idPro = await AsyncStorage.getItem('id2');
-        console.log(capaElegida);
         var actividad = {
             id_prof:idPro,estado:4
         }
@@ -163,7 +160,6 @@ class Capacitacion extends Component {
             body: JSON.stringify(actividad)
         })
         var respJson = await resp.json();
-        console.log(respJson);
         this.setState({capaElegida:[],listaAsistentes:[],selectedIndex:-1,materiales:'',asistentes:''})
         this.refreshSolicitudes();
    }
@@ -309,7 +305,6 @@ class Capacitacion extends Component {
 
     proView(){
         const { solicitudes,refreshList,listaAsistentes,capaElegida,materiales } = this.state;
-        //console.log(capaElegida);
         return(
             <KeyboardAvoidingView style={{flex:1}} behavior="height">
                 <KeyboardAvoidingView style={{flex:0.2, alignItems:'center'}} behavior="padding">
