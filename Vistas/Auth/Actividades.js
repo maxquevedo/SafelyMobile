@@ -14,6 +14,10 @@ class Actividades extends Component {
             capacitaciones:null
         };
     }
+    
+    componentWillUnmount(){
+        this.setState({loading:true,visitas:null,asesorias:null,capacitaciones:null})
+    }
 
     async componentDidMount(){
         let tipoUsuario = await AsyncStorage.getItem('tipoUsuario');
