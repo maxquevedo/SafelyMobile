@@ -34,14 +34,14 @@ class Accidentes extends Component {
             let fecha = new Date(fechaStr);
             return(this.state.hoy < fecha);
         });
-        acti = acti.filter((item,index)=>{
+        let idPro = await acti[0].id_prof;
+        acti = respJson.filter((item,index)=>{
             //filtra capacitaciones
             return item.tipo_act != "1";
         });
         acti.sort((first,second)=>{
             return(first.fec_estimada > second.fec_estimada)
         })
-        let idPro = await acti[0].id_prof;
         resp = await fetch(`http://${URLS['api-tarrito']}/alerta/`);
         respJson = await resp.json();
         let accidentes = respJson.filter((item,index)=>{

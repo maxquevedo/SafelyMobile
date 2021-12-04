@@ -1,29 +1,139 @@
-//import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet,TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet,TouchableOpacity, Button, ActionSheetIOS, ActivityIndicator, Alert } from 'react-native';
 import styles from '../styles';
 import { Ionicons } from '@expo/vector-icons'; 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Picker} from '@react-native-community/picker';
+import Helper from '../../Store/Helper';
+import URLS from '../URLS';
 
-// create a component
 class PropuestasMejora extends Component {
     constructor(props){
         super(props);
         this.state = {
-            loading:false,
-            propuestas:['Cambiar el extintor','Poner avisos en escaleras','Marcar zona segura','centrar el muro'],
-            estadoPropuestas: ['1','0','1','1'],
-            tipoUsuario:'Cliente'
+            loading:true,
+            propuestas:[],
+            estadoPropuestas: [],
+            tipoUsuario:'',
+            mejoras:[],
+            actividades: [],
+            actividadSelected:'',
+            fechaSelected:'',
+            actiIdSelected:-1,
+            actisConMejora:[],
+            propuestaSelected: ''
         }
     }
 
     async componentDidMount(){
         let tipoUsuario = await AsyncStorage.getItem("tipoUsuario");
-        this.setState({tipoUsuario});
+        let id2 = await AsyncStorage.getItem('id2');
+        let actis = await Helper.getAllActis(id2,tipoUsuario);
+        let actividadSelected = actis[0];
+        let resp = await fetch(`http://${URLS['api-tarrito']}/mejora/`);
+        let respJson = await resp.json();
+        let actisConMejora = [];
+        let actiIdSelected = actividadSelected.id_actividad;
+        let mejoras = respJson.filter((item,index)=>{
+            for(var i =0;i<actis.length;i++){
+                if(item.id_actividad == actis[i].id_actividad){
+                    if(tipoUsuario == 'Cliente' && actis[i].id_cli == id2){
+                        actisConMejora.push(actis[i]);
+                        return item;
+                    }
+                    if(tipoUsuario == 'Profesional' && actis[i].id_prof == id2){
+                        actisConMejora.push(actis[i]);
+                        return item;
+                    }
+                };
+            }    
+        });
+        mejoras = mejoras.filter((item,index)=>{
+            for(var i=0;i<actisConMejora.length;i++){
+                if(actisConMejora[i].id_actividad == item.id_actividad){
+                    return item;
+                }
+            }
+        });
+        let propuestaSelected = actisConMejora.filter((item,index)=>{
+            return item.id_actividad == actiIdSelected;
+        });
+        let fechaSelected = Helper.bdDateToChileDate(actividadSelected.fec_estimada);        
+        actividadSelected = actividadSelected.nombre;
+        actis.sort((firs,second)=>{
+            return(firs.id_actividad > second.id_actividad);
+        });
+        this.setState({tipoUsuario,actividadSelected,actividades:actis,propuestas:mejoras,fechaSelected,actiIdSelected,actisConMejora,loading:false,propuestaSelected});
+    }
+
+    refreshView = async () => {
+        let tipoUsuario = await AsyncStorage.getItem("tipoUsuario");
+        let id2 = await AsyncStorage.getItem('id2');
+        let actis = await Helper.getAllActis(id2,tipoUsuario);
+        let actividadSelected = actis[0];
+        let resp = await fetch(`http://${URLS['api-tarrito']}/mejora/`);
+        let respJson = await resp.json();
+        let actisConMejora = [];
+        let actiIdSelected = actividadSelected.id_actividad;
+        let mejoras = respJson.filter((item,index)=>{
+            for(var i =0;i<actis.length;i++){
+                if(item.id_actividad == actis[i].id_actividad){
+                    if(tipoUsuario == 'Cliente' && actis[i].id_cli == id2){
+                        actisConMejora.push(actis[i]);
+                        return item;
+                    }
+                    if(tipoUsuario == 'Profesional' && actis[i].id_prof == id2){
+                        actisConMejora.push(actis[i]);
+                        return item;
+                    }
+                };
+            }    
+        });
+        mejoras = mejoras.filter((item,index)=>{
+            for(var i=0;i<actisConMejora.length;i++){
+                if(actisConMejora[i].id_actividad == item.id_actividad){
+                    return item;
+                }
+            }
+        });
+        let propuestaSelected = actisConMejora.filter((item,index)=>{
+            return item.id_actividad == actiIdSelected;
+        });
+        let fechaSelected = Helper.bdDateToChileDate(actividadSelected.fec_estimada);        
+        actividadSelected = actividadSelected.nombre;
+        actis.sort((firs,second)=>{
+            return(firs.id_actividad > second.id_actividad);
+        });
+        this.setState({tipoUsuario,actividadSelected,actividades:actis,propuestas:mejoras,fechaSelected,actiIdSelected,actisConMejora,loading:false,propuestaSelected});
+    }
+
+    componentWillUnmount(){
+        this.setState({propuestas:[],tipoUsuario:'',mejoras:[],actividades:[],actividadSelected:'',
+            fechaSelected:'',actiIdSelected:-1,actisConMejora:[],propuestaSelected:''});
     }
 
 
-    changeCheckState = (item,action) => {
+
+    changeCheckState = async (item,action) => {
+        console.log('changingstate...',item,action);
+        let act = action === "aprobar"? true:false;
+        let bodie = {
+            estado:act
+        }
+        let resp = await fetch(`http://${URLS['api-tarrito']}/mejora/${item.id_mejora}/`,{            
+            method:'PATCH',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify(bodie)
+        });
+        let respJson = await resp.json();
+        console.log("respJson = ",respJson);
+        if(resp.ok){
+            Alert.alert("Éxtio","Se ha modificado la propuesta correctamente",[{text:'Ok',onPress:this.refreshView.bind(this)}]);
+        }
+
+        /*
         const { estadoPropuestas, propuestas } = this.state;
         let indice = -1;
         for(let i=0;i<propuestas.length;i++){
@@ -38,56 +148,81 @@ class PropuestasMejora extends Component {
         }
         
         this.setState({estadoPropuestas:estadoPropuestas})
+        */
     }
 
     render() {
-        const { propuestas,estadoPropuestas,tipoUsuario } = this.state;
+        const { propuestaSelected,propuestas,estadoPropuestas,tipoUsuario,actividadSelected,actividades,fechaSelected,actiIdSelected,loading } = this.state;
         return (
-            <View style={{flex:1,justifyContent:'space-around'}}>
+            <View style={{flex:1,justifyContent:'space-between',alignContent:'center'}}>
                 {
-                    propuestas.map((item,index)=>{
-                        let color = "white";
-                        if(index %2 ==0){
-                            color= "#A2AFA2";
-                        }
-
-                        let colorCheckApro = "black";
-                        let colorCheckRecha = "black";
-
-                        if(estadoPropuestas[index] == 0){
-                            colorCheckRecha = "red";
-                        }else if(estadoPropuestas[index] == 1){
-                            colorCheckApro = "green";
-                        }
-
-                        return <View style={{flex:1,backgroundColor:color,flexDirection:'row',paddingTop:75}}
-                        key={index}>
-                            <Text>     </Text>
-                            <Text style={styles.text}>{item}</Text>
-                            <Text>   </Text>
-                            {
-                                tipoUsuario === 'Cliente'?
-                                <Ionicons name="md-checkmark-circle-outline" size={35} color={colorCheckApro} />:    
-                                <TouchableOpacity onPress={()=>{this.changeCheckState(item,'aprobar')}}>
-                                    <Ionicons name="md-checkmark-circle-outline" size={35} color={colorCheckApro} />
-                                </TouchableOpacity>
+                    loading?
+                    <ActivityIndicator size="large" color="green"/>
+                    :
+                    <View>
+                        <Text></Text>
+                        <Text style={styles.centerText}>Seleccione actividad relacionada</Text>
+                        <Text></Text>
+                        <Picker 
+                            selectedValue={actividadSelected}
+                            style={{textAlign:'center',backgroundColor:'white'}}
+                            onValueChange={(itemValue,index)=>{
+                                let items = itemValue.split('- ');
+                                let actiIdSelected = items[2];                                
+                                let propuestaSelected = propuestas.filter((item,index)=>{
+                                    return item.id_actividad == actiIdSelected;
+                                });
+                                this.setState({actividadSelected:itemValue,fechaSelected:items[1],actiIdSelected,propuestaSelected})
+                            }}
+                        >
+                            {                        
+                                actividades.map((item,index)=>{
+                                    var show = item.nombre+"- "+item.fec_estimada+'- '+item.id_actividad;
+                                    return (<Picker.Item key={index+toString()+'-Act'} label={show} value={show}/>);
+                            })
                             }
-                            <Text>  </Text>
-                            {
-                                tipoUsuario === 'Cliente'?
-                                <Ionicons name="md-close-circle-outline" size={35} color={colorCheckRecha} />:
-                                <TouchableOpacity onPress={()=> this.changeCheckState(item,'rechazar')}>
-                                    <Ionicons name="md-close-circle-outline" size={35} color={colorCheckRecha} />
-                                </TouchableOpacity>    
-                            }
-                            
-                        </View>
-                    })
+                        </Picker>
+                        {
+                            propuestaSelected.map((item,index)=>{
+                                let color = "white";
+                                if(index %2 ==0){
+                                    color= "#A2AFA2";
+                                }                                                              
+                                let colorCheckApro = "black";
+                                let colorCheckRecha = "black";
+                                if(item.estado == false){
+                                    colorCheckRecha = "red";
+                                }else if(item.estado == true){
+                                    colorCheckApro = "green";
+                                }
+                                return(
+                                <View style={{backgroundColor:color,flexDirection:'row',padding:'8%',justifyContent:'space-around'}} key={index.toString()} >
+                                    <Text>     </Text>
+                                    <Text style={styles.text}>{item.propuesta}</Text>
+                                    <Text>   </Text>
+                                    {
+                                        tipoUsuario === 'Cliente'?
+                                        <Ionicons name="md-checkmark-circle-outline" size={35} color={colorCheckApro} />:    
+                                        <TouchableOpacity onPress={()=>{this.changeCheckState(item,'aprobar')}}>
+                                            <Ionicons name="md-checkmark-circle-outline" size={35} color={colorCheckApro} />
+                                        </TouchableOpacity>
+                                    }
+                                    <Text>  </Text>
+                                    {
+                                        tipoUsuario === 'Cliente'?
+                                        <Ionicons name="md-close-circle-outline" size={35} color={colorCheckRecha} />:
+                                        <TouchableOpacity onPress={()=> this.changeCheckState(item,'rechazar')}>
+                                            <Ionicons name="md-close-circle-outline" size={35} color={colorCheckRecha} />
+                                        </TouchableOpacity>    
+                                    }                            
+                                </View>)
+                            })
+                        }
+                    </View>
                 }
             </View>
         );
     }
 }
 
-//make this component available to the app
 export default PropuestasMejora;

@@ -39,7 +39,7 @@ class Capacitacion extends Component {
             var resp = await fetch(`http://${URLS['api-tarrito']}/activiad/`);
             var respJson = await resp.json();
             var capas = respJson.filter((item)=>{
-                return item.id_cli == idCli;
+                return (item.id_cli == idCli && item.tipo_act == "1");
             });
             this.setState({solicitudes:capas,tipoUsu})
         }else{
@@ -63,7 +63,7 @@ class Capacitacion extends Component {
             let resp = await fetch(`http://${URLS['api-tarrito']}/activiad/`);
             var respJson = await resp.json();
             var capas = respJson.filter((item)=>{
-                return item.id_cli == idCli;
+                return (item.id_cli == idCli && item.tipo_act == "1");
             });
             this.setState({solicitudes:capas});
         }else{
@@ -229,6 +229,25 @@ class Capacitacion extends Component {
         }
     }
 
+    async terminarCapacitacion(){
+        var { capaElegida,asistentes, materiales,listaAsistentes} = this.state;
+        let idPro = await AsyncStorage.getItem('id2');
+        var actividad = {
+            id_prof:idPro,estado:3
+        }
+        var url = `http://${URLS['api-tarrito']}/activiad/${capaElegida.id_actividad}/`;
+        var resp = await fetch(url,{
+            method:'PATCH',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify(actividad)
+        })
+        var respJson = await resp.json();
+        this.setState({capaElegida:[],listaAsistentes:[],selectedIndex:-1,materiales:'',asistentes:''})
+        this.refreshSolicitudes();
+    }
+
     clienteView(){
         const { solicitudes,refreshList,fechaSeleccionada,showDatePicker } = this.state;
         const minDate = new Date();
@@ -273,14 +292,14 @@ class Capacitacion extends Component {
                         <Text style={styles.text}>Asistentes</Text>
                         <TextInput
                             multiline={true}
-                            placeholder="Asistentes aquí"
+                            placeholder="Asistentes separados por coma. Ej: Javier Ibarra, Matias Gallardo"
                             numberOfLines={4}
                             onChangeText={(asistentes) => this.setState({asistentes})}
                             value={this.state.asistentes.toString()}/>
                         <Text style={styles.text}>Materiales</Text>
                         <TextInput
                             multiline={true}
-                            placeholder="Asistentes aquí"
+                            placeholder="Materiales separados por coma. Ej: Tijeras, Papelógrafo"
                             numberOfLines={4}
                             onChangeText={(materiales) => this.setState({materiales})}
                             value={this.state.materiales.toString()}/>
@@ -296,7 +315,7 @@ class Capacitacion extends Component {
                                 <Text style={{fontSize: 25, paddingLeft:'15%'}}>Estado</Text>
                             </View>
                             <View style={styles.FieldSeparator}></View>
-                            <FlatList data={solicitudes} renderItem={this.renderItem.bind(this)} keyExtractor={(item,index) => '0aB'+index.toString()}/>
+                            <FlatList data={solicitudes} renderItem={this.renderItem.bind(this)} keyExtractor={(item,index) => '0aB'+index.toString()} refreshing={refreshList} onRefresh={this.refreshSolicitudes.bind(this)}/>
                     </View>
                 </View>
             </View>
@@ -329,6 +348,11 @@ class Capacitacion extends Component {
                         capaElegida.estado == 1?<Button title="Rechazar capacitacion" color="red" onPress={ ()=> {this.rechazarCapacitacion()}}/>:<Text></Text>
                     }                    
                 </View>
+                <KeyboardAvoidingView style={{flex:0.1}}>
+                    {
+                        capaElegida.estado == 2? <Button title="Terminar capacitacion" color="green" onPress={ ()=> {this.terminarCapacitacion()}}/>:<Text></Text>
+                    }
+                </KeyboardAvoidingView>
                 <KeyboardAvoidingView style={{flex:0.4}}>
                     <View style={styles.FieldSeparator}></View>
                     <View style={{flexDirection:'row'}}>

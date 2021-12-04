@@ -20,8 +20,8 @@ class TomarVisita extends Component {
 
     renderItem(data){
         let fecha = new Date().getDate()+'/'+(new Date().getMonth()+1)+'/'+new Date().getFullYear();
-        console.log(data.item[0]);
-        console.log("fecha: ",fecha)
+        //console.log(data.item[0]);
+        //console.log("fecha: ",fecha)
         return(
             <View>
                {
@@ -45,7 +45,7 @@ class TomarVisita extends Component {
 
     render() {
         const { fecha, fechaFormated,clientes,visitas,visitasClientes } = this.state;
-        console.log(visitasClientes);
+        //console.log(visitasClientes);
         return (
             <View style={styles.container}>
                 <View style={{flex:0.3,justifyContent:'space-around',alignSelf:'stretch'}}>

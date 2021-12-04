@@ -101,6 +101,25 @@ async function getAuthIdWithPerfilId(id){
     return respJson;
 }
 
+async function getAllActis(id2,tipoUsuario){
+    let resp = await fetch(`http://${URLS['api-tarrito']}/activiad/`);
+    let respJson = await resp.json();
+    respJson = respJson.sort((first,second)=>{
+        return(first.id_actividad > second.id_actividad);
+    });
+    if(tipoUsuario == 'Profesional'){
+        return respJson.filter((item,index)=>{
+            return item.id_prof == id2;
+        });
+    }
+    if(tipoUsuario = 'Cliente'){
+        return respJson.filter((item,index)=>{
+            return item.id_cli == id2;
+        });
+    }
+    return;
+}
+
 async function getAllPerfiles(){
     var resp = await fetch(`http://${URLS['api-tarrito']}/perfil/`)
     return await resp.json();
@@ -120,5 +139,6 @@ export default {
     getIdPro,
     getPerfilIdFromSpecificId,
     getAuthIdWithPerfilId,
-    getUserWithAuthId
+    getUserWithAuthId,
+    getAllActis
 };

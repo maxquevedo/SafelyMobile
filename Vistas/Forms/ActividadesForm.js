@@ -8,6 +8,7 @@ import {Picker} from '@react-native-community/picker';
 import Helper from "../../Store/Helper";
 
 const ActividadesForm = (props) => {
+  console.disableYellowBox;
     const asesorias = props.asesorias;
     const visitas = props.visitas;
     const capacitaciones = props.capacitaciones;
@@ -123,7 +124,7 @@ const ActividadesForm = (props) => {
     }
 
     const renderEvento = (data) => {
-      return <Text key={data.index.toString()+'eventoOox'} style={{fontSize:25}}>{data.item}</Text>
+      return <Text key={data.index.toString()+'eventoOox'} style={{fontSize:25}}>{data.index+1}-{data.item}</Text>
     }
 
     const evento = () => {
@@ -160,9 +161,9 @@ const ActividadesForm = (props) => {
       }
 
       if(eventos.length == 1) {
-        return (<Text>Evento: { eventos }</Text>);
+        return (<Text>1- { eventos }</Text>);
       }else if(eventos.length == 2){
-        return (<Text>Evento 1: { eventos[0]+'\n' }Evento 2: {eventos[1]}</Text>);
+        return (<Text>1- { eventos[0]+'\n' } 2-: {eventos[1]}</Text>);
       }else{
         return <FlatList data={eventos} renderItem={renderEvento} keyExtractor={(item,index)=>{index.toString()+'flatList22312312312'}}/>
       }

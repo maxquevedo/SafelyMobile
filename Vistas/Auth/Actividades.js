@@ -122,7 +122,7 @@ class Actividades extends Component {
 
     render() {
         const {loading, visitas, asesorias,capacitaciones} = this.state;
-        
+        console.disableYellowBox;
         return (
             <View style={styles.container}>
                 {

@@ -39,9 +39,6 @@ const validate = (values) =>{
 }
 
 const renderItem = (data) => {
-
-
-    console.log("DATA: ",data.item.item);
     var color = "black";
     let color1 = "black";
     let color2 = "black";
@@ -75,7 +72,7 @@ const VisitaCheckForm = (props) => {
     for(var i =0;i<props.estados.length; i++){
         console.log(props.estados[i]);
     }
-    console.log("checks2: ",items);
+    //console.log("checks2: ",items);
     //<View style={{alignItems:'stretch',justifyContent:'flex-end'}}>
     //<Field name="correo" component={checkList} ph={props.correo} nm="Correo" check={props.check}/>    
 
