@@ -14,7 +14,7 @@ class VisitaStack extends Component {
             <Stack.Navigator>
                 <Stack.Screen name="Home" component={VisitaHome} options={{headerShown:false}}/>
                 <Stack.Screen name="Visita" component={Visita} options={{}} />
-                <Stack.Screen name="TomarVisita" component={TomarVisita} option={{}}/>
+                <Stack.Screen name="TomarVisita" component={TomarVisita} options={{headerTitle:'Tomar visita'}}/>
             </Stack.Navigator>
         );
     }
