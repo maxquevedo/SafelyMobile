@@ -125,7 +125,8 @@ class TomarVisita extends Component {
         let id2 = await AsyncStorage.getItem('id2');
 
         let tomarVisita = {
-            id_prof:id2
+            id_prof:id2,
+            estado:2
         }
 
         let resp = await fetch(`http://${URLS['api-tarrito']}/activiad/${data.item.id_actividad}/`,{

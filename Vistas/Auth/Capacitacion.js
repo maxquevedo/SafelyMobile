@@ -304,7 +304,7 @@ class Capacitacion extends Component {
                             onChangeText={(materiales) => this.setState({materiales})}
                             value={this.state.materiales.toString()}/>
                     </KeyboardAvoidingView>
-                    <Button title="Solicitar capacitacion" color="#18ac30" onPress={()=>{this.solicitarCapacitacion()}}/>
+                    <Button title="Solicitar capacitación" color="#18ac30" onPress={()=>{this.solicitarCapacitacion()}}/>
                 </ScrollView>
                 
                 <View style={{flex:0.75}}>
@@ -340,17 +340,17 @@ class Capacitacion extends Component {
 
                 <KeyboardAvoidingView style={{flex:0.1}}>
                     {
-                        capaElegida.estado == 1? <Button title="Confirmar capacitacion" color="green" onPress={ ()=> {this.crearCapacitacion()}}/>:<Text></Text>
+                        capaElegida.estado == 1? <Button title="Confirmar capacitación" color="green" onPress={ ()=> {this.crearCapacitacion()}}/>:<Text></Text>
                     }
                 </KeyboardAvoidingView>
                 <View style={{flex:0.1}}>
                     {
-                        capaElegida.estado == 1?<Button title="Rechazar capacitacion" color="red" onPress={ ()=> {this.rechazarCapacitacion()}}/>:<Text></Text>
+                        capaElegida.estado == 1?<Button title="Rechazar capacitación" color="red" onPress={ ()=> {this.rechazarCapacitacion()}}/>:<Text></Text>
                     }                    
                 </View>
                 <KeyboardAvoidingView style={{flex:0.1}}>
                     {
-                        capaElegida.estado == 2? <Button title="Terminar capacitacion" color="green" onPress={ ()=> {this.terminarCapacitacion()}}/>:<Text></Text>
+                        capaElegida.estado == 2? <Button title="Terminar capacitación" color="green" onPress={ ()=> {this.terminarCapacitacion()}}/>:<Text></Text>
                     }
                 </KeyboardAvoidingView>
                 <KeyboardAvoidingView style={{flex:0.4}}>
@@ -368,7 +368,7 @@ class Capacitacion extends Component {
 
     render() {
         const { loading, tipoUsu } = this.state;
-        //console.log(showDatePicker);
+        //console.log(this.state.capaElegida);
         return (
             <View style={{flex:2}}>
                 {

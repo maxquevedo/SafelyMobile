@@ -128,6 +128,7 @@ const loggin = async (values) => {
 }
 
 const fieldLogin = (props) => {
+    console.disableYellowBox;
     return(
         <View style={{alignContent:'center',alignItems:'center',alignSelf:'center'}}>
             <Text style={styles.text}>{props.nm}</Text>

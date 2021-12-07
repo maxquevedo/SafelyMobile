@@ -1,3 +1,233 @@
+import React, { Component } from 'react';
+import { View, Text, FlatList, TouchableOpacity, ActivityIndicator, Alert, Button, Touchable } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import URLS from '../URLS';
+import styles from '../styles';
+import Helper from '../../Store/Helper';
+import {Picker} from '@react-native-community/picker';
+
+class Visita extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            loading: true,
+            fecha: new Date(),
+            actis:[],
+            actiSelected:'',
+            idActiSelec:'',
+            idCli:'',
+            checks:'',
+            showDatePicker:false,
+        }
+    }
+
+    formatFecha(fecha){
+        let deit = ''+fecha;
+        deit = deit[8]+deit[9]+'/'+deit[5]+deit[6]+'/'+deit[0]+deit[1]+deit[2]+deit[3];
+        return deit;
+    }
+
+    async componentDidMount(){
+        let id2 = await AsyncStorage.getItem('id2');
+        let resp = await fetch(`http://${URLS['api-tarrito']}/activiad/`);
+        let respJson = await resp.json();
+        let actis = respJson.filter((item,index)=>{
+            return item.tipo_act == 3 && item.id_prof == id2
+                && item.estado == 2;
+        });
+        actis = actis.sort((first,second)=>{
+            return first.fec_estimada > second.fec_estimada;
+        });
+        resp = await fetch(`http://${URLS['api-tarrito']}/visita/`);
+        respJson = await resp.json();
+        let visitas = respJson.filter((item,index)=>{
+                return(item.estado != true);
+        });        
+
+        if(actis.length == 0){
+            Alert.alert("Error","No hay visitas en este momento.",[{text:'Ok'}]);
+            this.setState({loading:false});
+            return;
+        }
+        let actiSelected = actis[0];
+        let fecha = actis[0].fec_estimada;        
+        fecha = new Date(fecha);
+        fecha = new Date(fecha.setDate(fecha.getDate() + 1))
+        fecha = fecha.toLocaleDateString();
+        let idActiSelec = actis[0].id_actividad;
+        let idCli = actis[0].id_cli;
+        resp = await fetch(`http://${URLS['api-tarrito']}/clicheck/`);
+        respJson = await resp.json();
+        let idCliCheck = respJson.filter((item,index)=>{
+            return item.id_cli == idCli;
+        });
+        if(idCliCheck.length == 0){
+            Alert.alert('Error','El cliente aún no tiene checklist creado.',[{text:'Ok'}]);
+            this.setState({loading:false});
+            return;
+        }
+        idCliCheck = idCliCheck[0].id_clicheck;
+        resp = await fetch(`http://${URLS['api-tarrito']}/checklist/`);
+        respJson = await resp.json();
+        let checks = respJson.filter((item,index)=>{
+            return item.id_clicheck == idCliCheck;
+        })
+        this.setState({loading:false,actis,visitas,actiSelected,fecha,idActiSelec,
+            visitasClientes:actis[0],fechaFormatted:this.formatFecha(fecha), checks})
+    }
+
+    async RefreshVisitas(){
+        let id2 = await AsyncStorage.getItem('id2');
+        let resp = await fetch(`http://${URLS['api-tarrito']}/activiad/`);
+        let respJson = await resp.json();
+        let actis = respJson.filter((item,index)=>{
+            return item.tipo_act == 3 && item.id_prof == id2
+                && item.estado == 2;
+        });
+        actis = actis.sort((first,second)=>{
+            return first.fec_estimada > second.fec_estimada;
+        });
+        resp = await fetch(`http://${URLS['api-tarrito']}/visita/`);
+        respJson = await resp.json();
+        let visitas = respJson.filter((item,index)=>{
+                return(item.estado != true);
+        });        
+
+        if(actis.length == 0){
+            Alert.alert("Error","No hay visitas en este momento.",[{text:'Ok'}]);
+            this.setState({loading:false});
+            return;
+        }
+        let actiSelected = actis[0];
+        let fecha = actis[0].fec_estimada;        
+        fecha = new Date(fecha);
+        fecha = new Date(fecha.setDate(fecha.getDate() + 1))
+        fecha = fecha.toLocaleDateString();
+        let idActiSelec = actis[0].id_actividad;
+        let idCli = actis[0].id_cli;
+        resp = await fetch(`http://${URLS['api-tarrito']}/clicheck/`);
+        respJson = await resp.json();
+        let idCliCheck = respJson.filter((item,index)=>{
+            return item.id_cli == idCli;
+        });
+        if(idCliCheck.length == 0){
+            Alert.alert('Error','El cliente aún no tiene checklist creado.',[{text:'Ok'}]);
+            this.setState({loading:false});
+            return;
+        }
+        idCliCheck = idCliCheck[0].id_clicheck;
+        resp = await fetch(`http://${URLS['api-tarrito']}/checklist/`);
+        respJson = await resp.json();
+        let checks = respJson.filter((item,index)=>{
+            return item.id_clicheck == idCliCheck;
+        })
+        this.setState({loading:false,actis,visitas,actiSelected,fecha,idActiSelec,
+            visitasClientes:actis[0],fechaFormatted:this.formatFecha(fecha), checks})
+    }
+
+    renderItem(data){
+        let clientes = this.state.clientes;
+        return(
+            <View>
+                <View>
+                    <View style={{flexDirection:'row', justifyContent: 'space-between',paddingLeft:'10%',paddingRight:'10%',alignSelf:'stretch',paddingTop:'5%'}}>
+                        <Text style={{fontSize:25 ,color:'black',textAlignVertical:'center'}}>{data.item.nombre}</Text>
+                        <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+                            <TouchableOpacity>
+                                <Ionicons name="md-checkmark-circle-outline" size={40}/>
+                            </TouchableOpacity>
+                            <TouchableOpacity>
+                                <Ionicons name="close-circle-outline" size={40}/>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+                            <Text style={{fontSize:12}}>Asignar</Text>
+                            <Text style={{fontSize:12}}>Rechazar</Text>
+                        </View>
+                    </View>
+                </View>
+            </View>
+        );
+    }
+
+    async tomarVisita(data){
+        let id2 = await AsyncStorage.getItem('id2');
+
+        let tomarVisita = {
+            id_prof:id2
+        }
+
+        let resp = await fetch(`http://${URLS['api-tarrito']}/activiad/${data.item.id_actividad}/`,{
+            method:'PATCH',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify(tomarVisita)
+        });
+        let respJson = await resp.json();
+        if(resp.ok){
+            this.setState({loading:true});
+            Alert.alert('Éxito',"Se ha tomado la visita correctamente.",[{text:'Ok',onPress: ()=>{
+                this.props.navigation.goBack();
+            }}]);
+        }
+    }
+
+    render() {
+        var {checks,fecha,fechaFormatted,loading,actis,idActiSelec,actiSelected } = this.state;
+        return (
+            <View style={styles.orderScreen}>
+                {
+                loading?
+                    <ActivityIndicator size="large" color="green"/>
+                    :
+                    <View>
+                        {
+                            actis.length == 0? 
+
+                            <TouchableOpacity>                                
+                                <Text style={{marginTop:'40%',fontSize:35,textAlign:'center',padding:'10%'}}>No hay visitas asignadas en este momento.</Text>
+                                <Button title={'actualizar'} color={'green'} onPress={async ()=>{await this.RefreshVisitas()}}/>
+                            </TouchableOpacity>
+                            :
+                            <View>
+                            <View style={{justifyContent:'space-around',alignSelf:'stretch'}}>
+                            <Text></Text>
+                            <Text style={styles.centerText}>Seleccione una visita</Text>
+                            <Text></Text>
+                            <View style={{flexDirection:'column',alignSelf:'stretch',justifyContent:'center'}}>
+                                <Picker selectedValue={actiSelected} onValueChange={(item,index)=>{
+                                    
+                                }}>
+                                    {
+                                        actis.map((item,index)=>{
+                                            //return()                                    
+                                            return(<Picker.Item key={item.id_actividad} label={item.nombre+'- '+item.fec_estimada+'- '+item.id_actividad} value={item.id_actividad}/>);
+                                        })
+                                    }
+                                </Picker>
+                            </View>                                                   
+                    </View>
+                    <View style={{backgroundColor:'white',marginBottom:'100%',height:'50%'}}>
+                        {
+                            checks.length == 0? 
+                                <Text style={{marginTop:'45%',fontSize:30,textAlign:'center'}}>Este cliente aún no posee checks.</Text>
+                                :
+                                <FlatList data={checks} keyExtractor={(item,index)=>index.toString()} renderItem={this.renderItem.bind(this)} style={{backgroundColor:'#fff'}}/>
+                        }
+                    </View>
+                    </View>
+                        }   
+                        
+                    </View>
+                }       
+        </View>
+        );
+    }
+}
+export default Visita;
+/*
 //import liraries
 import React, { Component } from 'react';
 import { View, Text, Button, ActivityIndicator,FlatList,TouchableOpacity,Alert,TextInput,KeyboardAvoidingView } from 'react-native';
@@ -43,7 +273,7 @@ class Visita extends Component {
             estados.push(respJson[i][4]);
         }
         this.setState({nombresChecks:nombres,estadoChecks:estados,loading:false,checks:respJson})
-        */
+        
     }
 
     async prueba(data,check){
@@ -200,7 +430,7 @@ class Visita extends Component {
             //console.log(respJson);
             this.setState({ checksFallidos: [], checksNoFallidos:[], redIndexes:[], greenIndexes:[] })
         }
-        */
+        
     }
 
 
@@ -243,3 +473,5 @@ class Visita extends Component {
 
 //make this component available to the app
 export default Visita;
+
+*/

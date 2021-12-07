@@ -89,7 +89,7 @@ class RevisarCliente extends Component {
             <View style={styles.container}>
                 {
                     loading? 
-                            <ActivityIndicator size={'large'} color={'blue'}/>
+                            <ActivityIndicator size={'large'} color={'green'}/>
                         :
                         <View>
                             <View style={{marginTop:'15%',backgroundColor:'white',alignSelf:'center'}}>

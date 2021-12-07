@@ -34,6 +34,10 @@ class Accidentes extends Component {
             let fecha = new Date(fechaStr);
             return(this.state.hoy < fecha);
         });
+        if(acti.length == 0){
+            this.setState({loading:false})
+            return;
+        }
         let idPro = await acti[0].id_prof;
         acti = respJson.filter((item,index)=>{
             //filtra capacitaciones
@@ -161,6 +165,7 @@ class Accidentes extends Component {
                         title={"Reportar accidente"}
                         message={'¿Qué ha ocurrido?'}
                         hintInput ={"Escribe aquí..."}
+                        submitText = {'Reportar'}
                         submitInput={ (inputText) => {this.sendInput(inputText)} }
                         closeDialog={ () => {this.setState({showDialog:false})}}>
                     </DialogInput>

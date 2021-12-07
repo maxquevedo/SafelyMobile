@@ -29,6 +29,9 @@ class PropuestasMejora extends Component {
         let tipoUsuario = await AsyncStorage.getItem("tipoUsuario");
         let id2 = await AsyncStorage.getItem('id2');
         let actis = await Helper.getAllActis(id2,tipoUsuario);
+        actis = actis.filter((item,index)=>{
+            return item.tipo_act != 1;
+        });
         let actividadSelected = actis[0];
         let resp = await fetch(`http://${URLS['api-tarrito']}/mejora/`);
         let respJson = await resp.json();
@@ -115,7 +118,6 @@ class PropuestasMejora extends Component {
 
 
     changeCheckState = async (item,action) => {
-        console.log('changingstate...',item,action);
         let act = action === "aprobar"? true:false;
         let bodie = {
             estado:act
@@ -128,7 +130,6 @@ class PropuestasMejora extends Component {
             body:JSON.stringify(bodie)
         });
         let respJson = await resp.json();
-        console.log("respJson = ",respJson);
         if(resp.ok){
             Alert.alert("Éxtio","Se ha modificado la propuesta correctamente",[{text:'Ok',onPress:this.refreshView.bind(this)}]);
         }
