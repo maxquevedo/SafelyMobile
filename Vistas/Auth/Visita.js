@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList, TouchableOpacity, ActivityIndicator, Alert, Button, Touchable } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, ActivityIndicator, Alert, Button } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import URLS from '../URLS';
 import styles from '../styles';
-import Helper from '../../Store/Helper';
 import {Picker} from '@react-native-community/picker';
 
 class Visita extends Component {
@@ -18,7 +17,11 @@ class Visita extends Component {
             idActiSelec:'',
             idCli:'',
             checks:'',
+            checksPostVisita:[],
             showDatePicker:false,
+            idCliCheck:'',
+            refreshing: false,
+            actiSelectedFormat: '',
         }
     }
 
@@ -73,11 +76,11 @@ class Visita extends Component {
         let checks = respJson.filter((item,index)=>{
             return item.id_clicheck == idCliCheck;
         })
-        this.setState({loading:false,actis,visitas,actiSelected,fecha,idActiSelec,
-            visitasClientes:actis[0],fechaFormatted:this.formatFecha(fecha), checks})
+        this.setState({loading:false,actis,visitas,actiSelected,fecha,idActiSelec,idCli,idCliCheck,
+            visitasClientes:actis[0],fechaFormatted:this.formatFecha(fecha), checks,checksPostVisita:checks});
     }
 
-    async RefreshVisitas(){
+    async RefreshVisitas(){        
         let id2 = await AsyncStorage.getItem('id2');
         let resp = await fetch(`http://${URLS['api-tarrito']}/activiad/`);
         let respJson = await resp.json();
@@ -122,15 +125,14 @@ class Visita extends Component {
         let checks = respJson.filter((item,index)=>{
             return item.id_clicheck == idCliCheck;
         })
-        this.setState({loading:false,actis,visitas,actiSelected,fecha,idActiSelec,
-            visitasClientes:actis[0],fechaFormatted:this.formatFecha(fecha), checks})
+        this.setState({loading:false,actis,visitas,actiSelected,fecha,idActiSelec,idCli,idCliCheck,
+            visitasClientes:actis[0],fechaFormatted:this.formatFecha(fecha), checks,checksPostVisita:checks});
     }
 
     renderItem(data){
-        let clientes = this.state.clientes;
+        let checks = this.state.checks;
         let color1 = "black";
         let color2 = "black";
-        console.log(data);
         if(data.item.verificacion == false){
             color2 = "red";
             color1 = "black";
@@ -145,12 +147,26 @@ class Visita extends Component {
                         <Text style={{fontSize:20 ,color:'black',textAlignVertical:'center'}}>{data.index+1}- {data.item.nombre}</Text>
                         <View style={{flexDirection:'row',justifyContent:'space-around'}}>
                             <Text>  </Text>
-                            <TouchableOpacity style={{flexDirection:'column'}}>
+                            <TouchableOpacity style={{flexDirection:'column'}} onPress={()=>{
+                                for(var i=0;i<checks.length;i++){
+                                    if( checks[i].id_check == data.item.id_check){
+                                        checks[i].verificacion = true;
+                                        this.setState({checksPostVisita:checks});
+                                    }
+                                }
+                            }}>
                                 <Ionicons name="md-checkmark-circle-outline" size={30} color={color1}/>
-                                <Text style={{fontSize:10}}>Asignar</Text>
+                                <Text style={{fontSize:10}}>Aprobar</Text>
                             </TouchableOpacity>
                             <Text>    </Text>
-                            <TouchableOpacity style={{flexDirection:'column'}}>
+                            <TouchableOpacity style={{flexDirection:'column'}} onPress={()=>{
+                                    for(var i=0;i<checks.length;i++){
+                                        if( checks[i].id_check == data.item.id_check){
+                                            checks[i].verificacion = false;
+                                            this.setState({checksPostVisita:checks});
+                                        }
+                                    }
+                                }}>
                                 <Ionicons name="close-circle-outline" size={30} color={color2}/>
                                 <Text style={{fontSize:10}}>Rechazar</Text>
                             </TouchableOpacity>
@@ -161,31 +177,8 @@ class Visita extends Component {
         );
     }
 
-    async tomarVisita(data){
-        let id2 = await AsyncStorage.getItem('id2');
-
-        let tomarVisita = {
-            id_prof:id2
-        }
-
-        let resp = await fetch(`http://${URLS['api-tarrito']}/activiad/${data.item.id_actividad}/`,{
-            method:'PATCH',
-            headers:{
-                'Content-Type':'application/json'
-            },
-            body:JSON.stringify(tomarVisita)
-        });
-        let respJson = await resp.json();
-        if(resp.ok){
-            this.setState({loading:true});
-            Alert.alert('Éxito',"Se ha tomado la visita correctamente.",[{text:'Ok',onPress: ()=>{
-                this.props.navigation.goBack();
-            }}]);
-        }
-    }
-
     render() {
-        var {checks,fecha,fechaFormatted,loading,actis,idActiSelec,actiSelected } = this.state;
+        var {actiSelectedFormat,checksPostVisita,refreshing,checks,fecha,fechaFormatted,loading,actis,idActiSelec,actiSelected,idCli } = this.state;
         return (
             <View style={styles.orderScreen}>
                 {
@@ -207,8 +200,37 @@ class Visita extends Component {
                             <Text style={styles.centerText}>Seleccione una visita</Text>
                             <Text></Text>
                             <View style={{flexDirection:'column',alignSelf:'stretch',justifyContent:'center'}}>
-                                <Picker selectedValue={actiSelected} onValueChange={(item,index)=>{
-                                    
+                                <Picker selectedValue={actiSelectedFormat} onValueChange={async(item,index)=>{
+                                    let actiSelected = actis.filter((item1,index1)=>{
+                                        return item1.id_actividad == item;
+                                    })
+                                    actiSelected = actiSelected[0];
+                                    var checks = this.state.checks;
+                                    var idCliCheck = this.state.idCliCheck;
+                                    var actiSelectedFormat = actiSelected.id_actividad;
+                                    if(idCli == actiSelected.id_cli){
+                                        let resp = await fetch(`http://${URLS['api-tarrito']}/checklist/`);
+                                        let respJson = await resp.json();
+                                        respJson = respJson.filter((item,index)=>{
+                                            return item.id_clicheck == idCliCheck;
+                                        });                            
+                                        this.setState({checksPostVisita:respJson,actiSelected,actiSelectedFormat,checks:respJson,idActiSelec:actiSelected.id_actividad});
+                                    }else{
+                                        //sacar cli_checkid
+                                        let resp = await fetch(`http://${URLS['api-tarrito']}/clicheck/`);
+                                        let respJson = await resp.json();
+                                        respJson = respJson.filter((item,index)=>{
+                                            return item.id_cli == actiSelected.id_cli;
+                                        });
+                                        idCliCheck = respJson[0].id_clicheck;                                        
+                        
+                                        resp = await fetch(`http://${URLS['api-tarrito']}/checklist/`);
+                                        respJson = await resp.json();
+                                        respJson = respJson.filter((item,index)=>{
+                                            return item.id_clicheck == idCliCheck;
+                                        });
+                                        this.setState({checksPostVisita:respJson,idCliCheck,checks:respJson,actiSelected,actiSelectedFormat,idActiSelec:actiSelected.id_actividad,idCli:actiSelected.id_cli});
+                                    }
                                 }}>
                                     {
                                         actis.map((item,index)=>{
@@ -224,7 +246,44 @@ class Visita extends Component {
                             checks.length == 0? 
                                 <Text style={{marginTop:'45%',fontSize:30,textAlign:'center'}}>Este cliente aún no posee checks.</Text>
                                 :
-                                <FlatList data={checks} keyExtractor={(item,index)=>index.toString()} renderItem={this.renderItem.bind(this)} style={{backgroundColor:'#fff',flexDirection:'column',flexWrap:'wrap'}}/>
+                                <View>
+                                    <FlatList data={checksPostVisita} onRefresh={async ()=> await this.RefreshVisitas()} refreshing={refreshing} 
+                                        keyExtractor={(item,index)=>index.toString()} renderItem={this.renderItem.bind(this)} 
+                                        style={{backgroundColor:'#fff',flexDirection:'column',flexWrap:'wrap'}}/>
+                                    <Button title="Finalizar visita" color="green" onPress={async ()=>{
+                                        this.setState({loading:true});
+                                        var resp;
+                                        var respJson;
+                                        checksPostVisita.map(async(item,index)=>{
+                                            let enviar = {
+                                                verificacion:item.verificacion
+                                            };
+                                            resp = await fetch(`http://${URLS['api-tarrito']}/checklist/${item.id_check}/`,{
+                                                method:'PATCH',
+                                                headers:{
+                                                    'Content-Type':'application/json'                            
+                                                },
+                                                body:JSON.stringify(enviar)
+                                            });
+                                            respJson = await resp.json();                                    
+                                        });                       
+                                        let enviarActi = {
+                                            estado:3
+                                        }       
+                                        resp = await fetch(`http://${URLS['api-tarrito']}/activiad/${idActiSelec}/`,{
+                                            method:'PATCH',
+                                            headers:{
+                                                'Content-Type':'application/json'
+                                            },
+                                            body: JSON.stringify(enviarActi)
+                                        });
+                                        respJson = await resp.json();                                        
+                                        Alert.alert("Éxito","Se ha finalizado la visita, por favor espere",[{text:'Ok',onPress:async()=>{                                    
+                                            this.props.navigation.goBack();
+                                        }}]);
+                                        
+                                    }}/>
+                                </View>
                         }
                     </View>
                     </View>
@@ -237,251 +296,3 @@ class Visita extends Component {
     }
 }
 export default Visita;
-/*
-//import liraries
-import React, { Component } from 'react';
-import { View, Text, Button, ActivityIndicator,FlatList,TouchableOpacity,Alert,TextInput,KeyboardAvoidingView } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import VisitaCheckForm from '../Forms/VisitaCheckForm';
-import { Ionicons } from '@expo/vector-icons';
-import styles from '../styles';
-// create a component
-class Visita extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            loading: false,
-            checks: [['Not ok','check1','quiza ok'],
-        ['ok','check2','oko']],
-            //nombresChecks: ['hola'],
-            comentarios: '',
-            estadoChecks: ['0',0],
-            failedChecks: ['not ok'],
-            checksFallidos: ['not ok1'],
-            checksNoFallidos:['ok1'],
-            redIndexes:['0','1'],
-            greenIndexes:[],
-            color1: 'black',
-            color2: 'black'
-        }
-    }
-
-    async componentDidMount(){
-        /*
-        let id = await AsyncStorage.getItem('id2');
-        let id_cli = '';
-        let resp = await fetch(`http://10.0.2.2:8080/profesionales/${id}`);
-        let respJson = await resp.json();
-        let nombres = [];
-        let estados = [];
-        id_cli = respJson[5];
-        resp = await fetch(`http://10.0.2.2:8080/checks/${id}/${id_cli}`);
-        respJson = await resp.json();
-        //console.log(respJson[0])
-        for(var i =0 ; i<respJson.length ; i++){
-            nombres.push(respJson[i][1]);
-            estados.push(respJson[i][4]);
-        }
-        this.setState({nombresChecks:nombres,estadoChecks:estados,loading:false,checks:respJson})
-        
-    }
-
-    async prueba(data,check){
-        
-        var { checksFallidos,redIndexes,greenIndexes,checksNoFallidos } = this.state;
-        var item = data.item;
-        var indexToPop = -1;
-        //isInAprobar
-        var aprobar = false;
-        //isInRechazar
-        var rechazar = false;
-        var estadoChecks = this.state.estadoChecks;
-        var wasHere = false;
-        estadoChecks[data.index] = 1;
-
-        if(checksFallidos.length == 0 && checksNoFallidos.length == 0){
-            if(check == "aprobar"){
-                checksNoFallidos.push(data.item);
-                greenIndexes.push(data.index);
-                this.setState({checksNoFallidos,greenIndexes});
-                return;
-            }else{
-                checksFallidos.push(data.item);
-                redIndexes.push(data.index);
-                this.setState({checksFallidos,redIndexes});
-                return;
-            }
-        } 
-        for(var i=0;i<checksFallidos.length;i++){
-            if(item == checksFallidos[i]){
-                rechazar = true;
-                wasHere = true;
-                indexToPop = i;
-                continue;
-            }
-        }
-
-        for(var i=0;i<checksNoFallidos.length;i++){
-            if(data.item == checksNoFallidos[i]){
-                aprobar = true;
-                wasHere = true;
-                indexToPop = i;
-                continue;
-            }
-        }
-
-        if(rechazar && check == "aprobar"){
-            //Borrarlo de rechazar
-            if(indexToPop != -1){
-                checksFallidos.splice(indexToPop,1);
-                redIndexes.splice(indexToPop,1);
-                aprobar = true;
-                rechazar = false;
-            }
-        }
-
-        if(aprobar && check == "rechazar"){
-            //Borrarlo de aprobar
-            if(indexToPop != -1){
-                checksNoFallidos.splice(indexToPop,1);
-                greenIndexes.splice(indexToPop,1);
-                rechazar = true;                
-                aprobar = false;
-            }
-        }
-
-        if(aprobar || (!wasHere && check == "aprobar")){
-            checksNoFallidos.push(data.item);
-            greenIndexes.push(data.index);
-            this.setState({checksFallidos,checksNoFallidos,redIndexes,greenIndexes});
-        }
-
-        if(rechazar || (!wasHere && check == "rechazar")){
-            checksFallidos.push(data.item);
-            redIndexes.push(data.index);
-            this.setState({checksFallidos,checksNoFallidos,redIndexes,greenIndexes});
-        }
-    }
-
-    renderItem = (data) => {
-        var { greenIndexes, redIndexes,estadoChecks,color2,color1,checksFallidos,checksNoFallidos } = this.state;
-        var estado = this.state.estadoChecks[data.index];
-        var itemToUpdate = data.item;
-        var isInRedindex = false;
-        var isInGreenIndex = false;
-        for(var i=0;i<redIndexes.length;i++){
-            if(data.index == redIndexes[i]){
-                color1 = "red";
-                color2 = "black";
-                isInRedIndex = true;
-                break;
-            }
-        }
-        for(var i=0;i<greenIndexes.length;i++){
-            if(data.index == greenIndexes[i]){
-                color1 = "black";
-                color2 = "green";
-                isInGreenIndex = true;
-                break;
-            }
-        }
-        if(isInRedindex){
-            color1 = "red";
-            color2 = "black";
-        }
-
-       return(<View  style={{justifyContent:'space-around',padding:30}}>
-                        <View style={{flexDirection:'row', alignItems:'center', justifyContent:'space-around'}}>
-                            <Text style={{fontSize:25}}>{((data.index)+1)+" - " +data.item[1]} </Text>
-                            <TouchableOpacity onPress={()=> this.prueba(data,"rechazar")}>
-                                <Ionicons name="md-close-circle" size={25} color={color1}/>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={()=> this.prueba(data,"aprobar")}>
-                                <Ionicons name="md-checkmark-circle" size={25} color={ color2} />
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.FieldSeparator}></View>
-                    </View>);
-    }
-    
-    async _generarInforme(){
-        /*
-        const { checks,checksFallidos,checksNoFallidos } = this.state;
-        let rechazados = checksFallidos.length;
-        let aprobados = checksNoFallidos.length;
-        let idCli = await AsyncStorage.getItem("id2");
-
-        if(aprobados + rechazados != checks.length){
-            Alert.alert('Error','No has completado todos los checks',[{text:'Ok'}]);
-        }else{
-            var template =`\n Visita finalizada.\n\n `;
-            template += `\t\t\t\t\t\t\t\t\tFallidos:`;
-            for(var i =0;i<checksFallidos.length;i++){
-                template += `\n \t\t\t\t${checksFallidos[i][1]}`;
-            }
-            template += `\n\n\t\t\t\t\t\t\t\t\tAprobados: \n`
-            for(var i =0;i<checksNoFallidos.length;i++){
-                template += `\n \t\t\t\t${checksNoFallidos[i][1]}`;
-            }
-            Alert.alert("Informe",template,[{text:'Ok'}]);
-            //console.log(checksFallidos);
-            let jeison = {
-                idCli,
-                checks: checksFallidos
-            }
-            let resp = await fetch(`http://10.0.2.2:8080/crearMejora`,{
-                method:'POST',
-                headers: {
-                    'Content-Type':'application/json; charset="UTF-8"'
-                },
-                body:JSON.stringify({jeison})
-            });
-            let respJson = await resp.json();
-            //console.log(respJson);
-            this.setState({ checksFallidos: [], checksNoFallidos:[], redIndexes:[], greenIndexes:[] })
-        }
-        
-    }
-
-
-    render() {
-        const { checks,estadoChecks,loading } = this.state;
-
-        return (
-            <View style={{flex:1}}>
-                <View style={styles.orderScreen}>
-                    <View style={{justifyContent:'space-around'}}>
-                        <View><Text></Text></View>
-                        <View><Text></Text></View>
-                        {
-                            loading? <ActivityIndicator size="large" color="#095813"/>:
-                            <FlatList data={checks} extraData={estadoChecks} renderItem={this.renderItem} keyExtractor={(item,index) => index.toString()}/>
-                        }
-                        
-                        <View>
-                            <KeyboardAvoidingView style={{alignSelf:'stretch',backgroundColor:'#BABABA'}}>
-                                <TextInput
-                                    style={{textAlign:'center'}}
-                                    multiline={true}    
-                                    numberOfLines={10}
-                                    placeholder={"Detalles..."}
-                                    onChangeText={(comentarios) => this.setState({comentarios:comentarios})}
-                                    value={this.state.text}
-                                />
-                            </KeyboardAvoidingView>
-                            <View>
-                                <View><Text></Text><Text></Text></View>
-                                <Button color="#095813" onPress={ ()=> this._generarInforme() } title="generar informe"/>
-                            </View>
-                        </View>
-                    </View>
-                </View>
-            </View>
-        );
-    }
-}
-
-//make this component available to the app
-export default Visita;
-
-*/

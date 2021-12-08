@@ -6,19 +6,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-//import MantenedorAdmin from './Vistas/Auth/Admin/MantenedorAdmin';
-//import VerReportes from './Vistas/Auth/VerReportes';
 import AsignarProfesional from './Vistas/Auth/AsignarProfesional';
 import Perfil from './Vistas/Auth/Perfil';
 import Actividades from './Vistas/Auth/Actividades';
-import Administrar from './Vistas/Auth/Administrar';
 import Accidentes from './Vistas/Auth/Accidentes';
 import AsesoriaStack from './Vistas/Auth/AsesoriaStack';
-//import Accidentes from './Vistas/Auth/Cliente/Accidentes';
-//import AsesoriaStack from './Vistas/Auth/AsesoriaStack';
 import Login from './Vistas/NoAuth/Login';
 import RevisarCliente from './Vistas/Auth/RevisarCliente';
-///import Visita from './Vistas/Auth/Profesional/Visita';
 import { Provider } from 'react-redux'
 import Store from './Store/Store';
 import VisitaStack from './Vistas/Auth/VisitaStack';

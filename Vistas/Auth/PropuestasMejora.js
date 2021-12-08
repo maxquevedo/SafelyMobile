@@ -120,7 +120,7 @@ class PropuestasMejora extends Component {
     changeCheckState = async (item,action) => {
         let act = action === "aprobar"? true:false;
         let bodie = {
-            estado:act
+            aceptacion:act
         }
         let resp = await fetch(`http://${URLS['api-tarrito']}/mejora/${item.id_mejora}/`,{            
             method:'PATCH',
@@ -133,23 +133,6 @@ class PropuestasMejora extends Component {
         if(resp.ok){
             Alert.alert("Éxtio","Se ha modificado la propuesta correctamente",[{text:'Ok',onPress:this.refreshView.bind(this)}]);
         }
-
-        /*
-        const { estadoPropuestas, propuestas } = this.state;
-        let indice = -1;
-        for(let i=0;i<propuestas.length;i++){
-            if(propuestas[i] === item){
-                indice = i;
-            }
-        }
-        if(action === 'rechazar'){
-            estadoPropuestas[indice] = 0;
-        }else if(action === 'aprobar'){
-            estadoPropuestas[indice] = 1;
-        }
-        
-        this.setState({estadoPropuestas:estadoPropuestas})
-        */
     }
 
     render() {

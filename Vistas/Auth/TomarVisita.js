@@ -65,7 +65,6 @@ class TomarVisita extends Component {
     }
 
     async RefreshVisitas(){
-        console.log("hola?");
         let resp = await fetch(`http://${URLS['api-tarrito']}/activiad/`);
         let respJson = await resp.json();
         let actis = respJson.filter((item,index)=>{
@@ -74,7 +73,6 @@ class TomarVisita extends Component {
         actis = actis.sort((first,second)=>{
             return first.fec_estimada > second.fec_estimada;
         });
-        console.log("actis: ",actis);
         if(actis.length == 0){
             return;
         }   

@@ -368,7 +368,6 @@ class Capacitacion extends Component {
 
     render() {
         const { loading, tipoUsu } = this.state;
-        //console.log(this.state.capaElegida);
         return (
             <View style={{flex:2}}>
                 {

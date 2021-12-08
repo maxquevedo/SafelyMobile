@@ -67,7 +67,6 @@ class Actividades extends Component {
             });
             this.setState({visitas,asesorias,capacitaciones,loading:false})
         }
-        //console.log("visitas en la clase: ",visitas);
     }
 
     getData = async ()=> {
