@@ -293,7 +293,7 @@ class AsignarProfesional extends Component {
                          <Picker.Item label="Asesoría" value="asesoria" />
                          <Picker.Item label="Visita" value="visita" />
                     </Picker>
-                    <Button title="Consultar" color="#18ac30" onPress={this.updatePro}/>
+                    <Button title="Consultar" color="green" onPress={this.updatePro}/>
                     {
                         showPro? <View>
                         <Text style={styles.titleForm}>Profesional</Text>
@@ -310,7 +310,7 @@ class AsignarProfesional extends Component {
                                  })
                             }
                         </Picker>
-                        <Button title="Asignar" color="#18ac30" onPress={async ()=>{
+                        <Button title="Asignar" color="green" onPress={async ()=>{
                             this.updateEvento(clienteElecto,profesionalElecto,fecha,evento);
                             }
                     }/>
