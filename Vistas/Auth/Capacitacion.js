@@ -304,7 +304,7 @@ class Capacitacion extends Component {
                             onChangeText={(materiales) => this.setState({materiales})}
                             value={this.state.materiales.toString()}/>
                     </KeyboardAvoidingView>
-                    <Button title="Solicitar capacitación" color="#18ac30" onPress={()=>{this.solicitarCapacitacion()}}/>
+                    <Button title="Solicitar capacitación" color="green" onPress={()=>{this.solicitarCapacitacion()}}/>
                 </ScrollView>
                 
                 <View style={{flex:0.75}}>

@@ -187,7 +187,7 @@ class SolicitarAsesoria extends Component {
                                 </View>
                                     <View style={styles.cajaFlotante}>
                                         <Text></Text>
-                                        <Button title="Solicitar asesoría" color="#18ac30" onPress={()=>{
+                                        <Button title="Solicitar asesoría" color="green" onPress={()=>{
                                             this.solicitar()
                                         }}/>
                                     </View>

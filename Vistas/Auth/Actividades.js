@@ -131,7 +131,7 @@ class Actividades extends Component {
                     :
                     <View>
                         <ActividadesForm visitas={visitas} asesorias={asesorias} capacitaciones={capacitaciones}/>
-                        <Button title="Refrescar calendario" onPress={this.getData} color="#18ac30"/>
+                        <Button title="Refrescar calendario" onPress={this.getData} color="green"/>
                     </View>
             }
             </View>

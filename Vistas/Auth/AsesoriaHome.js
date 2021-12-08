@@ -24,21 +24,21 @@ class AsesoriaHome extends Component {
                 <View style={{flex:1,justifyContent:'space-evenly'}}>
                     {
                         tipoUsuario == "Cliente"?
-                        <Button color="#18ac30" title="solicitar capacitación" onPress={()=>{
+                        <Button color="green" title="solicitar capacitación" onPress={()=>{
                             navigation.navigate('Capacitacion');
                         }}/>:
-                        <Button color="#18ac30" title="capacitacion" onPress={()=>{
+                        <Button color="green" title="capacitacion" onPress={()=>{
                             navigation.navigate('Capacitacion');
                         }}/>
                     }
                     
-                    <Button color="#18ac30" title="propuestas de mejora" onPress={()=>{
+                    <Button color="green" title="propuestas de mejora" onPress={()=>{
                         navigation.navigate('Propuestas');
                     }}/>
                     {
                         tipoUsuario == "Cliente"?
                         <View>
-                        <Button color="#18ac30" title="solicitar asesoría" onPress={()=>{
+                        <Button color="green" title="solicitar asesoría" onPress={()=>{
                             navigation.navigate('SolicitarAsesoria');
                         }}/></View>:<Text></Text>
                     }

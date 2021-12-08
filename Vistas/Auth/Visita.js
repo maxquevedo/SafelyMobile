@@ -128,22 +128,32 @@ class Visita extends Component {
 
     renderItem(data){
         let clientes = this.state.clientes;
+        let color1 = "black";
+        let color2 = "black";
+        console.log(data);
+        if(data.item.verificacion == false){
+            color2 = "red";
+            color1 = "black";
+        }else{
+            color1 = "green";
+            color2 = "black";
+        }
         return(
-            <View>
+            <View style={{paddingLeft:'5%'}}>
                 <View>
-                    <View style={{flexDirection:'row', justifyContent: 'space-between',paddingLeft:'10%',paddingRight:'10%',alignSelf:'stretch',paddingTop:'5%'}}>
-                        <Text style={{fontSize:25 ,color:'black',textAlignVertical:'center'}}>{data.item.nombre}</Text>
-                        <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                            <TouchableOpacity>
-                                <Ionicons name="md-checkmark-circle-outline" size={40}/>
+                    <View style={{flexDirection:'row',alignSelf:'flex-start',paddingTop:'1%'}}>
+                        <Text style={{fontSize:20 ,color:'black',textAlignVertical:'center'}}>{data.index+1}- {data.item.nombre}</Text>
+                        <View style={{flexDirection:'row',justifyContent:'space-around'}}>
+                            <Text>  </Text>
+                            <TouchableOpacity style={{flexDirection:'column'}}>
+                                <Ionicons name="md-checkmark-circle-outline" size={30} color={color1}/>
+                                <Text style={{fontSize:10}}>Asignar</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity>
-                                <Ionicons name="close-circle-outline" size={40}/>
+                            <Text>    </Text>
+                            <TouchableOpacity style={{flexDirection:'column'}}>
+                                <Ionicons name="close-circle-outline" size={30} color={color2}/>
+                                <Text style={{fontSize:10}}>Rechazar</Text>
                             </TouchableOpacity>
-                        </View>
-                        <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                            <Text style={{fontSize:12}}>Asignar</Text>
-                            <Text style={{fontSize:12}}>Rechazar</Text>
                         </View>
                     </View>
                 </View>
@@ -214,7 +224,7 @@ class Visita extends Component {
                             checks.length == 0? 
                                 <Text style={{marginTop:'45%',fontSize:30,textAlign:'center'}}>Este cliente aún no posee checks.</Text>
                                 :
-                                <FlatList data={checks} keyExtractor={(item,index)=>index.toString()} renderItem={this.renderItem.bind(this)} style={{backgroundColor:'#fff'}}/>
+                                <FlatList data={checks} keyExtractor={(item,index)=>index.toString()} renderItem={this.renderItem.bind(this)} style={{backgroundColor:'#fff',flexDirection:'column',flexWrap:'wrap'}}/>
                         }
                     </View>
                     </View>

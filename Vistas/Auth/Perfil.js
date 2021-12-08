@@ -70,7 +70,7 @@ class Perfil extends Component {
                     { loading? <ActivityIndicator animating={true} color={'#18ac30'} size="large"/>:
                     <View>
                         <View style={{ justifyContent:'center', alignItems:'center',marginBottom:15}}>
-                            <Button color={'#18ac30'}  title="Cerrar Sesion" onPress={async() => {
+                            <Button color={'green'}  title="Cerrar Sesion" onPress={async() => {
                                 await AsyncStorage.clear();
                                 this.props.navigation.reset({
                                     index:0,
@@ -126,7 +126,7 @@ class Perfil extends Component {
                     }
                     <Button title="Editar" onPress={()=>{
                         this.setState({editar:!editar});
-                    }} color="#18ac30"/>
+                    }} color="green"/>
                     </View>
                     </View>
                 }
