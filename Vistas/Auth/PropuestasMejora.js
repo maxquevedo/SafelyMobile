@@ -58,9 +58,7 @@ class PropuestasMejora extends Component {
                 }
             }
         });
-        let propuestaSelected = actisConMejora.filter((item,index)=>{
-            return item.id_actividad == actiIdSelected;
-        });
+        let propuestaSelected = mejoras;
         let fechaSelected = Helper.bdDateToChileDate(actividadSelected.fec_estimada);        
         actividadSelected = actividadSelected.nombre;
         actis.sort((firs,second)=>{
@@ -174,9 +172,9 @@ class PropuestasMejora extends Component {
                                 }                                                              
                                 let colorCheckApro = "black";
                                 let colorCheckRecha = "black";
-                                if(item.estado == false){
+                                if(item.aceptacion == false){
                                     colorCheckRecha = "red";
-                                }else if(item.estado == true){
+                                }else if(item.aceptacion == true){
                                     colorCheckApro = "green";
                                 }
                                 return(
