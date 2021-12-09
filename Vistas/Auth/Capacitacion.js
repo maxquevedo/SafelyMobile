@@ -12,7 +12,7 @@ class Capacitacion extends Component {
     constructor(props){
         super(props);
         this.state = {
-            loading:false,
+            loading:true,
             solicitudes:[],
             fechaSeleccionada: new Date().setDate(new Date().getDate() + 15),
             fechaFormat: new Date().getDate()+'/'+(new Date().getMonth()+1)+'/'+new Date().getFullYear(),
@@ -52,7 +52,7 @@ class Capacitacion extends Component {
             resp = await fetch(`http://${URLS['api-tarrito']}/capacitacion/`)
             respJson = await resp.json();
             var materiales = respJson;
-            this.setState({solicitudes:capas,listaMateriales:materiales,tipoUsu})
+            this.setState({solicitudes:capas,listaMateriales:materiales,tipoUsu,loading:false})
         }
     }
 

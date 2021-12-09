@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator, Alert } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import URLS from '../URLS';
 import {Picker} from '@react-native-community/picker';
@@ -29,6 +29,10 @@ class RevisarCliente extends Component {
         url = `http://${URLS['api-tarrito']}/perfil/`;
         resp = await fetch(url);
         respJson = await resp.json();        
+        if(respJson.length == 0){
+            Alert.alert("Error","No hay perfiles creados.",[{text:'Ok'}]);
+            return;
+        }
         perfiles = respJson.filter((p)=>{
                 return p.tipo_perf === "3";
         });
@@ -39,7 +43,10 @@ class RevisarCliente extends Component {
         usuarios = respJson.filter((u)=>{
             return u.groups[0] === 3;
         });
-
+        if(usuarios.length == 0){
+            Alert.alert("Error","No hay clientes creados.",[{text:'Ok'}]);
+            return;
+        }
         var  data = {};
         usuarios.forEach((item,index)=> {
             var usrId = item.id;
@@ -85,13 +92,17 @@ class RevisarCliente extends Component {
 
     render() {
         const { data, detallesClienteElecto,loading } = this.state;
+        var stylo = loading? {flex:1,justifyContent:'center',alignSelf:'center',alignContent:'center'}:
+        styles.container;
         return (
-            <View style={styles.container}>
+            <View style={stylo} >
                 {
                     loading? 
-                            <ActivityIndicator size={'large'} color={'green'}/>
+                    <View >
+                        <ActivityIndicator size={'large'} color={'green'} />
+                    </View>
                         :
-                        <View>
+                        <View style={styles.container}>
                             <View style={{marginTop:'15%',backgroundColor:'white',alignSelf:'center'}}>
                                 <Text style={styles.text}>Selecciona al cliente</Text>
                                 <Picker

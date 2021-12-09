@@ -32,6 +32,13 @@ class PropuestasMejora extends Component {
         actis = actis.filter((item,index)=>{
             return item.tipo_act != 1;
         });
+        console.log(actis.length);
+        if(actis.length == 0){
+            Alert.alert("Error","No hay actividades en este momento.",[{text:'Ok',onPress: ()=>{
+                this.props.navigation.goBack();
+            }}])
+            return;
+        }
         let actividadSelected = actis[0];
         let resp = await fetch(`http://${URLS['api-tarrito']}/mejora/`);
         let respJson = await resp.json();
@@ -71,6 +78,9 @@ class PropuestasMejora extends Component {
         let tipoUsuario = await AsyncStorage.getItem("tipoUsuario");
         let id2 = await AsyncStorage.getItem('id2');
         let actis = await Helper.getAllActis(id2,tipoUsuario);
+        if(actis.length == 0){
+            return;
+        }
         let actividadSelected = actis[0];
         let resp = await fetch(`http://${URLS['api-tarrito']}/mejora/`);
         let respJson = await resp.json();
