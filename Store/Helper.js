@@ -56,10 +56,14 @@ async function getPerfilIdFromSpecificId(id,tipoUsuario){
             var resp = await fetch(`http://${URLS['api-tarrito']}/cliente/`);
             var respJson = await resp.json();
             //console.log("tipo usuario: ",tipoUsuario,"resp: ",respJson);
+            console.log(respJson);
             if(resp.ok){
                 perfilId = respJson.filter((item,index)=>{
                     return item.id_cli == id;
                 });
+                if(perfilId.length == 0){
+                    return '';
+                }
                 perfilId = perfilId[0].id_perfil;
                 return perfilId;
             }
@@ -71,6 +75,9 @@ async function getPerfilIdFromSpecificId(id,tipoUsuario){
                 perfilId = respJson.filter((item,index)=>{
                     return item.id_prof == id;
                 });
+                if(perfilId.length == 0){
+                    return '';
+                }
                 perfilId = perfilId[0].id_perfil;
                 return perfilId;
             }

@@ -16,7 +16,7 @@ class Capacitacion extends Component {
             solicitudes:[],
             fechaSeleccionada: new Date().setDate(new Date().getDate() + 15),
             fechaFormat: new Date().getDate()+'/'+(new Date().getMonth()+1)+'/'+new Date().getFullYear(),
-            tipoUsu:'Cliente',
+            tipoUsu:'',
             refreshList: false,
             showDatePicker: false,
             asistentes:[],
@@ -41,7 +41,7 @@ class Capacitacion extends Component {
             var capas = respJson.filter((item)=>{
                 return (item.id_cli == idCli && item.tipo_act == "1");
             });
-            this.setState({solicitudes:capas,tipoUsu})
+            this.setState({solicitudes:capas,tipoUsu,loading:false})
         }else{
             var idPro = await AsyncStorage.getItem('id2');
             var resp = await fetch(`http:${URLS['api-tarrito']}/activiad/`)

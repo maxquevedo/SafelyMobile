@@ -32,7 +32,6 @@ class PropuestasMejora extends Component {
         actis = actis.filter((item,index)=>{
             return item.tipo_act != 1;
         });
-        console.log(actis.length);
         if(actis.length == 0){
             Alert.alert("Error","No hay actividades en este momento.",[{text:'Ok',onPress: ()=>{
                 this.props.navigation.goBack();
@@ -78,7 +77,13 @@ class PropuestasMejora extends Component {
         let tipoUsuario = await AsyncStorage.getItem("tipoUsuario");
         let id2 = await AsyncStorage.getItem('id2');
         let actis = await Helper.getAllActis(id2,tipoUsuario);
+        actis = actis.filter((item,index)=>{
+            return item.tipo_act != 1;
+        });
         if(actis.length == 0){
+            Alert.alert("Error","No hay actividades en este momento.",[{text:'Ok',onPress: ()=>{
+                this.props.navigation.goBack();
+            }}])
             return;
         }
         let actividadSelected = actis[0];
@@ -107,9 +112,7 @@ class PropuestasMejora extends Component {
                 }
             }
         });
-        let propuestaSelected = actisConMejora.filter((item,index)=>{
-            return item.id_actividad == actiIdSelected;
-        });
+        let propuestaSelected = mejoras;
         let fechaSelected = Helper.bdDateToChileDate(actividadSelected.fec_estimada);        
         actividadSelected = actividadSelected.nombre;
         actis.sort((firs,second)=>{
@@ -188,10 +191,10 @@ class PropuestasMejora extends Component {
                                     colorCheckApro = "green";
                                 }
                                 return(
-                                <View style={{backgroundColor:color,flexDirection:'row',padding:'8%',justifyContent:'space-around'}} key={index.toString()} >
-                                    <Text>     </Text>
+                                <View style={{backgroundColor:color,padding:'8%',justifyContent:'space-around'}} key={index.toString()} >    
                                     <Text style={styles.text}>{item.propuesta}</Text>
-                                    <Text>   </Text>
+                                    <Text></Text>
+                                    <View style={{flexDirection:'row',justifyContent:'space-around'}}>
                                     {
                                         tipoUsuario === 'Cliente'?
                                         <Ionicons name="md-checkmark-circle-outline" size={35} color={colorCheckApro} />:    
@@ -199,14 +202,14 @@ class PropuestasMejora extends Component {
                                             <Ionicons name="md-checkmark-circle-outline" size={35} color={colorCheckApro} />
                                         </TouchableOpacity>
                                     }
-                                    <Text>  </Text>
                                     {
                                         tipoUsuario === 'Cliente'?
                                         <Ionicons name="md-close-circle-outline" size={35} color={colorCheckRecha} />:
                                         <TouchableOpacity onPress={()=> this.changeCheckState(item,'rechazar')}>
                                             <Ionicons name="md-close-circle-outline" size={35} color={colorCheckRecha} />
                                         </TouchableOpacity>    
-                                    }                            
+                                    }
+                                    </View>                               
                                 </View>)
                             })
                         }

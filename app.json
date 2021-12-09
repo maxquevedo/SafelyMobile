@@ -2,11 +2,18 @@
   "expo": {
     "name": "Safely",
     "slug": "Safely",
-    "icon":"favicon/favicon-32x32.png",
+    "icon": "favicon/favicon-32x32.png",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "android": {
+      "package": "com.mixlab.safelyMovil"
+    }
   },
-  "name": "Safely"
+  "name": "Safely",
+  "android": {
+    "package": "com.mixlab.safelyWebMovil",
+    "versionCode": 1
+  }
 }

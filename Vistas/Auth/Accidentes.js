@@ -87,6 +87,12 @@ class Accidentes extends Component {
         let id_cli = this.state.idCli;
         let id_prof = this.state.idPro;
         let idPerfil = await Helper.getPerfilIdFromSpecificId(id_cli,'Cliente');
+        if(idPerfil.length == 0){
+            Alert.alert("Error","aún no ha tenido su primera actividad",[{text:'Ok',onPress:()=>{
+                this.setState({loading:false,showDialog:false});
+            }}])
+            return;
+        }
         let idUser = await Helper.getAuthIdWithPerfilId(idPerfil);
         let cli  = await Helper.getUserWithAuthId(idUser);
         let date = new Date();
